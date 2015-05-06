@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: BP Media Component
-Plugin URI: http://github.com/modemlooper
+Plugin URI: https://github.com/WebDevStudios/WDS-BP-Media
 Description: Media component for BuddyPress.
 Version: 1.0
 Tested up to: 4.2
 Requires at least: 3.9
 License: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
 Author: WebDevStudios
-Author URI: https://twitter.com/modemlooper
+Author URI: https://webdevstudios.com
 Network: True
 Text Domain: buddypress
 */
