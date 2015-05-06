@@ -122,7 +122,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 		
 		
 		/**
-		 * buddypics_bp_check function.
+		 * bp_media_bp_check function.
 		 * 
 		 * @access public
 		 * @return void
@@ -136,7 +136,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 		
 		
 		/**
-		 * buddypics_install_buddypress_notice function.
+		 * bp_media_install_buddypress_notice function.
 		 * 
 		 * @access public
 		 * @return void
