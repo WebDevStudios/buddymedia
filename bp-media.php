@@ -102,9 +102,12 @@ if ( !class_exists( 'BP_Media' ) ) :
 		 * @return void
 		 */
 		private function includes() {
-			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
-			require( dirname( __FILE__ ) . '/includes/bp-attachments-media.php' );
 			
+			require( dirname( __FILE__ ) . '/includes/bp-media-admin-settings.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-function.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-attachments-media.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-cpt.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
 
 		}
 		
@@ -165,3 +168,5 @@ function bpmedia() {
 	return BP_Media::instance();
 }
 add_action( 'bp_include', 'bpmedia');
+
+

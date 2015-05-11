@@ -235,10 +235,10 @@ function bp_media_locate_template( $template_names, $load = false, $require_once
  * @access public
  * @return void
  */
-function bp_media_screen_my_media() {
+function bp_media_screen_user_media() {
 	global $bp;
 
-	do_action( 'bp_media_screen_my_media' );
+	do_action( 'bp_media_screen_user_media' );
 
 	add_action( 'bp_template_content', 'bp_media_gallery_content' );
 
@@ -259,16 +259,16 @@ function bp_media_gallery_content() {
 
 	switch ( bp_current_action() ) {
 		case bp_get_friends_slug(): 
-			 bp_media_get_template_part( 'friends');
+			 bp_media_get_template_part( 'single/friends');
 		break;
 		case bp_get_groups_slug(): 
-			 bp_media_get_template_part( 'groups');
+			 bp_media_get_template_part( 'single/groups');
 		break;
 		case 'shared':
-			 bp_media_get_template_part( 'shared');
+			 bp_media_get_template_part( 'single/shared');
 		break;
 		default:
-			 bp_media_get_template_part( 'home');
+			 bp_media_get_template_part( 'single/home');
 		break;
 	}
 	 

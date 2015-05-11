@@ -106,7 +106,7 @@ class BP_Media_Component extends BP_Component {
 			'name'                => _x( 'Media', 'Profile media screen nav', 'buddypress' ),
 			'slug'                => $this->slug,
 			'position'            => 10,
-			'screen_function'     => 'bp_media_screen_my_media',
+			'screen_function'     => 'bp_media_screen_user_media',
 			'default_subnav_slug' => 'media',
 			'item_css_id'         => $this->id
 		);
@@ -133,7 +133,7 @@ class BP_Media_Component extends BP_Component {
 			'slug'            => 'media',
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
-			'screen_function' => 'bp_media_screen_my_media',
+			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 10
 		);
 				
@@ -144,7 +144,7 @@ class BP_Media_Component extends BP_Component {
 				'slug'            => bp_get_friends_slug(),
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_my_media',
+				'screen_function' => 'bp_media_screen_user_media',
 				'position'        => 20
 			);
 		}
@@ -156,22 +156,22 @@ class BP_Media_Component extends BP_Component {
 				'slug'            => bp_get_groups_slug(),
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_my_media',
+				'screen_function' => 'bp_media_screen_user_media',
 				'position'        => 30
 			);
 		}
 		
 		// Additional menu if shared is active
-		//if ( bp_media_is_option( 'shared' ) ) {
+		if ( bp_media_is_option( 'shared-gallery' ) ) {
 			$sub_nav[] = array(
 				'name'            => _x( 'Shared', 'Profile friend media screen sub nav', 'buddypress' ),
 				'slug'            => 'shared',
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_my_media',
+				'screen_function' => 'bp_media_screen_user_media',
 				'position'        => 40
 			);
-		//}
+		}
 		
 		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
 		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
@@ -224,34 +224,36 @@ class BP_Media_Component extends BP_Component {
 				'href'   => trailingslashit( $media_link )
 			);
 			
+			// friends
 			if ( bp_is_active( 'friends' ) ) {
 				$wp_admin_nav[] = array(
 					'parent' => 'my-account-' . $this->id,
 					'id'     => 'my-account-' . $this->id . '-friends',
-					'title'  => _x( 'Friends', 'My Account Activity sub nav', 'buddypress' ),
+					'title'  => _x( 'Friends', 'My friends media sub nav', 'buddypress' ),
 					'href'   => trailingslashit( $media_link . bp_get_friends_slug() )
 				);
 			}
 
-			// Groups?
+			// Groups
 			if ( bp_is_active( 'groups' ) ) {
 				$wp_admin_nav[] = array(
 					'parent' => 'my-account-' . $this->id,
 					'id'     => 'my-account-' . $this->id . '-groups',
-					'title'  => _x( 'Groups', 'My Account Activity sub nav', 'buddypress' ),
+					'title'  => _x( 'Groups', 'My group media sub nav', 'buddypress' ),
 					'href'   => trailingslashit( $media_link . bp_get_groups_slug() )
 				);
 			}
 			
-			//if ( bp_media_is_option( 'shared' ) ) {
+			// shared
+			if ( bp_media_is_option( 'shared-gallery' ) ) {
 				$wp_admin_nav[] = array(
 					'parent' => 'my-account-' . $this->id,
 					'id'     => 'my-account-' . $this->id . '-shared',
-					'title'  => _x( 'Shared', 'My Account Activity sub nav', 'buddypress' ),
+					'title'  => _x( 'Shared', 'My shared media sub nav', 'buddypress' ),
 					'href'   => trailingslashit( $media_link . 'shared' )
 				);
 			
-			//}
+			}
 			
 		}
 		
