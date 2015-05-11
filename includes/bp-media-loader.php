@@ -129,13 +129,52 @@ class BP_Media_Component extends BP_Component {
 
 		// Add the subnav items to the media nav item if we are using a theme that supports this
 		$sub_nav[] = array(
-			'name'            => _x( 'My Media', 'Profile media screen sub nav', 'buddypress' ),
+			'name'            => _x( 'Personal', 'Profile media screen sub nav', 'buddypress' ),
 			'slug'            => 'media',
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_my_media',
 			'position'        => 10
 		);
+				
+		// Additional menu if friends is active
+		if ( bp_is_active( 'friends' ) ) {
+			$sub_nav[] = array(
+				'name'            => _x( 'Friends', 'Profile friend media screen sub nav', 'buddypress' ),
+				'slug'            => bp_get_friends_slug(),
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_my_media',
+				'position'        => 20
+			);
+		}
+		
+		// Additional menu if groups is active
+		if ( bp_is_active( 'groups' ) ) {
+			$sub_nav[] = array(
+				'name'            => _x( 'Groups', 'Profile group media screen sub nav', 'buddypress' ),
+				'slug'            => bp_get_groups_slug(),
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_my_media',
+				'position'        => 30
+			);
+		}
+		
+		// Additional menu if shared is active
+		//if ( bp_media_is_option( 'shared' ) ) {
+			$sub_nav[] = array(
+				'name'            => _x( 'Shared', 'Profile friend media screen sub nav', 'buddypress' ),
+				'slug'            => 'shared',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_my_media',
+				'position'        => 40
+			);
+		//}
+		
+		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
+		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
 
 		parent::setup_nav( $main_nav, $sub_nav );
 	}
@@ -184,8 +223,29 @@ class BP_Media_Component extends BP_Component {
 				'title'  => _x( 'Personal', 'My Account Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link )
 			);
+			
+			if ( bp_is_active( 'friends' ) ) {
+				$wp_admin_nav[] = array(
+					'parent' => 'my-account-' . $this->id,
+					'id'     => 'my-account-' . $this->id . '-friends',
+					'title'  => _x( 'Friends', 'My Account Activity sub nav', 'buddypress' ),
+					'href'   => trailingslashit( $media_link . bp_get_friends_slug() )
+				);
+			}
 
+			// Groups?
+			if ( bp_is_active( 'groups' ) ) {
+				$wp_admin_nav[] = array(
+					'parent' => 'my-account-' . $this->id,
+					'id'     => 'my-account-' . $this->id . '-groups',
+					'title'  => _x( 'Groups', 'My Account Activity sub nav', 'buddypress' ),
+					'href'   => trailingslashit( $media_link . bp_get_groups_slug() )
+				);
+			}
+			
 		}
+		
+		$wp_admin_nav = apply_filters( 'bp_media_filter_wp_admin_nav', $wp_admin_nav );
 
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
