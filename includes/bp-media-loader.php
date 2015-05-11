@@ -243,6 +243,16 @@ class BP_Media_Component extends BP_Component {
 				);
 			}
 			
+			//if ( bp_media_is_option( 'shared' ) ) {
+				$wp_admin_nav[] = array(
+					'parent' => 'my-account-' . $this->id,
+					'id'     => 'my-account-' . $this->id . '-shared',
+					'title'  => _x( 'Shared', 'My Account Activity sub nav', 'buddypress' ),
+					'href'   => trailingslashit( $media_link . 'shared' )
+				);
+			
+			//}
+			
 		}
 		
 		$wp_admin_nav = apply_filters( 'bp_media_filter_wp_admin_nav', $wp_admin_nav );

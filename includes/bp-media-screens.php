@@ -54,7 +54,7 @@ class BP_Media_Theme_Compat {
 	    if ( !bp_displayed_user_id() && bp_is_current_component( 'media' ) && !bp_current_action() ) {
 	    
 	        bp_update_is_directory( true, 'media' );
-	        bp_core_load_template( apply_filters( 'media_screen_index', 'media/index' ) );
+	        bp_core_load_template( apply_filters( 'media_screen_index', 'media/directory-index' ) );
 	     
 	    }
 	}
@@ -135,13 +135,98 @@ class BP_Media_Theme_Compat {
      * @return void
      */
     public function directory_content() {
-        bp_buffer_template_part( 'media/index');
+        bp_buffer_template_part( 'media/directory-index');
     }
     
 }
  
 new BP_Media_Theme_Compat();
 
+
+/**
+ * bp_media_get_templates_dir function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_get_templates_dir() {
+	return BP_MEDIA_PLUGIN_DIR . 'includes/templates/media';
+}
+
+
+/**
+ * bp_media_get_template_part function.
+ * 
+ * @access public
+ * @param mixed $slug
+ * @param mixed $name (default: null)
+ * @param bool $load (default: true)
+ * @return void
+ */
+function bp_media_get_template_part( $slug, $name = null, $load = true ) {
+	// Execute code for this part
+	do_action( 'get_template_part_' . $slug, $slug, $name );
+ 
+	// Setup possible parts
+	$templates = array();
+	if ( isset( $name ) )
+		$templates[] = $slug . '-' . $name . '.php';
+	$templates[] = $slug . '.php';
+ 
+	// Allow template parts to be filtered
+	$templates = apply_filters( 'bp_media_get_template_part', $templates, $slug, $name );
+ 
+	// Return the part that is found
+	return bp_media_locate_template( $templates, $load, false );
+}
+
+
+/**
+ * bp_media_locate_template function.
+ * 
+ * @access public
+ * @param mixed $template_names
+ * @param bool $load (default: false)
+ * @param bool $require_once (default: true)
+ * @return void
+ */
+function bp_media_locate_template( $template_names, $load = false, $require_once = true ) {
+	// No file found yet
+	$located = false;
+ 
+	// Try to find a template file
+	foreach ( (array) $template_names as $template_name ) {
+ 
+		// Continue if template is empty
+		if ( empty( $template_name ) )
+			continue;
+			
+		// Trim off any slashes from the template name
+		$template_name = ltrim( $template_name, '/' );
+ 
+		// Check child theme first
+		if ( file_exists( trailingslashit( get_stylesheet_directory() ) . 'media/' . $template_name ) ) {
+			$located = trailingslashit( get_stylesheet_directory() ) . 'media/' . $template_name;
+			break;
+ 
+		// Check parent theme next
+		} elseif ( file_exists( trailingslashit( get_template_directory() ) . 'media/' . $template_name ) ) {
+			$located = trailingslashit( get_template_directory() ) . 'media/' . $template_name;
+			break;
+ 
+		// Check theme compatibility last
+		} elseif ( file_exists( trailingslashit( bp_media_get_templates_dir() ) . $template_name ) ) {
+			$located = trailingslashit( bp_media_get_templates_dir() ) . $template_name;
+			break;
+		}
+	}
+	
+
+	if ( ( true == $load ) && ! empty( $located ) )
+		load_template( $located, $require_once );
+ 
+	return $located;
+}
 
 
 /**
@@ -153,32 +238,39 @@ new BP_Media_Theme_Compat();
 function bp_media_screen_my_media() {
 	global $bp;
 
-	do_action( 'bp_media_gallery' );
+	do_action( 'bp_media_screen_my_media' );
 
-	add_action( 'bp_template_title', 'bp_media_gallery_title' );
 	add_action( 'bp_template_content', 'bp_media_gallery_content' );
 
 	bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 }
 
 
-/**
- * bp_example_screen_one_title function.
- * 
- * @access public
- * @return void
- */
-function bp_media_gallery_title() {
-	_e( 'Media', 'bp-media' );
-}
-
 
 /**
- * bp_example_screen_one_content function.
+ * bp_media_gallery_content function.
  * 
  * @access public
  * @return void
  */
 function bp_media_gallery_content() {
-	_e( 'media loop', 'bp-media' );
+
+	do_action( 'bp_media_gallery_content' );
+
+	switch ( bp_current_action() ) {
+		case bp_get_friends_slug(): 
+			 bp_media_get_template_part( 'friends');
+		break;
+		case bp_get_groups_slug(): 
+			 bp_media_get_template_part( 'groups');
+		break;
+		case 'shared':
+			 bp_media_get_template_part( 'shared');
+		break;
+		default:
+			 bp_media_get_template_part( 'home');
+		break;
+	}
+	 
+	 
 }
