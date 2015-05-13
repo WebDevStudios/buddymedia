@@ -22,6 +22,12 @@ function bp_media_is_option( $option ) {
 }
 
 
+/**
+ * bp_media_loop_filter function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_loop_filter() {
 	
 	$query = 'post_type=bp_media';
@@ -30,21 +36,46 @@ function bp_media_loop_filter() {
 }
 
 
+/**
+ * bp_media_css_class function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_css_class() {
 	echo bp_get_media_css_class();
 }
+	/**
+	 * bp_get_media_css_class function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	function bp_get_media_css_class() {
+		return 'bp-media';
+	}
 
 
-function bp_get_media_css_class() {
-	return 'bp-media';
+/**
+ * bp_media_css_id function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_css_id() {
+	echo bp_get_media_css_id();
 }
-
-
-function bp_media_id() {
-	global $post;
-	
-	echo $post->ID;
-}
+	/**
+	 * bp_get_media_css_id function.
+	 * 
+	 * @access public
+	 * @return post id
+	 */
+	function bp_get_media_css_id() {
+		global $post;
+		
+		return $post->ID;
+	}
 
 
 /**

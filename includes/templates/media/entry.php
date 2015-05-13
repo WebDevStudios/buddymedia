@@ -18,7 +18,7 @@
  */
 do_action( 'bp_media_before_entry' ); ?>
 
-<li class="<?php bp_media_css_class(); ?>" id="media-<?php bp_media_id(); ?>">
+<li class="<?php bp_media_css_class(); ?>" id="media-<?php bp_media_css_id(); ?>">
 
 	<a href="<?php bp_media_album_link(); ?>">
 	
