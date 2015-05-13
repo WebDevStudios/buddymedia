@@ -120,6 +120,14 @@ if ( !class_exists( 'BP_Media' ) ) :
 		 */
 		private function setup_actions() {
 			add_action( 'plugins_loaded', array( $this, 'bp_media_bp_check' ), 999 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		}
+		
+		public function enqueue_scripts() {
+		
+			wp_enqueue_style( 'bp-media-css', plugins_url( 'includes/css/bp-media.css' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/css/bp-media.css' ) );
+			wp_enqueue_script( 'bp-media-js', plugins_url( 'includes/js/bp-media.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media.js' ) );
+		
 		}
 		
 		

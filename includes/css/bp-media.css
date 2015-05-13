@@ -1,0 +1,16 @@
+#buddypress ul#media-stream.grid-list {
+	border-top: 1px solid #eaeaea;
+	width: 100%;
+	list-style: none;
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+
+#buddypress ul#media-stream.grid-list li {
+	border: 1px solid #eaeaea;
+	width: 30%;
+	float: left;
+	margin: 10px 10px 10px 5px;
+	padding: 0;
+}
