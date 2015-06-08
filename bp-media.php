@@ -109,12 +109,6 @@ if ( !class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/bp-media-cpt.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
 			
-			if ( file_exists( dirname( __FILE__ ) . '/lib/cmb2/init.php' ) ) {
-				require_once dirname( __FILE__ ) . '/lib/cmb2/init.php';
-			} elseif ( file_exists( dirname( __FILE__ ) . '/lib/CMB2/init.php' ) ) {
-				require_once dirname( __FILE__ ) . '/lib/CMB2/init.php';
-			}
-
 		}
 		
 		

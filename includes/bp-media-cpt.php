@@ -125,7 +125,20 @@ class BP_Media_CPT {
 	
 		if( ! $post ) return;
 		
-		echo 'wwwww';
+		wp_update_post( array(
+		        'ID' => 14,
+		        'post_parent' => $post->ID
+		    )
+		);
+		
+		$attachments = get_attached_media( 'image', $post->ID );
+		
+		foreach( $attachments as $attachment ) {
+					
+			echo wp_get_attachment_image( $attachment->ID, 'thumbnail' );
+			
+		}
+		
 		
 	}
 		
