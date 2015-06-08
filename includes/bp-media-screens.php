@@ -267,6 +267,9 @@ function bp_media_gallery_content() {
 		case 'shared':
 			 bp_media_get_template_part( 'single/shared');
 		break;
+		case 'album':
+			 bp_media_get_template_part( 'single/album');
+		break;
 		default:
 			 bp_media_get_template_part( 'single/home');
 		break;

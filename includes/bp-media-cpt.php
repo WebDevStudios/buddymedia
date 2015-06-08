@@ -125,19 +125,87 @@ class BP_Media_CPT {
 	
 		if( ! $post ) return;
 		
-		wp_update_post( array(
-		        'ID' => 14,
+		/* wp_update_post( array(
+		        'ID' => 39,
 		        'post_parent' => $post->ID
 		    )
-		);
+		); */
 		
 		$attachments = get_attached_media( 'image', $post->ID );
 		
-		foreach( $attachments as $attachment ) {
-					
-			echo wp_get_attachment_image( $attachment->ID, 'thumbnail' );
+		echo '<ul class="user-media">';
+		
+			foreach( $attachments as $attachment ) {
 			
-		}
+				$user = get_user_by( 'id', (int) $attachments[$attachment->ID]->post_author );
+				
+				 //wp_update_attachment_metadata( $attachment->ID, array( 'bp_media' => true ) ); 
+				 
+				 //$meta = wp_get_attachment_metadata( $attachment->ID ); 
+				
+				//echo '<pre>';
+				//var_dump($meta);
+				//echo '</pre>';
+				
+				/*
+				  $media = get_children(array(
+				        'post_parent' => $attachments[$attachment->ID]->post_parent,
+				        'post_type' => 'attachment'
+				    ));
+				
+				    if (empty($media)) return;
+				
+				    foreach ($media as $file) {
+				        wp_delete_attachment($file->ID);
+				    } */
+				
+				
+				?>
+				
+				<style>
+					.user-media li {
+						overflow: hidden;
+					}
+					.media-thumbnail {
+						float: left;
+					}
+					.media-info {
+						float: left;
+						padding: 0 10px;
+						position: relative;
+						height: 150px;
+						width: 60%;
+					}
+					.media-info div {
+						padding: 5px 0;
+					}
+					.media-author {
+						position: absolute;
+						bottom: 0;
+					}
+				</style>
+				
+				<li>
+					<div class="media-thumbnail"><?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?></div>
+					
+					<div class="media-info">						
+						<div class="media-description">
+							<?php _e( 'Description: ', 'bp_media' ); ?>
+							<?php echo $attachments[$attachment->ID]->post_content; ?>
+						</div>
+						
+						<div class="media-author">
+							<?php _e( 'Uploaded By: ', 'bp_media' ); ?>
+							<?php echo $user->user_login; ?>
+						</div>
+					</div>
+				<li>
+				
+				<?php
+				
+			}
+		
+		echo '</ul>';
 		
 		
 	}
