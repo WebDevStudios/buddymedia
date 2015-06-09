@@ -13,7 +13,7 @@
 <?php
 
 /**
- * Fires before the display of an activity entry.
+ * Fires before the display of an media entry.
  *
  */
 do_action( 'bp_media_before_entry' ); ?>
@@ -22,8 +22,14 @@ do_action( 'bp_media_before_entry' ); ?>
 
 	<a href="<?php bp_media_album_link(); ?>">
 	
-		<h2><?php the_title(); ?></h2>
+		<img class="album-cover" src="<?php bp_album_cover_url(); ?>">
+		
+		<div class="album-title"><?php the_title(); ?></div>
+		
+		<div class="album-count"><?php bp_album_image_count(); ?> <?php _e( 'images', 'bp_media' ); ?></div>
 		
 	</a>
+	
+	
 	
 </li>

@@ -1,3 +1,18 @@
+#buddypress ul#media-stream.grid-list a,  #buddypress ul#media-stream.grid-list u {
+    text-decoration: none;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
+
 #buddypress ul#media-stream.grid-list {
 	border-top: 1px solid #eaeaea;
 	width: 100%;
@@ -5,6 +20,8 @@
 	clear: both;
 	margin: 0;
 	padding: 0;
+	
+	
 }
 
 #buddypress ul#media-stream.grid-list li {
@@ -13,4 +30,29 @@
 	float: left;
 	margin: 10px 10px 10px 5px;
 	padding: 0;
+	height: 225px;
+	overflow: hidden;
 }
+
+#buddypress ul#media-stream.grid-list li img {
+	border-radius: 0;
+	box-shadow: none;
+	width: 100%;
+}
+
+#buddypress ul#media-stream.grid-list .album-title {
+	padding: 0 5px 0 5px;
+	font-size: 14px;
+}
+
+#buddypress ul#media-stream.grid-list .album-count {
+	padding: 0 5px 0 5px;
+	font-size: 12px;
+}
+
+#buddypress ul#media-stream.grid-list .create-album {
+	line-height: 225px;
+	text-align: center;
+	border: dashed 1px #e1e1e1;
+}
+

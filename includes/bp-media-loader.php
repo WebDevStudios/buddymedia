@@ -137,17 +137,6 @@ class BP_Media_Component extends BP_Component {
 			'position'        => 10
 		);
 				
-		// Additional menu if friends is active
-		if ( bp_is_active( 'friends' ) ) {
-			$sub_nav[] = array(
-				'name'            => _x( 'Friends', 'Profile friend media screen sub nav', 'buddypress' ),
-				'slug'            => bp_get_friends_slug(),
-				'parent_url'      => $media_link,
-				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 20
-			);
-		}
 		
 		// Additional menu if groups is active
 		if ( bp_is_active( 'groups' ) ) {
@@ -235,16 +224,6 @@ class BP_Media_Component extends BP_Component {
 				'href'   => trailingslashit( $media_link )
 			);
 			
-			// friends
-			if ( bp_is_active( 'friends' ) ) {
-				$wp_admin_nav[] = array(
-					'parent' => 'my-account-' . $this->id,
-					'id'     => 'my-account-' . $this->id . '-friends',
-					'title'  => _x( 'Friends', 'My friends media sub nav', 'buddypress' ),
-					'href'   => trailingslashit( $media_link . bp_get_friends_slug() )
-				);
-			}
-
 			// Groups
 			if ( bp_is_active( 'groups' ) ) {
 				$wp_admin_nav[] = array(

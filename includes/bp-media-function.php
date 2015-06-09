@@ -29,8 +29,15 @@ function bp_media_is_option( $option ) {
  * @return void
  */
 function bp_media_loop_filter() {
+
+	$author = bp_displayed_user_id();
 	
-	$query = 'post_type=bp_media';
+	$query = array(
+		'post_type' => 'bp_media',
+		'author' => $author
+	);
+	
+	apply_filters( 'bp_media_loop_filter', $query );
 	
 	return $query;
 }
@@ -109,6 +116,10 @@ function bp_media_userlink() {
 	
 		return; 
 	}
+	
+function bp_media_add_album_link() {
+	
+}
 
 
 /**
@@ -146,3 +157,62 @@ function bp_media_album_link() {
 		return;
 		
 	}
+	
+
+	
+/**
+ * bp_album_cover_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_album_cover_url() {
+	global $post;
+	
+	$args = array(
+		'order'          => 'ASC',
+		'orderby'        => 'menu_order',
+		'post_type'      => 'attachment',
+		'post_parent'    => $post->ID,
+		'post_mime_type' => 'image',
+		'post_status'    => null,
+		'numberposts'    => 1,
+	);
+	
+	$attachments = get_posts($args);
+	
+  	if ( $attachments ) {
+		foreach ($attachments as $attachment) {
+			$cover =  wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+			echo $cover[0];
+		}
+	} else {
+		echo BP_MEDIA_PLUGIN_URL . 'includes/images/no-image.png';
+	}
+	
+}
+
+
+function bp_album_image_count() {
+	global $post;
+	
+	$args = array(
+		'order'          => 'ASC',
+		'orderby'        => 'menu_order',
+		'post_type'      => 'attachment',
+		'post_parent'    => $post->ID,
+		'post_mime_type' => 'image',
+		'post_status'    => null,
+		'numberposts'    => -1,
+	);
+	
+	$attachments = get_posts($args);
+	
+	$count = 0;
+	foreach ( $attachments as $attachment ) {
+	    $count += count( $attachment );
+	}
+	
+	echo $count;
+	
+}
