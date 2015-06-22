@@ -56,3 +56,14 @@ html {
 	border: dashed 1px #e1e1e1;
 }
 
+
+#buddypress #drag-drop-area {
+	text-align: center;
+	border: 4px dotted #efefef;
+	padding: 15px;
+	margin: 0 0 10px 0;
+}
+
+#buddypress #drag-drop-area p {
+	margin: 0;
+}

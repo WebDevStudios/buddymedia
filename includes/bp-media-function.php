@@ -29,18 +29,41 @@ function bp_media_is_option( $option ) {
  * @return void
  */
 function bp_media_loop_filter() {
-
-	$author = bp_displayed_user_id();
 	
 	$query = array(
-		'post_type' => 'bp_media',
-		'author' => $author
+		'post_type' => 'bp_media'
 	);
 	
 	apply_filters( 'bp_media_loop_filter', $query );
 	
 	return $query;
 }
+
+
+
+/**
+ * bp_media_loop_profile_filter function.
+ * 
+ * @access public
+ * @param mixed $query
+ * @return void
+ */
+function bp_media_loop_profile_filter( $query ) {
+
+	if( bp_is_user() ) { 
+
+		$author = bp_displayed_user_id();
+		
+		$query = array(
+			'post_type' => 'bp_media',
+			'author' => $author
+		);
+	
+	}
+
+	return $query;
+}
+add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 
 
 /**
@@ -216,3 +239,50 @@ function bp_album_image_count() {
 	echo $count;
 	
 }
+
+
+// include js
+function bp_media_enqueue_scripts() {
+	 wp_enqueue_script('plupload-all');
+}
+add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
+
+
+
+
+add_action('wp_ajax_photo_gallery_upload', function(){
+
+  check_ajax_referer('photo-upload');
+
+  // you can use WP's wp_handle_upload() function:
+  $file = $_FILES['async-upload'];
+  $status = wp_handle_upload( $file, array('test_form'=>true, 'action' => 'photo_gallery_upload') );
+
+  // and output the results or something...
+  echo 'Uploaded to: '. $status['file'];
+  
+  $wp_upload_dir = wp_upload_dir();
+
+  //Adds file as attachment to WordPress
+  
+  $attachment = array(
+  		'guid'           => $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
+     'post_mime_type' => $status['type'],
+     'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
+     'post_content' => '',
+     'post_status' => 'inherit'
+  );
+  
+  $attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $_POST['gallery_id'] );
+  
+  // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+  require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	// Generate the metadata for the attachment, and update the database record.
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
+	wp_update_attachment_metadata( $attach_id, $attach_data );
+	
+	echo "\n Attachment ID: " . $attach_id;
+
+  exit;
+});
