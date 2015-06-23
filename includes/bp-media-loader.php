@@ -126,6 +126,9 @@ class BP_Media_Component extends BP_Component {
 
 		// User link
 		$media_link = trailingslashit( $user_domain . $this->slug );
+		
+		if ( !defined( 'BP_MEDIA_USER_SLUG' ) )
+			define( 'BP_MEDIA_USER_SLUG', $media_link );
 
 		// Add the subnav items to the media nav item if we are using a theme that supports this
 		$sub_nav[] = array(

@@ -193,8 +193,8 @@ function bp_album_cover_url() {
 	global $post;
 	
 	$args = array(
-		'order'          => 'ASC',
-		'orderby'        => 'menu_order',
+		'order'          => 'asc',
+		'orderby'        => 'date',
 		'post_type'      => 'attachment',
 		'post_parent'    => $post->ID,
 		'post_mime_type' => 'image',
@@ -216,6 +216,12 @@ function bp_album_cover_url() {
 }
 
 
+/**
+ * bp_album_image_count function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_album_image_count() {
 	global $post;
 	
@@ -229,7 +235,7 @@ function bp_album_image_count() {
 		'numberposts'    => -1,
 	);
 	
-	$attachments = get_posts($args);
+	$attachments = get_posts( $args );
 	
 	$count = 0;
 	foreach ( $attachments as $attachment ) {
@@ -241,7 +247,13 @@ function bp_album_image_count() {
 }
 
 
-// include js
+
+/**
+ * bp_media_enqueue_scripts function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_enqueue_scripts() {
 	 wp_enqueue_script('plupload-all');
 }
@@ -250,39 +262,61 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
 
 
 
-add_action('wp_ajax_photo_gallery_upload', function(){
+/**
+ * bp_media_upload_photo function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_upload_photo() {
 
-  check_ajax_referer('photo-upload');
-
-  // you can use WP's wp_handle_upload() function:
-  $file = $_FILES['async-upload'];
-  $status = wp_handle_upload( $file, array('test_form'=>true, 'action' => 'photo_gallery_upload') );
-
-  // and output the results or something...
-  echo 'Uploaded to: '. $status['file'];
-  
-  $wp_upload_dir = wp_upload_dir();
-
-  //Adds file as attachment to WordPress
-  
-  $attachment = array(
-  		'guid'           => $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
-     'post_mime_type' => $status['type'],
-     'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
-     'post_content' => '',
-     'post_status' => 'inherit'
-  );
-  
-  $attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $_POST['gallery_id'] );
-  
-  // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-  require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
+	check_ajax_referer('photo-upload');
+	
+	// upload file
+	$file = $_FILES['async-upload'];
+	$status = wp_handle_upload( $file, array( 'test_form'=>true, 'action' => 'photo_gallery_upload' ) );
+	
+	// output the results to console
+	echo 'Uploaded to: ' . $status['file'];
+	
+	$wp_upload_dir = wp_upload_dir();
+	
+	//Adds file as attachment to WordPress
+	$attachment = array(
+		'guid'           	=> $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
+		'post_mime_type' 	=> $status['type'],
+		'post_title' 		=> preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
+		'post_content' 		=> '',
+		'post_status' 		=> 'inherit'
+	);
+	$attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $_POST['gallery_id'] );
+	
+	// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	
 	// Generate the metadata for the attachment, and update the database record.
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
+	// output the results to console
 	echo "\n Attachment ID: " . $attach_id;
+	
+	exit;
+}
+add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 
-  exit;
-});
+
+function getAjaxCall(){
+	
+  $photo_id =  $_GET['id'];
+  $guid =  $_GET['guid'];
+  $user_id =  $_GET['user'];
+  
+  $user = get_user_by( 'id', (int) $user_id );
+  
+  include( bp_media_get_template_part( 'single/photo') );
+  
+  die();
+}
+add_action('wp_ajax_getAjax', 'getAjaxCall');
+add_action('wp_ajax_nopriv_getAjax', 'getAjaxCall');
