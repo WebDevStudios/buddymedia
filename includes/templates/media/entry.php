@@ -26,7 +26,7 @@ do_action( 'bp_media_before_entry' ); ?>
 		
 		<div class="album-title"><?php the_title(); ?></div>
 		
-		<div class="album-count"><?php bp_album_image_count(); ?> <?php _e( 'images', 'bp_media' ); ?></div>
+		<div class="album-count"><?php bp_album_image_count(); ?></div>
 		
 	</a>
 	

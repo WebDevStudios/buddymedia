@@ -174,7 +174,7 @@ $ajax_url = add_query_arg(
 
 	<ul id="media-stream" class="media-list grid-list">
 
-<?php
+	<?php
 
 	add_thickbox();
 

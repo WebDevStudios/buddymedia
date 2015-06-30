@@ -250,7 +250,9 @@ function bp_album_image_count() {
 	    $count += count( $attachment );
 	}
 	
-	echo $count;
+	$text = ( $count === 1 ) ? __( ' image', 'bp_media' ) : __( ' images', 'bp_media' ) ;
+	
+	echo $count . $text;
 	
 }
 
