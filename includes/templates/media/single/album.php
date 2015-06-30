@@ -13,7 +13,7 @@ if( $variables[0] === 'photo' ) {
 	
 $ajax_url = add_query_arg( 
     array( 
-        'action' => 'getAjax' 
+        'action' => 'bp_media_get_image' 
     ), 
     '/wp-admin/admin-ajax.php'
 ); 
@@ -105,7 +105,7 @@ $ajax_url = add_query_arg(
 	
 	<script>
 	
-	function getAjax(tag, id, guid, user) {
+	function bp_media_get_image(tag, id, guid, user) {
 		tb_show( tag, '<?php echo $ajax_url; ?>&id=' + id + '&guid=' + guid + '&user=' + user );
 		bp_media_iframe_loaded();
 	}
@@ -188,7 +188,7 @@ $ajax_url = add_query_arg(
 				
 		?>
 		
-		<a onclick="getAjax( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" href="#" data-id="<?php echo $attachment->ID; ?>">	
+		<a onclick="bp_media_get_image( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" href="#" data-id="<?php echo $attachment->ID; ?>">	
 			<div class="media-thumbnail"><?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?></div>
 		</a>
 		

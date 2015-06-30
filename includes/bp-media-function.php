@@ -140,8 +140,16 @@ function bp_media_userlink() {
 		return; 
 	}
 	
-function bp_media_add_album_link() {
-	
+function bp_media_create_album_link() {
+
+	$ajax_url = add_query_arg( 
+	    array( 
+	        'action' => 'bp_media_add_album' 
+	    ), 
+	    '/wp-admin/admin-ajax.php'
+	); 
+
+	return $ajax_url;
 }
 
 
@@ -274,7 +282,7 @@ function bp_media_upload_photo() {
 	
 	// upload file
 	$file = $_FILES['async-upload'];
-	$status = wp_handle_upload( $file, array( 'test_form'=>true, 'action' => 'photo_gallery_upload' ) );
+	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'photo_gallery_upload' ) );
 	
 	// output the results to console
 	echo 'Uploaded to: ' . $status['file'];
@@ -306,17 +314,129 @@ function bp_media_upload_photo() {
 add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 
 
-function getAjaxCall(){
+/**
+ * getAjaxCall function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_get_image(){
 	
-  $photo_id =  $_GET['id'];
-  $guid =  $_GET['guid'];
-  $user_id =  $_GET['user'];
-  
-  $user = get_user_by( 'id', (int) $user_id );
-  
-  include( bp_media_get_template_part( 'single/photo') );
-  
-  die();
+	$photo_id =  $_GET['id'];
+	$guid =  $_GET['guid'];
+	$user_id =  $_GET['user'];
+	
+	$user = get_user_by( 'id', (int) $user_id );
+	
+	include( bp_media_get_template_part( 'single/photo') );
+	
+	die();
 }
-add_action('wp_ajax_getAjax', 'getAjaxCall');
-add_action('wp_ajax_nopriv_getAjax', 'getAjaxCall');
+add_action('wp_ajax_bp_media_get_image', 'bp_media_get_image');
+add_action('wp_ajax_nopriv_bp_media_get_image', 'bp_media_get_image');
+
+
+
+/**
+ * bp_media_addalbum function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_addalbum(){
+	
+	include_once( bp_media_get_template_part( 'single/add-album') );
+	
+	die();
+}
+add_action('wp_ajax_bp_media_add_album', 'bp_media_addalbum');
+add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_addalbum');
+
+
+
+/**
+ * bp_media_ajax_create_album function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_ajax_create_album(){
+
+	$title =  $_GET['title'];
+	$content =  $_GET['description'];
+	$user_id =  $_GET['user_id'];
+
+	// Create post object
+	$my_post = array(
+	  'post_title'    => $title,
+	  'post_content'  => $content,
+	  'post_status'   => 'publish',
+	  'post_author'   => (int) $user_id,
+	  'post_type' => 'bp_media'
+	);
+	
+	// Insert the post into the database
+	$post = wp_insert_post( $my_post );	
+	
+	echo $post;
+	
+	die();
+}
+add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
+add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
+
+
+
+/**
+ * bp_media_comments function.
+ * 
+ * @access public
+ * @param mixed $comment
+ * @param mixed $args
+ * @param mixed $depth
+ * @return void
+ */
+function bp_media_comments($comment, $args, $depth) {
+
+	$GLOBALS['comment'] = $comment;
+	extract($args, EXTR_SKIP);
+?>
+	
+	
+	<li id="div-comment-<?php comment_ID() ?>" class="comment-body">
+
+		<div class="comment-author vcard">
+		<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['avatar_size'] ); ?>
+			<div class="comment-author-username"><?php printf( __( '%s' ), get_comment_author_link() ); ?></div>
+			<?php comment_text(); ?>
+		</div>
+		<?php if ( $comment->comment_approved == '0' ) : ?>
+			<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em>
+			<br />
+		<?php endif; ?>
+	
+		
+
+	</li>
+<?php
+}
+
+
+	$time = current_time('mysql');
+	
+	$data = array(
+	    'comment_post_ID' => 49,
+	    'comment_author' => 'admin',
+	    'comment_author_email' => 'admin@admin.com',
+	    'comment_author_url' => 'http://',
+	    'comment_content' => 'content here two',
+	    'comment_type' => '',
+	    'comment_parent' => 0,
+	    'user_id' => 1,
+	    'comment_author_IP' => '127.0.0.1',
+	    'comment_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.10) Gecko/2009042316 Firefox/3.0.10 (.NET CLR 3.5.30729)',
+	    'comment_date' => $time,
+	    'comment_approved' => 1,
+	);
+	
+	//wp_insert_comment($data);
