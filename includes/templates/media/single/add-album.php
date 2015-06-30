@@ -23,6 +23,7 @@
 			   },
 			   success: function(data) {
 			   	console.log(data);
+			   	//window.reload(data.url);
 			   }
 			});
 			

@@ -2,7 +2,7 @@
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
- 
+
 /**
  * Main Media Class.
  *
@@ -16,9 +16,9 @@ class BP_Media_Component extends BP_Component {
 	 * @since BuddyPress (1.5.0)
 	 */
 	public function __construct() {
-	
+
 		global $bp;
-		
+
 		parent::start(
 			'media',
 			__( 'Media', 'buddypress' ),
@@ -27,11 +27,11 @@ class BP_Media_Component extends BP_Component {
 				'adminbar_myaccount_order' => 10
 			)
 		);
-		
-		
-		
+
+
+
 		$bp->active_components[$this->id] = '1';
-			
+
 		$this->includes();
 	}
 
@@ -70,7 +70,7 @@ class BP_Media_Component extends BP_Component {
 		// Define a slug, if necessary
 		if ( !defined( 'BP_MEDIA_SLUG' ) )
 			define( 'BP_MEDIA_SLUG', $this->id );
-			
+
 		// All globals for media component.
 		// Note that global_tables is included in this array.
 		$args = array(
@@ -126,21 +126,22 @@ class BP_Media_Component extends BP_Component {
 
 		// User link
 		$media_link = trailingslashit( $user_domain . $this->slug );
-		
+
 		if ( !defined( 'BP_MEDIA_USER_SLUG' ) )
 			define( 'BP_MEDIA_USER_SLUG', $media_link );
 
 		// Add the subnav items to the media nav item if we are using a theme that supports this
 		$sub_nav[] = array(
-			'name'            => _x( 'Personal', 'Profile media screen sub nav', 'buddypress' ),
+			'name'            => _x( 'Albums', 'Profile media screen sub nav', 'buddypress' ),
 			'slug'            => 'media',
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 10
 		);
-				
-		
+
+		/*
+
 		// Additional menu if groups is active
 		if ( bp_is_active( 'groups' ) ) {
 			$sub_nav[] = array(
@@ -149,10 +150,11 @@ class BP_Media_Component extends BP_Component {
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 30
+				'position'        => 20
 			);
 		}
-		
+
+
 		// Additional menu if shared is active
 		if ( bp_media_is_option( 'shared-gallery' ) ) {
 			$sub_nav[] = array(
@@ -161,10 +163,11 @@ class BP_Media_Component extends BP_Component {
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 40
+				'position'        => 30
 			);
 		}
-		
+
+		*/
 
 		$sub_nav[] = array(
 			'name'            => ' ',
@@ -173,9 +176,19 @@ class BP_Media_Component extends BP_Component {
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 40
-		); 
-		
-		
+		);
+
+		if( is_user_logged_in() ) {
+			$sub_nav[] = array(
+				'name'            => ' ',
+				'slug'            => 'create',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_user_media',
+				'position'        => 50
+			);
+		}
+
 		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
 		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
 
@@ -226,7 +239,7 @@ class BP_Media_Component extends BP_Component {
 				'title'  => _x( 'Personal', 'My Account Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link )
 			);
-			
+
 			// Groups
 			if ( bp_is_active( 'groups' ) ) {
 				$wp_admin_nav[] = array(
@@ -236,7 +249,7 @@ class BP_Media_Component extends BP_Component {
 					'href'   => trailingslashit( $media_link . bp_get_groups_slug() )
 				);
 			}
-			
+
 			// shared
 			if ( bp_media_is_option( 'shared-gallery' ) ) {
 				$wp_admin_nav[] = array(
@@ -245,11 +258,11 @@ class BP_Media_Component extends BP_Component {
 					'title'  => _x( 'Shared', 'My shared media sub nav', 'buddypress' ),
 					'href'   => trailingslashit( $media_link . 'shared' )
 				);
-			
+
 			}
-			
+
 		}
-		
+
 		$wp_admin_nav = apply_filters( 'bp_media_filter_wp_admin_nav', $wp_admin_nav );
 
 		parent::setup_admin_bar( $wp_admin_nav );

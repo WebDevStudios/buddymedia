@@ -1,5 +1,4 @@
 <script>
-
 	function bp_media_createAlbum(tag) {
 		tb_show( tag, '<?php echo bp_media_create_album_link() ?>' );
 	}
@@ -11,15 +10,17 @@
 
 	<ul id="media-stream" class="media-list grid-list">
 	
-		<li class="<?php bp_media_css_class(); ?> create-album" id="media-<?php bp_media_css_id(); ?>">
-		
-			<a href="#" onclick="bp_media_createAlbum('pop')">
-				
-				<div class="album-title"><?php _e( '+ Create Album', 'bp_album'); ?></div>
-				
-			</a>
+		<?php if( is_user_logged_in() ) : ?>
+			<li class="<?php bp_media_css_class(); ?> create-album" id="media-<?php bp_media_css_id(); ?>">
 			
-		</li>
+				<a href="<?php bp_media_create_album_link() ; ?>">
+					
+					<div class="album-title"><?php _e( '+ Create Album', 'bp_album'); ?></div>
+					
+				</a>
+				
+			</li>
+		<?php endif ; ?>
 		
 		<?php if ( $query->have_posts() ) : ?>
 			

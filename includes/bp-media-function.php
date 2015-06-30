@@ -139,8 +139,38 @@ function bp_media_userlink() {
 	
 		return; 
 	}
-	
+
+
+
+/**
+ * bp_media_create_album_link function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_create_album_link() {
+	echo bp_media_get_create_album_link();
+}	
+
+	
+	/**
+	 * bp_media_get_create_album_link function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	function bp_media_get_create_album_link() {
+		return bp_core_get_user_domain() . 'create';
+	}
+	
+	
+/**
+ * bp_media_create_album_link_ajax function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_create_album_link_ajax() {
 
 	$ajax_url = add_query_arg( 
 	    array( 
@@ -317,7 +347,7 @@ add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 
 
 /**
- * getAjaxCall function.
+ * bp_media_get_image function.
  * 
  * @access public
  * @return void
@@ -340,19 +370,19 @@ add_action('wp_ajax_nopriv_bp_media_get_image', 'bp_media_get_image');
 
 
 /**
- * bp_media_addalbum function.
+ * bp_media_add_album function.
  * 
  * @access public
  * @return void
  */
-function bp_media_addalbum(){
+function bp_media_add_album(){
 	
 	include_once( bp_media_get_template_part( 'single/add-album') );
 	
 	die();
 }
-add_action('wp_ajax_bp_media_add_album', 'bp_media_addalbum');
-add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_addalbum');
+add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
+add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_add_album');
 
 
 
@@ -370,8 +400,8 @@ function bp_media_ajax_create_album(){
 
 	// Create post object
 	$my_post = array(
-	  'post_title'    => $title,
-	  'post_content'  => $content,
+	  'post_title'    => sanitize_text_field( $title ),
+	  'post_content'  => sanitize_text_field( $content ),
 	  'post_status'   => 'publish',
 	  'post_author'   => (int) $user_id,
 	  'post_type' => 'bp_media'
@@ -380,9 +410,15 @@ function bp_media_ajax_create_album(){
 	// Insert the post into the database
 	$post = wp_insert_post( $my_post );	
 	
-	echo $post;
+	// return post id
 	
-	die();
+	$data = array(
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post
+	);
+	
+	
+	wp_send_json( $data );
+
 }
 add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
 add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
@@ -401,7 +437,6 @@ add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_al
 function bp_media_comments($comment, $args, $depth) {
 
 	$GLOBALS['comment'] = $comment;
-	extract($args, EXTR_SKIP);
 ?>
 	
 	

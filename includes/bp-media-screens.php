@@ -270,6 +270,9 @@ function bp_media_gallery_content() {
 		case 'album':
 			 bp_media_get_template_part( 'single/album');
 		break;
+		case 'create':
+			 bp_media_get_template_part( 'single/create');
+		break;
 		default:
 			 bp_media_get_template_part( 'single/home');
 		break;
