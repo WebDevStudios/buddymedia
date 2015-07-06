@@ -135,6 +135,13 @@ ul.commentlist p {
 	width: 300px;
 }
 
+.bp-media-buttons {
+	margin-bottom: 20px;
+}
+
+.bp-media-buttons div {
+	display: inline-block;
+}
 
 /* album grids */
 

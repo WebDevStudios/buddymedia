@@ -13,10 +13,15 @@ if( $variables[0] === 'photo' ) {
 	
 	<?php if( is_user_logged_in() ) : ?>
 	
-	<p>
-		<div id="bp-media-add-photo" class="generic-button"><a><?php _e( 'Add Photos', 'bp_album' ); ?></a></div>
-	</p>
-		
+	<div class="bp-media-buttons">
+		<div id="bp-media-add-photo" class="generic-button">
+			<a><?php _e( 'Add Photos', 'bp_album' ); ?></a>
+		</div>
+		<div id="bp-media-edit-album" class="generic-button">
+			<a><?php _e( 'Edit Album', 'bp_album' ); ?></a>
+		</div>
+	</div>
+	
 	<? bp_media_get_template_part( 'upload-form' ); ?>
 	
 	<?php endif ; ?>
