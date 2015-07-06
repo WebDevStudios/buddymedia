@@ -1,9 +1,3 @@
-<script>
-	function bp_media_createAlbum(tag) {
-		tb_show( tag, '<?php echo bp_media_create_album_link() ?>' );
-	}
-</script>
-
 <?php $query = new WP_Query( bp_media_loop_filter() ); add_thickbox(); ?>
 
 <div class="media no-ajax" role="main">

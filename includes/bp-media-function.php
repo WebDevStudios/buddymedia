@@ -34,7 +34,7 @@ function bp_media_loop_filter() {
 		'post_type' => 'bp_media'
 	);
 	
-	apply_filters( 'bp_media_loop_filter', $query );
+	$query = apply_filters( 'bp_media_loop_filter', $query );
 	
 	return $query;
 }
@@ -413,7 +413,7 @@ function bp_media_ajax_create_album(){
 	// return post id
 	
 	$data = array(
-		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
 	);
 	
 	

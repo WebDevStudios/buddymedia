@@ -2,10 +2,11 @@
     text-decoration: none;
 }
 
-html {
+html, body {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	height: 100%;
 }
 
 *, *:before, *:after {
@@ -132,4 +133,86 @@ ul.commentlist p {
 
 .media-pop-wrapper .image-reply-form input {
 	width: 300px;
+}
+
+
+/* album grids */
+
+.media-thumbnail {
+	float: left;
+	padding: 5px;
+}
+.media-thumbnail img {
+	border-radius: 0px;
+	box-shadow: none;
+}
+#album-personal-li,
+#create-personal-li {
+	display: none;
+}
+
+#TB_window {
+	overflow: hidden;
+	background:	#000000 !important;
+}
+		
+#TB_ajaxWindowTitle {
+	display: none;
+}
+
+#TB_title {
+	background:	#5c5c5c !important;
+	border:	none !important;
+	height: 0 !important;
+}
+
+#TB_ajaxContent {
+	width: 100% !important;
+	height: 100% !important;
+	padding: 0 !important;
+	overflow: scroll;
+}
+
+#TB_ajaxContent .media-pop-wrapper {
+  	margin-right: 400px;
+  	height: 100%;
+}
+#TB_ajaxContent .photo-column {
+  	float: left;
+  	width: 100%;
+  	height: 100%;
+}
+#TB_ajaxContent .comment-column {
+	float: right;
+	width: 400px;
+	height: 100%;
+	margin-right: -400px;
+	padding: 15px;
+	background-color: #ffffff;
+}
+#TB_ajaxContent #cleared {
+  	clear: both;
+}
+
+#TB_ajaxContent .media-image {
+	padding: 10px;
+	height: 100%;
+}
+
+#TB_ajaxContent .media-image img {
+	margin: auto;
+	display: table;
+	max-width: 100%;
+	top: 50%;
+	-webkit-transform: translateY(25%);
+	-ms-transform: translateY(25%);
+	transform: translateY(25%);
+}
+
+#TB_ajaxContent .upload-author {
+	margin: 0 0 20px 0;
+}
+
+#plupload-upload-ui {
+	display: none;
 }

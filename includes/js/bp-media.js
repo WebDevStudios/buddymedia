@@ -1,0 +1,94 @@
+function bp_media_get_image(tag, id, guid, user) {
+	tb_show( tag, '/wp-admin/admin-ajax.php?action=bp_media_get_image&id=' + id + '&guid=' + guid + '&user=' + user );
+	bp_media_iframe_loaded();
+}
+
+
+/**
+ * Add ‘bp_media’ class to the Thickbox window. Called from inside the TB iframe.
+ */
+function bp_media_iframe_loaded() {
+	jQuery('#TB_window').addClass('bp_media');
+	setTimeout(function() {
+		bp_media_resize_thickbox();
+	}, 500);
+	 
+}
+
+/**
+ * Checks how to resize the TB window. Called on window.resize.
+ */	
+function bp_media_window_resize() {
+	if( jQuery('#TB_window').hasClass('bp_media') ) {
+		bp_media_resize_thickbox();
+	} else {
+		tb_position();
+	}
+}
+
+/**
+ * Resizes the TB window our way, not the highway.
+ */
+function bp_media_resize_thickbox() {
+
+	//delete jQuery(window).data('events')['resize'];
+	
+	var bp_mediaWidth		= 1000;
+	var TB_newWidth			= jQuery(window).width() < ( bp_mediaWidth + 40 ) ? jQuery(window).width() - 40 : bp_mediaWidth;
+	var TB_newHeight		= jQuery(window).height() - 40;
+	var TB_newMargin		= ( jQuery(window).width() - bp_mediaWidth ) / 2;
+
+	jQuery('#TB_window').css({'marginLeft': -(TB_newWidth / 2)});
+	jQuery('#TB_window').css({'marginTop': -(TB_newHeight / 2)});
+	jQuery('#TB_window, #TB_iframeContent').width(TB_newWidth).height(TB_newHeight);
+	jQuery('#TB_ajaxContent .media-pop-wrapper').height(TB_newHeight);
+}
+
+
+function bp_media_createAlbum(tag, link) {
+	tb_show( tag, link );
+}
+
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
+jQuery(document).ready(function() {
+	/**
+	 * window.resize event to resize modal.
+ 	 */
+	jQuery(window).resize( function( event ) {
+			delete jQuery(window).data('events')['resize'];
+			jQuery(window).bind('resize', bp_media_window_resize);
+	});
+	
+	jQuery( "#bp-media-add-photo" ).click(function() {     
+    	jQuery('#plupload-upload-ui').slideToggle();        
+	});
+	
+	jQuery('#create-album').on( 'click', function( event ) {
+					
+		jQuery.ajax({
+		   url: '/wp-admin/admin-ajax.php',
+		   data: {
+		      'action':'bp_media_ajax_create_album',
+		      'title': jQuery('#album-title').val(),
+		      'description': jQuery('#album-description').val(),
+		      'user_id': jQuery('#album-user-id').val()
+		   },
+		   error: function() {
+		     alert('nope');
+		   },
+		   success: function(data) {
+		   	console.log(data);
+		   	window.location = data.url;
+		   }
+		});
+		
+	});
+	
+	if( getURLParameter('new') ) {
+		jQuery('#plupload-upload-ui').slideToggle(); 
+	}
+	
+});
