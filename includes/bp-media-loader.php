@@ -188,6 +188,17 @@ class BP_Media_Component extends BP_Component {
 				'position'        => 50
 			);
 		}
+		
+		if( is_user_logged_in() ) {
+			$sub_nav[] = array(
+				'name'            => ' ',
+				'slug'            => 'edit',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_user_media',
+				'position'        => 50
+			);
+		}
 
 		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
 		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );

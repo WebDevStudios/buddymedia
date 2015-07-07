@@ -145,6 +145,11 @@ ul.commentlist p {
 
 /* album grids */
 
+.bp-media-create-album label {
+	width: 100%;
+	display: block;
+}
+
 .media-thumbnail {
 	float: left;
 	padding: 5px;

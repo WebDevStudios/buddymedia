@@ -256,6 +256,8 @@ function bp_media_screen_user_media() {
 function bp_media_gallery_content() {
 
 	do_action( 'bp_media_gallery_content' );
+	
+	$action_var = bp_action_variables();
 
 	switch ( bp_current_action() ) {
 		case bp_get_friends_slug(): 
@@ -268,7 +270,14 @@ function bp_media_gallery_content() {
 			 bp_media_get_template_part( 'single/shared');
 		break;
 		case 'album':
-			 bp_media_get_template_part( 'single/album');
+				
+				if( 'edit' === $action_var[1] ) {
+					bp_media_get_template_part( 'single/edit-album');
+				} else {
+					bp_media_get_template_part( 'single/album');
+				}
+		
+			 
 		break;
 		case 'create':
 			 bp_media_get_template_part( 'single/create');

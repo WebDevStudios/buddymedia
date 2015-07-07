@@ -18,7 +18,7 @@ if( $variables[0] === 'photo' ) {
 			<a><?php _e( 'Add Photos', 'bp_album' ); ?></a>
 		</div>
 		<div id="bp-media-edit-album" class="generic-button">
-			<a><?php _e( 'Edit Album', 'bp_album' ); ?></a>
+			<a href="<?php bp_media_edit_album_link() ;?>" ><?php _e( 'Edit Album', 'bp_album' ); ?></a>
 		</div>
 	</div>
 	

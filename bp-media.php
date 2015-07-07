@@ -108,6 +108,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/bp-attachments-media.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-cpt.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-ajax.php' );
 			
 		}
 		
