@@ -87,6 +87,56 @@ jQuery(document).ready(function() {
 		
 	});
 	
+	jQuery('#edit-album').on( 'click', function( event ) {
+					
+		jQuery.ajax({
+		   url: '/wp-admin/admin-ajax.php',
+		   data: {
+		      'action':'bp_media_ajax_edit_album',
+		      'title': jQuery('#album-title').val(),
+		      'description': jQuery('#album-description').val(),
+		      'user_id': jQuery('#album-user-id').val(),
+		      'post_id': jQuery('#album-post-id').val()
+		   },
+		   error: function() {
+		     alert('nope');
+		   },
+		   success: function(data) {
+		   	console.log(data);
+		   	window.location = data.url;
+		   }
+		});
+		
+	});
+	
+
+
+
+
+	jQuery('#delete-album').on( 'click', function( event ) {
+	
+		if( confirm('Are you sure you want to delete this album?') ) { 
+						
+			jQuery.ajax({
+			   url: '/wp-admin/admin-ajax.php',
+			   data: {
+			      'action':'bp_media_ajax_delete_album',
+			      'user_id': jQuery('#album-user-id').val(),
+			      'post_id': jQuery('#album-post-id').val()
+			   },
+			   error: function() {
+			     alert('nope');
+			   },
+			   success: function(data) {
+			   	console.log(data);
+			   	window.location = data.url;
+			   }
+			});
+			
+		}
+		
+	});
+	
 	if( getURLParameter('new') ) {
 		jQuery('#plupload-upload-ui').slideToggle(); 
 	}

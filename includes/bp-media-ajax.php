@@ -92,6 +92,8 @@ add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_add_album');
  */
 function bp_media_ajax_create_album(){
 
+	
+
 	$title =  $_GET['title'];
 	$content =  $_GET['description'];
 	$user_id =  $_GET['user_id'];
@@ -120,3 +122,70 @@ function bp_media_ajax_create_album(){
 }
 add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
 add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
+
+
+
+
+
+/**
+ * bp_media_ajax_edit_album function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_ajax_edit_album(){
+
+	$title =  $_GET['title'];
+	$content =  $_GET['description'];
+	$user_id =  $_GET['user_id'];
+	$post_id =  $_GET['post_id'];
+	
+	// Update post
+	$my_post = array(
+	  'ID'           => (int) $post_id,
+	  'post_title'    => sanitize_text_field( $title ),
+	  'post_content'  => sanitize_text_field( $content ),
+	);
+	
+	// Update the post into the database
+	$post = wp_update_post( $my_post );
+	
+	// return post id
+	$data = array(
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post
+	);
+	
+	
+	wp_send_json( $data );
+
+}
+add_action('wp_ajax_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
+add_action('wp_ajax_nopriv_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
+
+
+
+/*
+ * bp_media_ajax_delete_album function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_ajax_delete_album(){
+
+	$user_id =  $_GET['user_id'];
+	$post_id =  $_GET['post_id'];
+		
+	// delete the post
+	wp_delete_post( (int) $post_id, true );
+	
+	// return post id
+	$data = array(
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG
+	);
+	
+	
+	wp_send_json( $data );
+
+}
+add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
+add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');

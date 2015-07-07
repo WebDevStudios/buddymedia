@@ -310,6 +310,7 @@ function bp_album_image_count() {
 }
 
 
+
 /**
  * bp_media_album_field function.
  * 
@@ -318,24 +319,47 @@ function bp_album_image_count() {
  * @return void
  */
 function bp_media_album_field( $field = null ) {
-
-	if( ! $field ) return;
+	echo bp_media_get_album_field( $field );
+}
+	/**
+	 * bp_media_get_album_field function.
+	 * 
+	 * @access public
+	 * @param mixed $field (default: null)
+	 * @return void
+	 */
+	function bp_media_get_album_field( $field = null ) {
 	
+		if( ! $field ) return;
+		
+		$action_var = bp_action_variables();
+		
+		$album = get_post( $action_var[0] );
+		
+		switch ( $field ) {
+			case 'title': 
+				return esc_html( $album->post_title );
+			break;
+			case 'description': 
+				return esc_html( $album->post_content );
+			break;
+			
+		}
+		
+		return;	
+	}
+
+
+
+function bp_media_album_id() {
+	echo bp_media_get_album_id();	
+}
+
+function bp_media_get_album_id() {
+
 	$action_var = bp_action_variables();
 	
-	$album = get_post( $action_var[0] );
-	
-	switch ( $field ) {
-		case 'title': 
-			echo $album->post_title;
-		break;
-		case 'description': 
-			echo $album->post_content;
-		break;
-		
-	}
-	
-	return;	
+	return $action_var[0];
 }
 
 
