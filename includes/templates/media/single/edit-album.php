@@ -1,4 +1,4 @@
-<div class="bp-media-create-album">
+<div class="bp-media-admin-album">
 	<label><?php _e( 'Album Title (required)', 'bp_album' ) ;?></label>
 	<input id="album-title" type="text" value="<?php bp_media_album_field('title') ;?>">
 
