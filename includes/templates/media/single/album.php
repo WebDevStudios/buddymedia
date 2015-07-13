@@ -26,6 +26,10 @@ if( $variables[0] === 'photo' ) {
 	
 	<?php endif ; ?>
 	
+	<h3 class="album-title"><?php bp_media_album_field( 'title' ) ;?></h3>
+	
+	<p class="album-description"><?php bp_media_album_field( 'description' ) ;?></p>
+	
 
 	<ul id="media-stream" class="media-list grid-list">
 
@@ -43,7 +47,7 @@ if( $variables[0] === 'photo' ) {
 				
 		?>
 		
-		<a onclick="bp_media_get_image( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" href="#" data-id="<?php echo $attachment->ID; ?>">	
+		<a onclick="bp_media_get_image( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" data-id="<?php echo $attachment->ID; ?>">	
 			<div class="media-thumbnail"><?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?></div>
 		</a>
 		

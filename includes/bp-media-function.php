@@ -31,7 +31,8 @@ function bp_media_is_option( $option ) {
 function bp_media_loop_filter() {
 	
 	$query = array(
-		'post_type' => 'bp_media'
+		'post_type' => 'bp_media',
+		'posts_per_page' => 12
 	);
 	
 	$query = apply_filters( 'bp_media_loop_filter', $query );
@@ -116,12 +117,8 @@ function bp_media_css_id() {
  * @return void
  */
 function bp_media_userlink() {
-	global $post;
-	
-	if( $post->post_author )
-		echo bp_media_get_userlink( $post->post_author );
-	
-	return; 
+		echo bp_media_get_userlink();
+
 }
 
 	/**
@@ -215,13 +212,7 @@ function bp_media_create_album_link_ajax() {
  * @return void
  */
 function bp_media_album_link() {
-	global $post;
-		
-	if( $post->ID )
-		echo bp_get_media_album_link( $post->post_author, $post->ID );
-		
-	return;
-	
+		echo bp_get_media_album_link();	
 }
 
 	/**
@@ -348,6 +339,15 @@ function bp_media_album_field( $field = null ) {
 		
 		return;	
 	}
+	
+	
+function bp_media_album_back_url() {
+
+	$action_var = bp_action_variables();
+	
+	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $action_var[0];
+	
+}
 
 
 

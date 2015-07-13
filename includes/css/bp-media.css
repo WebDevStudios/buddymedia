@@ -163,6 +163,16 @@ ul.commentlist p {
 	display: none;
 }
 
+#delete-album {
+	cursor: pointer;
+}
+
+.error {
+	color: red;
+}
+
+/* pop up window */
+
 #TB_window {
 	overflow: hidden;
 	background:	#000000 !important;

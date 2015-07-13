@@ -1,4 +1,6 @@
 <div class="bp-media-admin-album">
+	<a id="back-album" href="<?php bp_media_album_back_url() ;?>"><?php _e( 'Back to Album', 'bp_media' ) ; ?></a>
+
 	<label><?php _e( 'Album Title (required)', 'bp_media' ) ;?></label>
 	<input id="album-title" type="text" value="<?php bp_media_album_field('title') ;?>">
 
