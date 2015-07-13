@@ -233,6 +233,22 @@ function bp_media_album_link() {
 		
 	}
 	
+	
+/**
+ * bp_media_time_since function.
+ * 
+ * @access public
+ * @param mixed $photo_id
+ * @return void
+ */
+function bp_media_time_since( $photo_id ) {
+
+	$attachment = get_post( $photo_id );
+	$post_date = sprintf( __( '%1$s ago', 'bp_media' ), human_time_diff( strtotime( $attachment->post_date ), current_time('timestamp') ) );
+	
+	return $post_date;
+}
+	
 
 	
 /**
@@ -341,6 +357,12 @@ function bp_media_album_field( $field = null ) {
 	}
 	
 	
+/**
+ * bp_media_album_back_url function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_album_back_url() {
 
 	$action_var = bp_action_variables();
@@ -351,16 +373,29 @@ function bp_media_album_back_url() {
 
 
 
+/**
+ * bp_media_album_id function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_album_id() {
 	echo bp_media_get_album_id();	
 }
 
-function bp_media_get_album_id() {
 
-	$action_var = bp_action_variables();
+	/**
+	 * bp_media_get_album_id function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	function bp_media_get_album_id() {
 	
-	return $action_var[0];
-}
+		$action_var = bp_action_variables();
+		
+		return $action_var[0];
+	}
 
 
 
@@ -377,10 +412,6 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
 
 
 
-
-
-
-
 /**
  * bp_media_comments function.
  * 
@@ -390,7 +421,7 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
  * @param mixed $depth
  * @return void
  */
-function bp_media_comments($comment, $args, $depth) {
+function bp_media_comments( $comment, $args, $depth ) {
 
 	$GLOBALS['comment'] = $comment;
 ?>

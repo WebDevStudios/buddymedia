@@ -7,8 +7,8 @@
 	<div class="comment-column">
 		<div class="upload-author">
 			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $user_id ); ?></div>
-			<div class="upload-author-username"><?php echo $user->user_nicename; ?></div>
-			<?php var_dump($post); ?>
+			<div class="upload-author-username"><?php echo bp_core_get_username( $user_id ) ; ?></div>
+			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
 		</div>
 
 		<ul class="commentlist">
@@ -29,7 +29,12 @@
 		
 		    ?>
 		</ul>
-		<div class="image-reply-form"><input type="text"><button>reply</button></div>
+		<div class="image-reply-form">
+			<input id="upload-comment" type="text">
+			<input id="upload-user-id" type="hidden" value="<?php echo $user_id; ?>">
+			<input id="upload-post-id" type="hidden" value="<?php echo $photo_id; ?>">
+			<button id="upload-comment-reply"><?php _e( 'reply', 'bp_media' ) ;?></button>
+		</div>
 	</div>
 	<div id="cleared"></div>
 </div>

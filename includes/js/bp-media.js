@@ -111,8 +111,6 @@ jQuery(document).ready(function() {
 	
 
 
-
-
 	jQuery('#delete-album').on( 'click', function( event ) {
 	
 		if( confirm('Are you sure you want to delete this album?') ) { 
@@ -130,6 +128,34 @@ jQuery(document).ready(function() {
 			   success: function(data) {
 			   	console.log(data);
 			   	window.location = data.url;
+			   }
+			});
+			
+		}
+		
+	});
+	
+	jQuery('body').on( 'click', 'button#upload-comment-reply', function( event ) {
+	
+		var comment = jQuery('#upload-comment').val();
+		
+		console.log(comment);
+	
+		if( comment !== '' ) { 
+						
+			jQuery.ajax({
+			   url: '/wp-admin/admin-ajax.php',
+			   data: {
+			      'action':'bp_media_ajax_upload_comment',
+			      'user_id': jQuery('#upload-user-id').val(),
+			      'post_id': jQuery('#upload-post-id').val(),
+			      'upload_comment': comment
+			   },
+			   error: function() {
+			     alert('nope');
+			   },
+			   success: function(data) {
+			   	console.log(data);
 			   }
 			});
 			
