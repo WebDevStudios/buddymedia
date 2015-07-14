@@ -10,10 +10,9 @@
 			<div class="upload-author-username"><?php echo bp_core_get_username( $user_id ) ; ?></div>
 			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
 		</div>
-
 		<ul class="commentlist">
 		    <?php    
-		        //Gather comments for a specific page/post 
+		        //Gather comments for a photo 
 		        $comments = get_comments(array(
 		            'post_id' => $photo_id,
 		            'status' => 'approve' //Change this to the type of comments to be displayed
@@ -33,6 +32,7 @@
 			<input id="upload-comment" type="text">
 			<input id="upload-user-id" type="hidden" value="<?php echo $user_id; ?>">
 			<input id="upload-post-id" type="hidden" value="<?php echo $photo_id; ?>">
+			<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "add-comment" ); ?>">
 			<button id="upload-comment-reply"><?php _e( 'reply', 'bp_media' ) ;?></button>
 		</div>
 	</div>

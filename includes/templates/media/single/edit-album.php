@@ -9,6 +9,7 @@
 	
 	<input id="album-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
 	<input id="album-post-id" type="hidden" value="<?php echo bp_media_album_id(); ?>">
+	<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "edit-album" ); ?>">
 	
 	<div id="cleared"></div>
 	<button id="edit-album"><?php _e( 'Save Album', 'bp_media' ) ;?></button>

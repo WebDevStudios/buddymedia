@@ -10,7 +10,7 @@ License: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.ht
 Author: WebDevStudios
 Author URI: https://webdevstudios.com
 Network: True
-Text Domain: buddypress
+Text Domain: bp_media
 */
 
 

@@ -74,7 +74,8 @@ jQuery(document).ready(function() {
 		      'action':'bp_media_ajax_create_album',
 		      'title': jQuery('#album-title').val(),
 		      'description': jQuery('#album-description').val(),
-		      'user_id': jQuery('#album-user-id').val()
+		      'user_id': jQuery('#album-user-id').val(),
+		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
 		     alert('nope');
@@ -96,7 +97,8 @@ jQuery(document).ready(function() {
 		      'title': jQuery('#album-title').val(),
 		      'description': jQuery('#album-description').val(),
 		      'user_id': jQuery('#album-user-id').val(),
-		      'post_id': jQuery('#album-post-id').val()
+		      'post_id': jQuery('#album-post-id').val(),
+		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
 		     alert('nope');
@@ -120,7 +122,8 @@ jQuery(document).ready(function() {
 			   data: {
 			      'action':'bp_media_ajax_delete_album',
 			      'user_id': jQuery('#album-user-id').val(),
-			      'post_id': jQuery('#album-post-id').val()
+			      'post_id': jQuery('#album-post-id').val(),
+			      'nonce': jQuery('#nonce').val()
 			   },
 			   error: function() {
 			     alert('nope');
@@ -149,7 +152,8 @@ jQuery(document).ready(function() {
 			      'action':'bp_media_ajax_add_comment',
 			      'user_id': jQuery('#upload-user-id').val(),
 			      'post_id': jQuery('#upload-post-id').val(),
-			      'upload_comment': comment
+			      'upload_comment': comment,
+			      'nonce': jQuery('#nonce').val()
 			   },
 			   error: function() {
 			     alert('nope');
