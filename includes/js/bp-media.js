@@ -146,7 +146,7 @@ jQuery(document).ready(function() {
 			jQuery.ajax({
 			   url: '/wp-admin/admin-ajax.php',
 			   data: {
-			      'action':'bp_media_ajax_upload_comment',
+			      'action':'bp_media_ajax_add_comment',
 			      'user_id': jQuery('#upload-user-id').val(),
 			      'post_id': jQuery('#upload-post-id').val(),
 			      'upload_comment': comment
@@ -156,6 +156,7 @@ jQuery(document).ready(function() {
 			   },
 			   success: function(data) {
 			   	console.log(data);
+			   	jQuery('ul.commentlist').prepend(data);
 			   }
 			});
 			

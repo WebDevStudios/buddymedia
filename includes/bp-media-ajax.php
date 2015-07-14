@@ -80,7 +80,7 @@ function bp_media_add_album(){
 	die();
 }
 add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
-add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_add_album');
+//add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_add_album');
 
 
 
@@ -121,7 +121,7 @@ function bp_media_ajax_create_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
-add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
+//add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
 
 
 
@@ -160,7 +160,7 @@ function bp_media_ajax_edit_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
-add_action('wp_ajax_nopriv_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
+//add_action('wp_ajax_nopriv_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
 
 
 
@@ -188,4 +188,48 @@ function bp_media_ajax_delete_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
-add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
+//add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
+
+
+function bp_media_ajax_add_comment(){
+
+	
+
+	$user_id =  $_GET['user_id'];
+	$post_id =  $_GET['post_id'];
+	$comment =  $_GET['upload_comment'];
+	
+	if( empty( $comment ) ) return;
+		
+	$time = current_time('mysql');
+	
+	$data = array(
+	    'comment_post_ID' => $post_id,
+	    'comment_author' => '',
+	    'comment_author_email' => '',
+	    'comment_author_url' => '',
+	    'comment_content' => $comment,
+	    'comment_type' => '',
+	    'comment_parent' => 0,
+	    'user_id' => $user_id,
+	    'comment_author_IP' => '',
+	    'comment_agent' => '',
+	    'comment_date' => $time,
+	    'comment_approved' => 1,
+	);
+	
+	$comment_id = wp_insert_comment( $data );
+	$comment = array( get_comment( $comment_id ) );
+	
+    wp_list_comments(array(
+    	'type' => 'comment',
+    	'callback' => 'bp_media_comments',
+        'per_page' => 10, //Allow comment pagination
+        'reverse_top_level' => false
+    ), $comment );
+	
+	die();
+	
+}
+add_action('wp_ajax_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
+//add_action('wp_ajax_nopriv_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');

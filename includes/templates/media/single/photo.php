@@ -18,14 +18,14 @@
 		            'post_id' => $photo_id,
 		            'status' => 'approve' //Change this to the type of comments to be displayed
 		        ));
-		        
+		               	        
 		        //Display the list of comments
 		        wp_list_comments(array(
 		        	'type' => 'comment',
 		        	'callback' => 'bp_media_comments',
 		            'per_page' => 10, //Allow comment pagination
 		            'reverse_top_level' => false //Show the latest comments at the top of the list
-		        ), $comments);
+		        ), $comments );
 		
 		    ?>
 		</ul>

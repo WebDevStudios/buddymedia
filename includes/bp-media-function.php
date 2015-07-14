@@ -421,46 +421,8 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
  * @param mixed $depth
  * @return void
  */
-function bp_media_comments( $comment, $args, $depth ) {
-
-	$GLOBALS['comment'] = $comment;
-?>
+function bp_media_comments( $comment ) {
 	
-	
-	<li id="div-comment-<?php comment_ID() ?>" class="comment-body">
+	bp_media_get_template_part('comments' );
 
-		<div class="comment-author vcard">
-		<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['avatar_size'] ); ?>
-			<div class="comment-author-username"><?php printf( __( '%s' ), get_comment_author_link() ); ?></div>
-			<?php comment_text(); ?>
-		</div>
-		<?php if ( $comment->comment_approved == '0' ) : ?>
-			<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em>
-			<br />
-		<?php endif; ?>
-	
-		
-
-	</li>
-<?php
 }
-
-
-	$time = current_time('mysql');
-	
-	$data = array(
-	    'comment_post_ID' => 49,
-	    'comment_author' => 'admin',
-	    'comment_author_email' => 'admin@admin.com',
-	    'comment_author_url' => 'http://',
-	    'comment_content' => 'content here two',
-	    'comment_type' => '',
-	    'comment_parent' => 0,
-	    'user_id' => 1,
-	    'comment_author_IP' => '127.0.0.1',
-	    'comment_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.10) Gecko/2009042316 Firefox/3.0.10 (.NET CLR 3.5.30729)',
-	    'comment_date' => $time,
-	    'comment_approved' => 1,
-	);
-	
-	//wp_insert_comment($data);
