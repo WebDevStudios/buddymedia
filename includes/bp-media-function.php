@@ -426,3 +426,10 @@ function bp_media_comments( $comment ) {
 	bp_media_get_template_part('comments' );
 
 }
+
+
+function bp_media_can_edit() {
+	
+	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() ) return true;
+	
+}

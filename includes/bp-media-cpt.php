@@ -47,8 +47,9 @@ class BP_Media_CPT {
 		// Hook into the 'init' action
 		add_action( 'init', array( $this, 'bp_media_post_type'), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_bp_media_metaboxes' ) );
-		add_action('admin_menu', array( $this, 'remove_submenus' ) );
-		add_action('admin_head', array( $this, 'hide_add_new_button' ) );
+		add_action(	'admin_menu', array( $this, 'remove_submenus' ) );
+		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
+		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
 		
 	}
 	
@@ -82,7 +83,7 @@ class BP_Media_CPT {
 			'label'               => __( 'media', 'bp-media' ),
 			'description'         => __( 'User Media', 'bp-media' ),
 			'labels'              => $labels,
-			'supports'            => array('title'),
+			'supports'            => array('title', 'buddypress-activity'),
 			'taxonomies'          => array(''),
 			'hierarchical'        => false,
 			'public'              => true,
@@ -97,12 +98,38 @@ class BP_Media_CPT {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
 			'capability_type'     => 'post',
+	        'bp_activity' => array(
+	            'component_id' => buddypress()->activity->id,
+	            'action_id'    => 'new_album',
+	            'contexts'     => array( 'activity', 'member' ),
+	            'position'     => 40,
+	        ),
 		);
 		register_post_type( 'bp_media', $args );
 	
 	}
 	
 	
+	public function customize_media_tracking_args() {
+	    // Check if the Activity component is active before using it.
+	    if ( ! bp_is_active( 'activity' ) ) {
+	        return;
+	    }
+	 
+	    bp_activity_set_post_type_tracking_args( 'bp_media', array(
+	        'component_id'             => buddypress()->media->id,
+	        'action_id'                => 'new_album',
+	        'bp_activity_admin_filter' => __( 'Created a new album', 'bp_media' ),
+	        'bp_activity_front_filter' => __( 'Media', 'bp_media' ),
+	        'contexts'                 => array( 'activity', 'member' ),
+	        'activity_comment'         => true,
+	        'bp_activity_new_post'     => __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ),
+	        'bp_activity_new_post_ms'  => __( '%1$s created a new <a href="%2$s">album</a>, on the site %3$s', 'bp_media' ),
+	        'position'                 => 100,
+	    ) );
+	}
+	
+
 	/**
 	 * add_checkin_metaboxes function.
 	 * 
@@ -245,3 +272,19 @@ class BP_Media_CPT {
 }
 
 BP_Media_CPT::instance();
+
+
+
+
+
+function record_cpt_activity_content( $cpt ) {
+
+	if ( 'new_album' === $cpt['type'] ) {
+	
+		$cpt['content'] = 'what you need';
+	}
+	
+
+	return $cpt;
+}
+add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');

@@ -4,7 +4,7 @@
 
 	<ul id="media-stream" class="media-list grid-list">
 	
-		<?php if( is_user_logged_in() ) : ?>
+		<?php if( bp_media_can_edit() ) : ?>
 			<li class="<?php bp_media_css_class(); ?> create-album" id="media-<?php bp_media_css_id(); ?>">
 			
 				<a href="<?php bp_media_create_album_link() ; ?>">
@@ -20,11 +20,10 @@
 			
 			<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 	
-				<?php bp_media_get_template_part( 'entry' ); ?>
+				<?php bp_media_get_template_part( 'album' ); ?>
 	
 			<?php endwhile; ?>
 			
-	
 		<?php endif; ?>
 	
 	</ul>

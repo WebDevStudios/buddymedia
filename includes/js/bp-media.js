@@ -1,5 +1,5 @@
 function bp_media_get_image(tag, id, guid, user) {
-	tb_show( tag, '/wp-admin/admin-ajax.php?action=bp_media_get_image&id=' + id + '&guid=' + guid + '&user=' + user );
+	tb_show( tag, ajaxurl + '?action=bp_media_get_image&id=' + id + '&guid=' + guid + '&user=' + user );
 	bp_media_iframe_loaded();
 }
 
@@ -69,7 +69,7 @@ jQuery(document).ready(function() {
 	jQuery('#create-album').on( 'click', function( event ) {
 					
 		jQuery.ajax({
-		   url: '/wp-admin/admin-ajax.php',
+		   url: ajaxurl,
 		   data: {
 		      'action':'bp_media_ajax_create_album',
 		      'title': jQuery('#album-title').val(),
@@ -91,7 +91,7 @@ jQuery(document).ready(function() {
 	jQuery('#edit-album').on( 'click', function( event ) {
 					
 		jQuery.ajax({
-		   url: '/wp-admin/admin-ajax.php',
+		   url: ajaxurl,
 		   data: {
 		      'action':'bp_media_ajax_edit_album',
 		      'title': jQuery('#album-title').val(),
@@ -118,7 +118,7 @@ jQuery(document).ready(function() {
 		if( confirm('Are you sure you want to delete this album?') ) { 
 						
 			jQuery.ajax({
-			   url: '/wp-admin/admin-ajax.php',
+			   url: ajaxurl,
 			   data: {
 			      'action':'bp_media_ajax_delete_album',
 			      'user_id': jQuery('#album-user-id').val(),
@@ -147,7 +147,7 @@ jQuery(document).ready(function() {
 		if( comment !== '' ) { 
 						
 			jQuery.ajax({
-			   url: '/wp-admin/admin-ajax.php',
+			   url: ajaxurl,
 			   data: {
 			      'action':'bp_media_ajax_add_comment',
 			      'user_id': jQuery('#upload-user-id').val(),
