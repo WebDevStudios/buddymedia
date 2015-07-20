@@ -450,3 +450,11 @@ function bp_media_can_edit() {
 	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() ) return true;
 	
 }
+
+function bp_media_image_description( $photo_id ) {
+		
+	$meta = get_post_meta( $photo_id, 'description', true ); 
+	
+	return $meta;
+			
+}

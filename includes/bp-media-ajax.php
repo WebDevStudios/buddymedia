@@ -36,8 +36,12 @@ function bp_media_upload_photo() {
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
+	update_post_meta( $attach_id, 'title', $_POST['title'] );
+	update_post_meta( $attach_id, 'description', $_POST['description'] );
+	
 	// output the results to console
 	echo "\n Attachment ID: " . $attach_id;
+	
 	
 	exit;
 }

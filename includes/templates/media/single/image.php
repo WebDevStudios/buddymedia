@@ -9,6 +9,8 @@
 			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $user_id ); ?></div>
 			<div class="upload-author-username"><?php echo bp_core_get_username( $user_id ) ; ?></div>
 			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
+			<div id="cleared"></div>
+			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>	
 		</div>
 		<ul class="commentlist">
 		    <?php    
