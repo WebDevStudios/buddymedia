@@ -151,7 +151,7 @@ function bp_media_ajax_edit_album(){
 	
 	// return post id
 	$data = array(
-		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '/edit'
 	);
 	
 	wp_send_json( $data );
@@ -189,6 +189,29 @@ function bp_media_ajax_delete_album(){
 }
 add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
 //add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
+
+
+function bp_media_ajax_delete_image(){
+
+	check_ajax_referer( 'edit-album', 'nonce' );
+
+	$user_id =  $_GET['user_id'];
+	$image_id =  $_GET['image_id'];
+		
+	// delete the post
+	wp_delete_attachment( (int) $image_id, true );
+	
+	// return post id
+	$data = array(
+		'id' =>  $image_id
+	);
+	
+	
+	wp_send_json( $data );
+
+}
+add_action('wp_ajax_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
+//add_action('wp_ajax_nopriv_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
 
 
 function bp_media_ajax_add_comment(){

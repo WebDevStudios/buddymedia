@@ -8,7 +8,7 @@
 			
 			<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 	
-				<?php bp_media_get_template_part( 'entry' ); ?>
+				<?php bp_media_get_template_part( 'album' ); ?>
 	
 			<?php endwhile; ?>
 			

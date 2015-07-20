@@ -23,6 +23,23 @@ function bp_media_is_option( $option ) {
 
 
 /**
+ * bp_media_is_action_edit function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_is_action_edit() {
+
+	$variables = bp_action_variables();
+	
+	if( 'edit' ===  $variables[1] ) {
+		return true;
+	}
+	
+	return;
+}
+
+/**
  * bp_media_loop_filter function.
  * 
  * @access public

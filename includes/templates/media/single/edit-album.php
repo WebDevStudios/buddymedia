@@ -1,5 +1,7 @@
 <div class="bp-media-admin-album">
 	<a id="back-album" href="<?php bp_media_album_back_url() ;?>"><?php _e( 'Back to Album', 'bp_media' ) ; ?></a>
+	
+	<h3><?php _e( 'Editing ', 'bp_media' ); ; ?><?php bp_media_album_field( 'title' ) ;?></h3>
 
 	<label><?php _e( 'Album Title (required)', 'bp_media' ) ;?></label>
 	<input id="album-title" type="text" value="<?php bp_media_album_field('title') ;?>">
@@ -14,4 +16,8 @@
 	<div id="cleared"></div>
 	<button id="edit-album"><?php _e( 'Save Album', 'bp_media' ) ;?></button>
 	<a id="delete-album" class="error"><?php _e( 'Delete Album', 'bp_media' ) ;?></a>
+	
+	<div id="cleared"></div>
+	<h3><?php _e( 'Edit or Delete Images', 'bp_media' ); ; ?></h3>
+	<?php bp_media_get_template_part('single/image-loop') ; ?>
 </div>
