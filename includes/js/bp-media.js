@@ -167,6 +167,27 @@ jQuery(document).ready(function() {
 		
 	});
 	
+	jQuery('.image-action-edit').on( 'click', function( event ) {
+		
+		jQuery.ajax({
+		   url: ajaxurl,
+		   data: {
+		      'action':'bp_media_ajax_edit_image',
+		      'user_id': jQuery('#image-user-id').val(),
+		      'image_id': jQuery('#image-post-id').val(),
+		      'description': jQuery('#image-description').val(),
+		      'nonce': jQuery('#nonce').val()
+		   },
+		   error: function() {
+		     alert('nope');
+		   },
+		   success: function(data) {
+		   	console.log(data);
+		   }
+		});
+		
+	});
+	
 	
 	
 	jQuery('body').on( 'click', 'button#upload-comment-reply', function( event ) {

@@ -138,7 +138,47 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 10
 		);
+		
+		$sub_nav[] = array(
+			'name'            => ' ',
+			'slug'            => 'album',
+			'parent_url'      => $media_link,
+			'parent_slug'     => $this->slug,
+			'screen_function' => 'bp_media_screen_user_media',
+			'position'        => 40
+		);
+		
+		$sub_nav[] = array(
+			'name'            => ' ',
+			'slug'            => 'image',
+			'parent_url'      => $media_link,
+			'parent_slug'     => $this->slug,
+			'screen_function' => 'bp_media_screen_user_media',
+			'position'        => 40
+		);
 
+		if( is_user_logged_in() ) {
+			$sub_nav[] = array(
+				'name'            => ' ',
+				'slug'            => 'create',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_user_media',
+				'position'        => 50
+			);
+		}
+		
+		if( is_user_logged_in() ) {
+			$sub_nav[] = array(
+				'name'            => ' ',
+				'slug'            => 'edit',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_user_media',
+				'position'        => 50
+			);
+		}
+		
 		/*
 
 		// Additional menu if groups is active
@@ -167,37 +207,6 @@ class BP_Media_Component extends BP_Component {
 		}
 
 		*/
-
-		$sub_nav[] = array(
-			'name'            => ' ',
-			'slug'            => 'album',
-			'parent_url'      => $media_link,
-			'parent_slug'     => $this->slug,
-			'screen_function' => 'bp_media_screen_user_media',
-			'position'        => 40
-		);
-
-		if( is_user_logged_in() ) {
-			$sub_nav[] = array(
-				'name'            => ' ',
-				'slug'            => 'create',
-				'parent_url'      => $media_link,
-				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 50
-			);
-		}
-		
-		if( is_user_logged_in() ) {
-			$sub_nav[] = array(
-				'name'            => ' ',
-				'slug'            => 'edit',
-				'parent_url'      => $media_link,
-				'parent_slug'     => $this->slug,
-				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 50
-			);
-		}
 
 		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
 		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
@@ -249,6 +258,8 @@ class BP_Media_Component extends BP_Component {
 				'title'  => _x( 'Personal', 'My Account Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link )
 			);
+			
+			/*
 
 			// Groups
 			if ( bp_is_active( 'groups' ) ) {
@@ -270,6 +281,8 @@ class BP_Media_Component extends BP_Component {
 				);
 
 			}
+			
+			*/
 
 		}
 

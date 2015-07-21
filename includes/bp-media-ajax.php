@@ -36,7 +36,6 @@ function bp_media_upload_photo() {
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
-	update_post_meta( $attach_id, 'title', $_POST['title'] );
 	update_post_meta( $attach_id, 'description', $_POST['description'] );
 	
 	// output the results to console
@@ -195,6 +194,12 @@ add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
 //add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
 
 
+/**
+ * bp_media_ajax_delete_image function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_ajax_delete_image(){
 
 	check_ajax_referer( 'edit-album', 'nonce' );
@@ -218,6 +223,42 @@ add_action('wp_ajax_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
 //add_action('wp_ajax_nopriv_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
 
 
+/**
+ * bp_media_ajax_edit_image function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_ajax_edit_image(){
+
+	check_ajax_referer( 'edit-album', 'nonce' );
+
+	$user_id =  $_GET['user_id'];
+	$image_id =  $_GET['image_id'];
+	$description =  sanitize_text_field( $_GET['description'] );
+		
+	// delete the post
+	update_post_meta( (int) $image_id, 'description', $description );
+	
+	// return post id
+	$data = array(
+		'id' =>  $image_id
+	);
+	
+	
+	wp_send_json( $data );
+
+}
+add_action('wp_ajax_bp_media_ajax_edit_image', 'bp_media_ajax_edit_image');
+//add_action('wp_ajax_nopriv_bp_media_ajax_edit_image', 'bp_media_ajax_edit_image');
+
+
+/**
+ * bp_media_ajax_add_comment function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_ajax_add_comment(){
 
 	check_ajax_referer( 'add-comment', 'nonce' );

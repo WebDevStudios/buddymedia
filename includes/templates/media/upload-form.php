@@ -1,11 +1,7 @@
 <div id="plupload-upload-ui" class="hide-if-no-js">
-
-	<label><?php _e( 'Image Title (required)', 'bp_media' ) ;?></label>
-	<input id="image-title" type="text">
 	
 	<label><?php _e( 'Description', 'bp_media' ) ;?></label>
 	<textarea id="image-description"></textarea>
-
 
 	<div id="drag-drop-area">
 		<div class="drag-drop-inside">
@@ -80,12 +76,7 @@ jQuery(document).ready(function($){
   uploader.init();
   
 	uploader.bind('BeforeUpload', function(up, file) {
-	
-		//$plupload_init.multipart_params["title"] = $('#image-title').val();
-	 	//$plupload_init.multipart_params["description"] = $('#image-description').val();
-	 	
-
-	    up.settings.multipart_params['title'] = $('#image-title').val();
+		 
 	    up.settings.multipart_params['description'] = $('#image-description').val();
 	    
 		console.log( up.settings.multipart_params );

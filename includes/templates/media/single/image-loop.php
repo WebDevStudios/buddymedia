@@ -16,13 +16,15 @@ if( !$attachments ) {
 				
 		?>
 		
-		<a onclick="bp_media_get_image( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" data-id="<?php echo $attachment->ID; ?>">	
+		<!-- onclick="bp_media_get_image( 'pop', <?php echo $attachment->ID ?>, '<?php echo $attachments[$attachment->ID]->guid ?>', <?php echo $attachments[$attachment->ID]->post_author ?> );" -->
+		
+		<a href="<?php bp_media_image_link($attachment->ID) ; ?>" data-id="<?php echo $attachment->ID; ?>">	
 			<div class="media-thumbnail">
 				<?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?>
 				
 				<?php if( bp_media_is_action_edit() ) : ?>
 					<div class="image-action-links" data-id="<?php echo $attachment->ID; ?>">
-						<a class="image-action-edit"><?php _e( 'edit', 'bp_media' ) ;?></a> 
+						<a href="<?php bp_media_edit_image_link( $attachment->ID ); ?>" class="image-action-edit"><?php _e( 'edit', 'bp_media' ) ;?></a> 
 						<a class="image-action-delete error"><?php _e( 'delete', 'bp_media' ) ;?></a>
 					</div>
 				<?php endif ; ?>

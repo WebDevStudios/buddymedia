@@ -258,7 +258,7 @@ function bp_media_gallery_content() {
 	do_action( 'bp_media_gallery_content' );
 	
 	$action_var = bp_action_variables();
-
+	
 	switch ( bp_current_action() ) {
 		case bp_get_friends_slug(): 
 			 bp_media_get_template_part( 'single/friends');
@@ -277,7 +277,15 @@ function bp_media_gallery_content() {
 					bp_media_get_template_part( 'single/album');
 				}
 		
-			 
+		break;
+		case 'image':
+		
+				if( 'edit' === $action_var[1] ) {
+					bp_media_get_template_part( 'single/edit-image');
+				} else {
+					bp_media_get_template_part( 'single/image');
+				}
+				
 		break;
 		case 'create':
 			 bp_media_get_template_part( 'single/create');

@@ -199,6 +199,23 @@ function bp_media_edit_album_link() {
 		return bp_media_userlink( bp_displayed_user_id() ) . 'edit';
 	}
 	
+
+
+/**
+ * bp_media_edit_image_link function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_edit_image_link( $id = null ) {
+
+	if( !$id ) {
+		$action_var = bp_action_variables();
+		$id = $action_var[0];
+	}
+	echo bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $id . '/edit';
+}
+	
 	
 	
 /**
@@ -334,6 +351,14 @@ function bp_album_image_count() {
 }
 
 
+function bp_get_media_image_id() {
+
+	$action_var = bp_action_variables();
+	$photo_id = $action_var[0];
+	
+	return $photo_id;
+}
+
 
 /**
  * bp_media_album_field function.
@@ -372,6 +397,33 @@ function bp_media_album_field( $field = null ) {
 		
 		return;	
 	}
+
+	
+/**
+ * bp_media_image_description function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_image_description() {
+	echo bp_media_get_image_description();
+}
+
+	/**
+	 * bp_media_get_image_description function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	function bp_media_get_image_description() {
+		
+		$action_var = bp_action_variables();	
+		$meta = get_post_meta( $action_var[0], 'description', true );
+		
+		if( $meta ) return esc_html( $meta );
+		
+		return;	
+	}
 	
 	
 /**
@@ -381,11 +433,34 @@ function bp_media_album_field( $field = null ) {
  * @return void
  */
 function bp_media_album_back_url() {
-
 	$action_var = bp_action_variables();
-	
 	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $action_var[0];
 	
+}
+
+
+/**
+ * bp_media_image_back_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_image_back_url() {
+	$action_var = bp_action_variables();
+	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $action_var[0];
+	
+}
+
+
+/**
+ * bp_media_image_link function.
+ * 
+ * @access public
+ * @param mixed $id
+ * @return void
+ */
+function bp_media_image_link( $id ) {
+	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $id;
 }
 
 
@@ -408,9 +483,7 @@ function bp_media_album_id() {
 	 * @return void
 	 */
 	function bp_media_get_album_id() {
-	
 		$action_var = bp_action_variables();
-		
 		return $action_var[0];
 	}
 
@@ -439,22 +512,17 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
  * @return void
  */
 function bp_media_comments( $comment ) {
-	
 	bp_media_get_template_part('comments' );
 
 }
 
 
+/**
+ * bp_media_can_edit function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_can_edit() {
-	
 	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() ) return true;
-	
-}
-
-function bp_media_image_description( $photo_id ) {
-		
-	$meta = get_post_meta( $photo_id, 'description', true ); 
-	
-	return $meta;
-			
 }
