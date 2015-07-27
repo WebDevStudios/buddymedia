@@ -47,6 +47,95 @@ function bp_media_upload_photo() {
 add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 
 
+
+
+/**
+ * bp_media_photo_activity_attach function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_photo_activity_attach() {
+
+	check_ajax_referer('photo-upload');
+	
+	// upload file
+	$file = $_FILES['async-upload'];
+	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'bp_media_photo_activity_attach' ) );
+	
+	if( ! $album_id = bp_media_get_activity_album_id( $_POST['user_id'] ) ) exit;
+		
+	$wp_upload_dir = wp_upload_dir();
+	
+	//Adds file as attachment to WordPress
+	$attachment = array(
+		'guid'           	=> $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
+		'post_mime_type' 	=> $status['type'],
+		'post_title' 		=> preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
+		'post_content' 		=> '',
+		'post_status' 		=> 'inherit'
+	);
+	$attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $album_id );
+	
+	// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	
+	// Generate the metadata for the attachment, and update the database record.
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
+	wp_update_attachment_metadata( $attach_id, $attach_data );
+	
+	update_post_meta( $attach_id, 'description', $_POST['description'] );
+	
+	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
+	
+	// output the results to console
+	//echo "\n activity Attachment ID: " . $attach_id;
+	wp_send_json( $image[0] );
+	
+	
+	exit;
+}
+add_action('wp_ajax_bp_media_photo_activity_attach', 'bp_media_photo_activity_attach' );
+
+
+
+/**
+ * bp_media_get_activity_album_id function.
+ * 
+ * @access public
+ * @param mixed $user_id
+ * @return void
+ */
+function bp_media_get_activity_album_id( $user_id ) {
+
+	if( ! $user_id ) return;
+
+	$post = get_posts( array(
+	    'meta_key'   => '_activity_album',
+	    'author' => (int) $user_id,
+	    'post_type' => 'bp_media'
+	) );
+	
+	if( $post ) return $post[0]->ID;
+
+	// Create post object
+	$my_post = array(
+	  'post_title'    => __( 'Activity Attachments', 'bp-media' ),
+	  'post_content'  => __( 'Images upload while posting activity.', 'bp-media' ),
+	  'post_status'   => 'publish',
+	  'post_author'   => (int) $user_id,
+	  'post_type' => 'bp_media'
+	);
+	
+	// Insert the post into the database
+	$post = wp_insert_post( $my_post );	
+	
+	add_post_meta( $post, '_activity_album', true, true );
+		
+	return $post;
+}
+
+
 /**
  * bp_media_get_image function.
  * 

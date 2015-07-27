@@ -109,6 +109,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/bp-media-cpt.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-ajax.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-activity.php' );
 			
 		}
 		

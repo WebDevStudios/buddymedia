@@ -66,6 +66,11 @@ jQuery(document).ready(function() {
     	jQuery('#plupload-upload-ui').slideToggle();        
 	});
 	
+	jQuery( "#bp-media-activity-upload-button" ).click(function(e) { 
+		e.preventDefault();    
+    	jQuery('#plupload-upload-ui').slideToggle();        
+	});
+	
 	jQuery('#create-album').on( 'click', function( event ) {
 					
 		jQuery.ajax({

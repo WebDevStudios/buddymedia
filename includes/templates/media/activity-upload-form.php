@@ -1,26 +1,20 @@
 <?php
 
 /**
- * BuddyPress - Media  Upload Form
+ * BuddyPress - Media Activity Upload Form
  *
- * This template has AJAX functions to attach images to albums
+ * This template has AJAX functions to attach images to activity items
  *
  */
 
 ?>
 
 <div id="plupload-upload-ui" class="hide-if-no-js">
-	
-	<label><?php _e( 'Description', 'bp_media' ) ;?></label>
-	<textarea id="image-description"></textarea>
-
 	<div id="drag-drop-area">
 		<div class="drag-drop-inside">
 			<p class="drag-drop-info"><?php _e('Drop files here'); ?></p>
-			<p><?php _e('or', 'Uploader: Drop files here - or - Select Files'); ?></p>
-			<p class="drag-drop-buttons">
-				<input id="plupload-browse-button" type="button" value="<?php esc_attr_e('Select Files'); ?>" class="button" />
-			</p>
+			<p><?php _ex('or', 'Uploader: Drop files here - or - Select Files'); ?></p>
+			<p class="drag-drop-buttons"><input id="plupload-browse-button" type="button" value="<?php esc_attr_e('Select Files'); ?>" class="button" /></p>
 		</div>
 	</div>
 	<div id="percentage"></div>
@@ -48,8 +42,8 @@ $plupload_init = array(
 // additional post data to send to our ajax hook
 'multipart_params'    => array(
   '_ajax_nonce' => wp_create_nonce('photo-upload'),
-  'action'      => 'photo_gallery_upload',            // the ajax action name
-  'gallery_id' => $variables[0],
+  'action'      => 'bp_media_photo_activity_attach',            // the ajax action name
+  'user_id' => bp_loggedin_user_id(),
 ),
 );
 
@@ -61,7 +55,7 @@ $plupload_init = apply_filters('plupload_init', $plupload_init); ?>
 jQuery(document).ready(function($){
 
 	var $plupload_init = <?php echo json_encode($plupload_init); ?>;
-	
+
 	// create the uploader and pass the config from above
 	var uploader = new plupload.Uploader($plupload_init);
 	
@@ -119,11 +113,14 @@ jQuery(document).ready(function($){
 	});
 	
 	// a file was uploaded 
-	uploader.bind('FileUploaded', function(up, file, response) {
+	uploader.bind('FileUploaded', function(up, file, data) {
 	
 	// this is your ajax response, update the DOM with it or something...
-	console.log(response);
-	window.location.reload();
+	console.log(data.response);
+	
+	$('#percentage').html('<img src="' + JSON.parse(data.response) + '">');
+	
+	//window.location.reload();
 	
 	});
 
