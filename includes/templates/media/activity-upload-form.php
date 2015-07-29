@@ -112,13 +112,23 @@ jQuery(document).ready(function($){
 	    $('#percentage progress').val(file.percent);
 	});
 	
+	var added_data = Array();
+	
 	// a file was uploaded 
 	uploader.bind('FileUploaded', function(up, file, data) {
 	
 	// this is your ajax response, update the DOM with it or something...
 	console.log(data.response);
 	
-	$('#percentage').html('<img src="' + JSON.parse(data.response) + '">');
+	$('#percentage').html('');
+	
+	$('#plupload-upload-ui').append('<img src="' + JSON.parse(data.response) + '">');
+	
+	added_data.push( JSON.parse(data.response) );
+	
+	$('#bp-media-images').val( added_data );
+	
+	console.log( added_data );
 	
 	//window.location.reload();
 	

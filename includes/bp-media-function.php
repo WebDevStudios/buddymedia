@@ -526,3 +526,37 @@ function bp_media_comments( $comment ) {
 function bp_media_can_edit() {
 	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() ) return true;
 }
+
+
+
+/**
+ * bp_media_add_images_to_activity function.
+ * 
+ * @access public
+ * @param mixed $args
+ * @return void
+ */
+function bp_media_add_images_to_activity( $args  ) {
+	
+	if ( isset( $_POST ) && !empty( $_POST['images'] ) ) {
+		
+		$images = html_entity_decode($_POST['images'] );
+		$images = explode(',', $images);
+		$imageHTML = [];
+		
+		foreach( $images as $image) {
+		
+			$imageHTML[] = '<img src="' . $image . '">';
+			
+		}
+		
+		$bp_media_content =  '<span class="bp-media-activity-content">' . implode( ',', $imageHTML ) . '</span>';
+	
+		$args['content'] = $args['content'] . str_replace( ',', '', $bp_media_content );
+		
+	}
+	
+	return $args;
+
+}
+add_filter( 'bp_before_activity_add_parse_args', 'bp_media_add_images_to_activity' );

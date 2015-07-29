@@ -243,3 +243,13 @@ ul.commentlist p {
 #plupload-upload-ui {
 	display: none;
 }
+
+.bp-media-activity-content {
+	display: block;
+	clear: both;
+}
+
+.bp-media-activity-content img {
+	width: 75px;
+	height: 75px;
+}

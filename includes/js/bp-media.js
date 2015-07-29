@@ -229,4 +229,40 @@ jQuery(document).ready(function() {
 		jQuery('#plupload-upload-ui').slideToggle(); 
 	}
 	
+	
+	
+	var extraParam = function(e, data) { 
+	
+		var action = get_var_in_query( 'action', data.data ) ;
+		
+		if( 'post_update' === action ) {
+	
+			var images = [
+				jQuery('#bp-media-images').val(),
+			];
+			 
+		    data.data += '&images=' + encodeURIComponent( images );
+	    
+	    }
+	    return true;
+	};
+	jQuery.ajaxSetup( {beforeSend: extraParam} );
+    
+    
+    
+	function get_var_in_query( item,  str ){
+	   var items;
+	   if( !str )
+	       return false;
+	   var data_fields = str.split('&');
+	   for( var i=0; i< data_fields.length; i++ ){
+	       
+	       items = data_fields[i].split('=');
+	       if( items[0] == item )
+	           return items[1];
+		}
+	       
+	       return false;
+	}
+	
 });
