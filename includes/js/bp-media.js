@@ -1,3 +1,4 @@
+// pop image into thickbox
 function bp_media_get_image(tag, id, guid, user) {
 	tb_show( tag, ajaxurl + '?action=bp_media_get_image&id=' + id + '&guid=' + guid + '&user=' + user );
 	bp_media_iframe_loaded();
@@ -53,6 +54,9 @@ function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 }
 
+
+
+// ajax functions
 jQuery(document).ready(function() {
 	/**
 	 * window.resize event to resize modal.
@@ -72,6 +76,11 @@ jQuery(document).ready(function() {
 	});
 	
 	jQuery('#create-album').on( 'click', function( event ) {
+	
+		if( jQuery.trim( jQuery("#album-title").val() ) === '' ) {
+			alert('Title required');
+			return false;
+		}
 					
 		jQuery.ajax({
 		   url: ajaxurl,
@@ -83,7 +92,7 @@ jQuery(document).ready(function() {
 		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
-		     alert('nope');
+		     alert('Error creating album');
 		   },
 		   success: function(data) {
 		   	console.log(data);
@@ -164,7 +173,14 @@ jQuery(document).ready(function() {
 			   },
 			   success: function(data) {
 			   	console.log(data);
-			   	jQuery(that).parent().parent().slideUp(300);
+			   	
+			   	if( jQuery(that).parent().hasClass('submit') ) {
+				   	if(data.url) window.location = data.url;
+			   	} else {
+				   	jQuery(that).parent().parent().slideUp(300);
+			   	}
+			   	
+			   
 			   }
 			});
 			

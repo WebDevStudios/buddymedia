@@ -97,7 +97,7 @@ jQuery(document).ready(function($){
 		    // file size error?
 		
 		  }else{
-		
+		  	
 		    // a file was added, you may want to update your DOM here...
 		    console.log(file);
 		  }
@@ -117,20 +117,18 @@ jQuery(document).ready(function($){
 	// a file was uploaded 
 	uploader.bind('FileUploaded', function(up, file, data) {
 	
-	// this is your ajax response, update the DOM with it or something...
-	console.log(data.response);
-	
-	$('#percentage').html('');
-	
-	$('#plupload-upload-ui').append('<img src="' + JSON.parse(data.response) + '">');
-	
-	added_data.push( JSON.parse(data.response) );
-	
-	$('#bp-media-images').val( added_data );
-	
-	console.log( added_data );
-	
-	//window.location.reload();
+		// this is your ajax response, update the DOM with it or something...
+		console.log(data.response);
+		
+		$('#percentage').html('');
+		
+		$('#plupload-upload-ui').append('<img class="media-activity-tmp" src="' + JSON.parse(data.response) + '">');
+		
+		added_data.push( JSON.parse(data.response) );
+		
+		$('#bp-media-images').val( added_data );
+		
+		console.log( added_data );
 	
 	});
 

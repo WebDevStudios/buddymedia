@@ -15,8 +15,9 @@ html, body {
 	box-sizing: inherit;
 }
 
-.center {
+#buddypress .center {
 	text-align: center;
+	padding: 10px 0;
 }
   
 #TB_ajaxWindowTitle {
@@ -242,6 +243,7 @@ ul.commentlist p {
 
 #plupload-upload-ui {
 	display: none;
+	margin: 0 0 10px 0;
 }
 
 .bp-media-activity-content {
@@ -252,4 +254,39 @@ ul.commentlist p {
 .bp-media-activity-content img {
 	width: 75px;
 	height: 75px;
+}
+
+#buddypress .media-image {
+	margin: 10px 0;
+}
+
+#buddypress #delete-album.error,
+#buddypress .image-action-delete.error {
+	font-size: 14px;
+	float: right;
+	text-decoration: none;
+}
+
+body.media #buddypress a {
+	border: none;
+	cursor: pointer;
+}
+
+#buddypress .image-action-links {
+	font-size: 14px;
+}
+
+#buddypress #percentage {
+	height: 15px;
+	width: 100%;
+	margin: 0 0 10px 0;
+}
+
+#buddypress #percentage progress {
+	height: 15px;
+	width: 100%;
+}
+
+#buddypress .media-activity-tmp {
+	margin: 5px;
 }

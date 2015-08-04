@@ -351,12 +351,41 @@ function bp_album_image_count() {
 }
 
 
+/**
+ * bp_get_media_image_id function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_get_media_image_id() {
 
 	$action_var = bp_action_variables();
 	$photo_id = $action_var[0];
 	
+	if ( FALSE === get_post_status( $photo_id ) ) {
+	  $photo_id = FALSE;
+	} 
+	
 	return $photo_id;
+}
+
+
+/**
+ * bp_get_media_album_id function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_get_media_album_id() {
+
+	$action_var = bp_action_variables();
+	$album_id = $action_var[0];
+	
+	if ( FALSE === get_post_status( $album_id ) ) {
+	  $album_id = FALSE;
+	} 
+		
+	return $album_id;
 }
 
 
