@@ -39,6 +39,7 @@ function bp_media_is_action_edit() {
 	return;
 }
 
+
 /**
  * bp_media_loop_filter function.
  * 
@@ -49,7 +50,8 @@ function bp_media_loop_filter() {
 	
 	$query = array(
 		'post_type' => 'bp_media',
-		'posts_per_page' => 12
+		'posts_per_page' => 12,
+		'orderby' => 'modified'
 	);
 	
 	$query = apply_filters( 'bp_media_loop_filter', $query );

@@ -1,7 +1,3 @@
-#buddypress ul#media-stream.grid-list a,  #buddypress ul#media-stream.grid-list u {
-    text-decoration: none;
-}
-
 html, body {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -23,6 +19,11 @@ html, body {
 #TB_ajaxWindowTitle {
 	display: none;
 }
+
+#buddypress ul#media-stream.grid-list a,  #buddypress ul#media-stream.grid-list u {
+    text-decoration: none;
+    position: relative;
+}
  
 #buddypress ul#media-stream.grid-list {
 	border-top: 1px solid #eaeaea;
@@ -37,18 +38,29 @@ html, body {
 
 #buddypress ul#media-stream.grid-list li {
 	border: 1px solid #eaeaea;
-	width: 30%;
 	float: left;
 	margin: 10px 10px 10px 5px;
 	padding: 0;
-	height: 225px;
 	overflow: hidden;
+	width: 150px;
+	height: 150px;
+	position: relative;
 }
 
 #buddypress ul#media-stream.grid-list li img {
 	border-radius: 0;
 	box-shadow: none;
+	float: left;
+	
+
+}
+
+#buddypress ul#media-stream.grid-list .album-info {
+	position: absolute;
+	left: 0;
+	bottom: 0;
 	width: 100%;
+	background: rgba( 0, 0, 0, 0.5 );
 }
 
 #buddypress ul#media-stream.grid-list .album-title {
@@ -60,6 +72,8 @@ html, body {
 	padding: 0 5px 0 5px;
 	font-size: 12px;
 }
+
+
 
 #buddypress ul#media-stream.grid-list .create-album {
 	line-height: 225px;
@@ -289,4 +303,8 @@ body.media #buddypress a {
 
 #buddypress .media-activity-tmp {
 	margin: 5px;
+}
+
+#buddypress #image-description {
+	margin: 0 0 10px 0; 
 }
