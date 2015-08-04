@@ -87,7 +87,7 @@ jQuery(document).ready(function() {
 		   },
 		   success: function(data) {
 		   	console.log(data);
-		   	window.location = data.url;
+		   	if(data.url) window.location = data.url;
 		   }
 		});
 		
@@ -110,7 +110,7 @@ jQuery(document).ready(function() {
 		   },
 		   success: function(data) {
 		   	console.log(data);
-		   	window.location = data.url;
+		   	if(data.url) window.location = data.url;
 		   }
 		});
 		
@@ -135,7 +135,7 @@ jQuery(document).ready(function() {
 			   },
 			   success: function(data) {
 			   	console.log(data);
-			   	window.location = data.url;
+			   	if(data.url) window.location = data.url;
 			   }
 			});
 			
@@ -188,6 +188,7 @@ jQuery(document).ready(function() {
 		   },
 		   success: function(data) {
 		   	console.log(data);
+		   	if(data.url) window.location = data.url;
 		   }
 		});
 		

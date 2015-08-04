@@ -14,7 +14,7 @@
 	<label><?php _e( 'Description', 'bp_media' ) ;?></label>
 	<textarea id="image-description"><?php bp_media_image_description(); ?></textarea>
 	
-	<input id="image-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
+	<input id="image-user-id" type="hidden" value="<?php echo bp_displayed_user_id(); ?>">
 	<input id="image-post-id" type="hidden" value="<?php echo bp_get_media_image_id(); ?>">
 	<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "edit-album" ); ?>">
 	

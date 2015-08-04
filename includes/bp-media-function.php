@@ -418,7 +418,7 @@ function bp_media_image_description() {
 	function bp_media_get_image_description() {
 		
 		$action_var = bp_action_variables();	
-		$meta = get_post_meta( $action_var[0], 'bp_media', true );
+		$meta = get_post_meta( $action_var[0], 'description', true );
 		
 		if( $meta ) return esc_html( $meta );
 		
@@ -524,7 +524,7 @@ function bp_media_comments( $comment ) {
  * @return void
  */
 function bp_media_can_edit() {
-	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() ) return true;
+	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() || is_super_admin() || is_admin() ) return true;
 }
 
 
@@ -560,3 +560,63 @@ function bp_media_add_images_to_activity( $args  ) {
 
 }
 add_filter( 'bp_before_activity_add_parse_args', 'bp_media_add_images_to_activity' );
+
+
+
+
+
+/**
+ * bp_media_delete_attachments_before_delete_post function.
+ *
+ * this is album clean up, deletes attachents/images when album is deleted
+ * 
+ * @access public
+ * @param mixed $id
+ * @return void
+ */
+function bp_media_delete_attachments_before_delete_post( $id ){
+	global $post;
+	
+	if( 'bp_media' !== $post->post_type ) return;
+	
+	$subposts = get_children(array( 
+	    'post_parent' => $id,
+	    'post_type'   => 'any', 
+	    'numberposts' => -1,
+	    'post_status' => 'any'
+	));
+	
+	if ( is_array( $subposts ) && count( $subposts ) > 0 ){
+		$uploadpath = wp_upload_dir();
+	 	
+		foreach( $subposts as $subpost ){
+			
+			$_wp_attached_file = get_post_meta( $subpost->ID, '_wp_attached_file', true );
+			
+			$original = basename( $_wp_attached_file );
+			$pos = strpos( strrev( $original ), '.' );
+			if (strpos( $original, '.' ) !== false ){
+				$ext = explode( '.', strrev( $original ) );
+				$ext = strrev( $ext[0] );
+			} else {
+				$ext = explode( '-', strrev( $original ) );
+				$ext = strrev( $ext[0] );
+			}
+			
+			$pattern = $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'-[0-9]*x[0-9]*.'.$ext;
+			$original= $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'.'.$ext;
+			if ( getimagesize( $original ) ){
+				$thumbs = glob( $pattern );
+				if ( is_array( $thumbs ) && count( $thumbs ) > 0 ){
+					foreach( $thumbs as $thumb )
+						unlink( $thumb );
+				}
+			}
+			wp_delete_attachment( $subpost->ID, true );
+		}
+	}
+}
+// till wp 3.1
+add_action( 'delete_post', 'bp_media_delete_attachments_before_delete_post' );
+// from wp 3.2
+add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_post' );

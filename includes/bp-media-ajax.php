@@ -306,7 +306,6 @@ function bp_media_ajax_delete_image(){
 		'id' =>  $image_id
 	);
 	
-	
 	wp_send_json( $data );
 
 }
@@ -336,6 +335,10 @@ function bp_media_ajax_edit_image(){
 		'id' =>  $image_id
 	);
 	
+	$data = array(
+		'id' =>  $image_id,
+		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $image_id
+	);
 	
 	wp_send_json( $data );
 

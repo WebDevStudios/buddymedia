@@ -48,6 +48,7 @@ class BP_Media_CPT {
 		add_action( 'init', array( $this, 'bp_media_post_type'), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_bp_media_metaboxes' ) );
 		add_action(	'admin_menu', array( $this, 'remove_submenus' ) );
+		add_action(	'admin_init', array( $this, 'add_columns' ) );
 		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
 		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
 		
@@ -106,10 +107,45 @@ class BP_Media_CPT {
 	        ),
 		);
 		register_post_type( 'bp_media', $args );
-	
+		
 	}
 	
 	
+	/**
+	 * add_columns function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function add_columns() {
+		add_filter( 'manage_edit-bp_media_columns', array( $this, 'add_new_gallery_columns' ) );
+	}
+	
+	
+	/**
+	 * add_new_gallery_columns function.
+	 * 
+	 * @access public
+	 * @param mixed $gallery_columns
+	 * @return void
+	 */
+	public function add_new_gallery_columns( $gallery_columns ) {
+		
+	    $new_columns['cb'] = '<input type="checkbox" />';
+	    $new_columns['title'] = _x('Album Name', 'bp-media');
+	    $new_columns['author'] = __('Author');
+	    $new_columns['date'] = _x('Date', 'bp-media');
+	 
+	    return $new_columns;
+	}
+	
+	
+	/**
+	 * customize_media_tracking_args function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function customize_media_tracking_args() {
 	    // Check if the Activity component is active before using it.
 	    if ( ! bp_is_active( 'activity' ) ) {
@@ -152,68 +188,60 @@ class BP_Media_CPT {
 	
 		if( ! $post ) return;
 		
-		/* wp_update_post( array(
-		        'ID' => 39,
-		        'post_parent' => $post->ID
-		    )
-		); */
-		
 		$attachments = get_attached_media( 'image', $post->ID );
+		
+		?>	
+			<style>
+				.user-media li {
+					overflow: hidden;
+					border-bottom: 1px solid #efefef;
+					border-top: 0px !important;
+					padding: 10px 0 !important;
+					margin: 0 !important;
+				}
+				.media-thumbnail {
+					width: 75px;
+					height: 75px;
+					float: left;
+					padding: 0 10px;
+				}
+				.media-thumbnail img {
+					width: 75px;
+					height: 75px;
+				}
+				.media-info {
+					float: left;
+					position: relative;
+					height: 75px;
+					width: 60%;
+				}
+				.media-info div {
+					padding: 5px 0;
+				}
+				.media-author {
+					position: absolute;
+					bottom: 0;
+				}
+				.image-action-delete {
+					cursor: pointer;
+				}
+			</style> 
+			<?php
 		
 		echo '<ul class="user-media">';
 		
 			foreach( $attachments as $attachment ) {
 			
 				$user = get_user_by( 'id', (int) $attachments[$attachment->ID]->post_author );
-				
-				 //wp_update_attachment_metadata( $attachment->ID, array( 'bp_media' => true ) ); 
-				 
-				 //$meta = wp_get_attachment_metadata( $attachment->ID ); 
-				
-				//echo '<pre>';
-				//var_dump($meta);
-				//echo '</pre>';
-				
-				/*
-				  $media = get_children(array(
-				        'post_parent' => $attachments[$attachment->ID]->post_parent,
-				        'post_type' => 'attachment'
-				    ));
-				
-				    if (empty($media)) return;
-				
-				    foreach ($media as $file) {
-				        wp_delete_attachment($file->ID);
-				    } */
-				
-				
+								
 				?>
 				
-				<style>
-					.user-media li {
-						overflow: hidden;
-					}
-					.media-thumbnail {
-						float: left;
-					}
-					.media-info {
-						float: left;
-						padding: 0 10px;
-						position: relative;
-						height: 150px;
-						width: 60%;
-					}
-					.media-info div {
-						padding: 5px 0;
-					}
-					.media-author {
-						position: absolute;
-						bottom: 0;
-					}
-				</style>
-				
 				<li>
-					<div class="media-thumbnail"><?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?></div>
+					<div class="media-thumbnail">
+						<a href="<?php echo bp_core_get_userlink( $user->ID, false, true )  . BP_MEDIA_SLUG . '/image/' . $attachment->ID; ?>">
+							<?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?>
+						</a>
+					</div>
 					
 					<div class="media-info">						
 						<div class="media-description">
@@ -223,10 +251,19 @@ class BP_Media_CPT {
 						
 						<div class="media-author">
 							<?php _e( 'Uploaded By: ', 'bp_media' ); ?>
-							<?php echo $user->user_login; ?>
+							<a href="<?php echo bp_core_get_userlink( $user->ID, false, true ); ?>"><?php echo $user->user_login; ?></a>
 						</div>
 					</div>
-				<li>
+					
+					<?php if( bp_media_can_edit() ) : ?>
+						<div class="image-action-links" data-id="<?php echo $attachment->ID; ?>">
+							<a class="image-action-delete error"><?php _e( 'delete', 'bp_media' ) ;?></a>
+							<input id="image-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
+							<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "edit-album" ); ?>">
+						</div>
+					<?php endif ; ?>
+				
+				</li>
 				
 				<?php
 				
@@ -261,7 +298,7 @@ class BP_Media_CPT {
 		  echo '<style type="text/css">
 		    	#favorite-actions {display:none;}
 				.add-new-h2{display:none;}
-				.tablenav{display:none;}
+				
 		    </style>';
 		 }
 	}
@@ -287,4 +324,4 @@ function record_cpt_activity_content( $cpt ) {
 
 	return $cpt;
 }
-add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');
+//add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');
