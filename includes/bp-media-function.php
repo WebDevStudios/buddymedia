@@ -418,7 +418,7 @@ function bp_media_image_description() {
 	function bp_media_get_image_description() {
 		
 		$action_var = bp_action_variables();	
-		$meta = get_post_meta( $action_var[0], 'description', true );
+		$meta = get_post_meta( $action_var[0], 'bp_media', true );
 		
 		if( $meta ) return esc_html( $meta );
 		

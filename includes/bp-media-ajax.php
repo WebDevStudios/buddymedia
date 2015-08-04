@@ -37,6 +37,7 @@ function bp_media_upload_photo() {
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
 	update_post_meta( $attach_id, 'description', $_POST['description'] );
+	update_post_meta( $attach_id, 'bp_media', '1' );
 	
 	// output the results to console
 	echo "\n Attachment ID: " . $attach_id;
@@ -85,6 +86,7 @@ function bp_media_photo_activity_attach() {
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
 	update_post_meta( $attach_id, 'description', $_POST['description'] );
+	update_post_meta( $attach_id, 'bp_media', '1' );
 	
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
 	
