@@ -627,13 +627,31 @@ function bp_media_display_attachment_image() {
 	
 	if( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
 	
-		$attachment_src = wp_get_attachment_image_src( $attachment_id, 'medium');
-		$attachment_url = bp_core_get_user_domain( bp_get_activity_user_id() ) . BP_MEDIA_SLUG . '/image/' . $attachment_id;
-	
-		echo '<div class="bp-media-activity-attachment">';
-			echo '<a href="'. $attachment_url .'"><img src="'. $attachment_src[0] .'"></a>';
-		echo '</div>';
+		/**
+		 * filter activity attachment media size.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string media size
+		*/
+		$attachment_size = apply_filters( 'bp_media_display_attachment_size', 'medium' );
 		
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, $attachment_size );	
+		$attachment_url = bp_core_get_user_domain( bp_get_activity_user_id() ) . BP_MEDIA_SLUG . '/image/' . $attachment_id;
+		
+		/**
+		 * filter activity attachment markup and parameters.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $attachment_url link to attachment %1$s.
+		 * @param string $attachment_src src of attachment %2$s.
+		*/
+		$attachment_html_string = apply_filters( 'bp_media_attachment_html', '<div class="bp-media-activity-attachment"><a href="%1$s"><img src="%2$s"></a></div>', $attachment_url, $attachment_src[0] );
+		
+		$attachment = sprintf( $attachment_html_string, $attachment_url, $attachment_src[0] );
+		
+		echo $attachment;
 	}
 	
 }

@@ -188,6 +188,35 @@ jQuery(document).ready(function() {
 		
 	});
 	
+	jQuery('body').on( 'click', '.remove-attachment', function( event ) {
+	
+		var id = jQuery( '#bp-media-attachment-id' ).val();		
+		var that = this;
+	
+		if( confirm('Are you sure you want to remove this image?') ) { 
+						
+			jQuery.ajax({
+			   url: ajaxurl,
+			   data: {
+			      'action':'bp_media_ajax_delete_image',
+			      'user_id': jQuery('#bp-media-user-id').val(),
+			      'image_id': id,
+			      'nonce': jQuery('#nonce').val()
+			   },
+			   error: function() {
+			     alert('nope');
+			   },
+			   success: function(data) {
+			   	console.log(data);
+				jQuery(that).parent().slideUp(300);
+				jQuery( '#bp-media-attachment-id' ).val('');
+			   }
+			});
+			
+		}
+		
+	});
+	
 	jQuery('.image-action-edit').on( 'click', function( event ) {
 		
 		jQuery.ajax({
@@ -264,6 +293,17 @@ jQuery(document).ready(function() {
 	    return true;
 	};
 	jQuery.ajaxSetup( {beforeSend: extraParam} );
+	
+	
+	jQuery(document).ajaxComplete( function( event, xhr, data ) {
+
+		var action = get_var_in_query( 'action', data.data ) ;
+		
+		if( 'post_update' === action ) {
+			jQuery( '.media-activity' ).slideUp(300);
+			jQuery( '#bp-media-attachment-id' ).val('');
+		}
+	});
     
     
     

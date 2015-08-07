@@ -12,6 +12,7 @@
 
 
 <div id="percentage"></div>
+<div id="attachment-holder"></div>
 
 <?php
 
@@ -119,7 +120,7 @@ jQuery(document).ready(function($){
 		
 		$('#percentage').html('');
 		
-		$('#plupload-upload-ui').append('<div class="media-activity"><span class="remove-attachment" data-id="' + imageData.id + '">X</span><img class="media-activity-tmp" src="' + imageData.url + '"></div>');
+		$('#attachment-holder').append('<div class="media-activity"><span class="remove-attachment" data-id="' + imageData.id + '">X</span><img class="media-activity-tmp" src="' + imageData.url + '"></div>');
 			
 		$('#bp-media-attachment-id').val( imageData.id );
 		
