@@ -9,21 +9,24 @@ function bp_media_get_image(tag, id, guid, user) {
  * Add ‘bp_media’ class to the Thickbox window. Called from inside the TB iframe.
  */
 function bp_media_iframe_loaded() {
-	jQuery('#TB_window').addClass('bp_media');
-	setTimeout(function() {
-		bp_media_resize_thickbox();
-	}, 500);
-	 
+	if( jQuery('#TB_window') ) {
+		jQuery('#TB_window').addClass('bp_media');
+		setTimeout(function() {
+			//bp_media_resize_thickbox();
+		}, 500);
+	}	 
 }
 
 /**
  * Checks how to resize the TB window. Called on window.resize.
  */	
 function bp_media_window_resize() {
-	if( jQuery('#TB_window').hasClass('bp_media') ) {
-		bp_media_resize_thickbox();
-	} else {
-		tb_position();
+	if( jQuery('#TB_window') ) {
+		if( jQuery('#TB_window').hasClass('bp_media') ) {
+			//bp_media_resize_thickbox();
+		} else {
+			//tb_position();
+		}
 	}
 }
 
@@ -284,7 +287,7 @@ jQuery(document).ready(function() {
 		if( 'post_update' === action ) {
 		
 			var id = jQuery('#bp-media-attachment-id').val();
-			
+
 			if(id) {
 				data.data += '&attachment_id=' + encodeURIComponent( id );
 			}

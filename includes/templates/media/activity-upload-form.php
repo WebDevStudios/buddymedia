@@ -73,11 +73,11 @@ jQuery(document).ready(function($){
 		}
 	});
 
-  uploader.init();
+	uploader.init();
   
 	uploader.bind('BeforeUpload', function(up, file) {
 		 
-	    up.settings.multipart_params['description'] = $('#image-description').val();
+	   	//up.settings.multipart_params['description'] = $('#whats-new').val();
 	    
 		console.log( up.settings.multipart_params );
 	});

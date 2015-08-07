@@ -88,7 +88,6 @@ function bp_media_photo_activity_attach() {
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
-	update_post_meta( $attach_id, 'description', $_POST['description'] );
 	update_post_meta( $attach_id, 'bp_media', '1' );
 	
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
@@ -302,13 +301,20 @@ function bp_media_ajax_delete_image(){
 
 	$user_id =  $_GET['user_id'];
 	$image_id =  $_GET['image_id'];
+	
+	$parent = get_post_field( 'post_parent', $image_id);
+	
+	if( $activity_id = get_post_meta( $image_id, 'activity_id', true ) ) {
+		bp_activity_delete( array( 'id' => $activity_id ) );
+	}
 		
 	// delete the post
 	wp_delete_attachment( (int) $image_id, true );
 	
 	// return post id
 	$data = array(
-		'id' =>  $image_id
+		'id' =>  $image_id,
+		'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $parent
 	);
 	
 	wp_send_json( $data );

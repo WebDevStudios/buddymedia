@@ -561,46 +561,6 @@ function bp_media_can_edit() {
 
 
 /**
- * bp_media_add_images_to_activity function.
- * 
- * @access public
- * @param mixed $args
- * @return void
- */
-function bp_media_add_images_to_activity( $args  ) {
-
-	//var_dump( $_POST );
-	
-	if ( isset( $_POST ) && !empty( $_POST['images'] ) ) {
-		
-		$images = html_entity_decode($_POST['images'] );
-		$images = explode(',', $images);
-		
-		if( !$images ) return $args;
-		
-		$imageHTML = [];
-		
-		foreach( $images as $image) {
-		
-			$imageHTML[] = '<img src="' . $image . '">';
-			
-		}
-		
-		$bp_media_content =  '<span class="bp-media-activity-content">' . implode( ',', $imageHTML ) . '</span>';
-	
-		$args['content'] = $args['content'] . str_replace( ',', '', $bp_media_content );
-		$args['image-attachment'] = $imageHTML;
-		
-	}
-	
-	return $args;
-
-}
-//add_filter( 'bp_before_activity_add_parse_args', 'bp_media_add_images_to_activity' );
-
-
-
-/**
  * bp_media_add_activity_meta function.
  * 
  * @access public
@@ -611,6 +571,8 @@ function bp_media_add_activity_meta( $activity ) {
 
 	 if ( ! empty( $_POST['attachment_id'] ) ) {
           bp_activity_update_meta( $activity->id, 'bp_media_attachment_id', $_POST['attachment_id'] );
+          update_post_meta( $_POST['attachment_id'], 'description', $_POST['content'] );
+          update_post_meta( $_POST['attachment_id'], 'activity_id', $activity->id );
      }	
 }
 add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
