@@ -568,11 +568,16 @@ function bp_media_can_edit() {
  * @return void
  */
 function bp_media_add_images_to_activity( $args  ) {
+
+	//var_dump( $_POST );
 	
 	if ( isset( $_POST ) && !empty( $_POST['images'] ) ) {
 		
 		$images = html_entity_decode($_POST['images'] );
 		$images = explode(',', $images);
+		
+		if( !$images ) return $args;
+		
 		$imageHTML = [];
 		
 		foreach( $images as $image) {
@@ -584,16 +589,55 @@ function bp_media_add_images_to_activity( $args  ) {
 		$bp_media_content =  '<span class="bp-media-activity-content">' . implode( ',', $imageHTML ) . '</span>';
 	
 		$args['content'] = $args['content'] . str_replace( ',', '', $bp_media_content );
+		$args['image-attachment'] = $imageHTML;
 		
 	}
 	
 	return $args;
 
 }
-add_filter( 'bp_before_activity_add_parse_args', 'bp_media_add_images_to_activity' );
+//add_filter( 'bp_before_activity_add_parse_args', 'bp_media_add_images_to_activity' );
 
 
 
+/**
+ * bp_media_add_activity_meta function.
+ * 
+ * @access public
+ * @param mixed $activity
+ * @return void
+ */
+function bp_media_add_activity_meta( $activity ) {
+
+	 if ( ! empty( $_POST['attachment_id'] ) ) {
+          bp_activity_update_meta( $activity->id, 'bp_media_attachment_id', $_POST['attachment_id'] );
+     }	
+}
+add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
+
+
+
+/**
+ * bp_media_display_attachment_image function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_display_attachment_image() {
+	
+	if( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
+	
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, 'medium');
+		$attachment_url = bp_core_get_user_domain( bp_get_activity_user_id() ) . BP_MEDIA_SLUG . '/image/' . $attachment_id;
+	
+		echo '<div class="bp-media-activity-attachment">';
+			echo '<a href="'. $attachment_url .'"><img src="'. $attachment_src[0] .'"></a>';
+		echo '</div>';
+		
+	}
+	
+}
+add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
 
 
 /**
@@ -651,3 +695,26 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 add_action( 'delete_post', 'bp_media_delete_attachments_before_delete_post' );
 // from wp 3.2
 add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_post' );
+
+
+
+/**
+ * bp_media_filter_album_attachments function.
+ * 
+ * @access public
+ * @param mixed $args
+ * @param mixed $type
+ * @param mixed $post
+ * @return void
+ */
+function bp_media_filter_album_attachments( $args, $type, $post ) {
+	
+	if( 'bp_media' === $post->post_type ) {
+		
+		$args['orderby'] = 'date';
+		$args['order'] = 'desc';
+		
+	}
+	return $args;
+}
+add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 3 );

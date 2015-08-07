@@ -10,10 +10,6 @@
 ?>
 
 <div id="plupload-upload-ui" class="hide-if-no-js">
-	
-	<label><?php _e( 'Description', 'bp_media' ) ;?></label>
-	<textarea id="image-description"></textarea>
-
 	<div id="drag-drop-area">
 		<div class="drag-drop-inside">
 			<p class="drag-drop-info"><?php _e('Drop files here'); ?></p>
@@ -88,7 +84,7 @@ jQuery(document).ready(function($){
   
 	uploader.bind('BeforeUpload', function(up, file) {
 		 
-	    up.settings.multipart_params['description'] = $('#image-description').val();
+	   // up.settings.multipart_params['description'] = $('#image-description').val();
 	    
 		console.log( up.settings.multipart_params );
 	});
@@ -118,12 +114,31 @@ jQuery(document).ready(function($){
 	    $('#percentage progress').val(file.percent);
 	});
 	
-	// a file was uploaded 
-	uploader.bind('FileUploaded', function(up, file, response) {
+	var added_data = Array();
 	
-	// this is your ajax response, update the DOM with it or something...
-	console.log(response);
-	window.location.reload();
+	// a file was uploaded 
+	uploader.bind('FileUploaded', function(up, file, data) {
+	
+		var imageData = JSON.parse(data.response);
+		console.log( imageData);
+		
+		$('#percentage').html('');
+		
+		//$('#plupload-upload-ui').append('<div class="media-user"><img class="media-user-tmp" src="' + imageData.url + '"></div>');
+		
+		added_data.push(imageData );
+		
+		$('#bp-media-images').val( added_data );
+		
+		console.log( added_data );
+	
+		
+	
+	});
+	
+	uploader.bind('UploadComplete', function(up, file, data) {
+		
+		window.location.reload();
 	
 	});
 

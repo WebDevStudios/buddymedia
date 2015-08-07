@@ -14,9 +14,6 @@ function bp_media_upload_photo() {
 	$file = $_FILES['async-upload'];
 	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'photo_gallery_upload' ) );
 	
-	// output the results to console
-	echo 'Uploaded to: ' . $status['file'];
-	
 	$wp_upload_dir = wp_upload_dir();
 	
 	//Adds file as attachment to WordPress
@@ -39,8 +36,14 @@ function bp_media_upload_photo() {
 	update_post_meta( $attach_id, 'description', $_POST['description'] );
 	update_post_meta( $attach_id, 'bp_media', '1' );
 	
-	// output the results to console
-	echo "\n Attachment ID: " . $attach_id;
+	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
+	
+	$data = array(
+		'id' => $attach_id,
+		'url' => $image[0]
+	);
+	
+	wp_send_json( $data );
 	
 	
 	exit;
@@ -90,15 +93,17 @@ function bp_media_photo_activity_attach() {
 	
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
 	
-	// output the results to console
-	//echo "\n activity Attachment ID: " . $attach_id;
-	wp_send_json( $image[0] );
+	$data = array(
+		'id' => $attach_id,
+		'album_id' => $album_id,
+		'url' => $image[0]
+	);
 	
+	wp_send_json( $data );
 	
 	exit;
 }
 add_action('wp_ajax_bp_media_photo_activity_attach', 'bp_media_photo_activity_attach' );
-
 
 
 /**

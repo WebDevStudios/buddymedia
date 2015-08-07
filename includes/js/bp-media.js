@@ -253,13 +253,13 @@ jQuery(document).ready(function() {
 		var action = get_var_in_query( 'action', data.data ) ;
 		
 		if( 'post_update' === action ) {
-	
-			var images = [
-				jQuery('#bp-media-images').val(),
-			];
+		
+			var id = jQuery('#bp-media-attachment-id').val();
+			
+			if(id) {
+				data.data += '&attachment_id=' + encodeURIComponent( id );
+			}
 			 
-		    data.data += '&images=' + encodeURIComponent( images );
-	    
 	    }
 	    return true;
 	};

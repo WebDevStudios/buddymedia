@@ -9,16 +9,9 @@
 
 ?>
 
-<div id="plupload-upload-ui" class="hide-if-no-js">
-	<div id="drag-drop-area">
-		<div class="drag-drop-inside">
-			<p class="drag-drop-info"><?php _e('Drop files here'); ?></p>
-			<p><?php _ex('or', 'Uploader: Drop files here - or - Select Files'); ?></p>
-			<p class="drag-drop-buttons"><input id="plupload-browse-button" type="button" value="<?php esc_attr_e('Select Files'); ?>" class="button" /></p>
-		</div>
-	</div>
-	<div id="percentage"></div>
-</div>
+
+
+<div id="percentage"></div>
 
 <?php
 
@@ -31,6 +24,7 @@ $plupload_init = array(
 'drop_element'        => 'drag-drop-area',
 'file_data_name'      => 'async-upload',            
 'multiple_queues'     => true,
+'multi_selection' => false,
 'max_file_size'       => wp_max_upload_size().'b',
 'url'                 => admin_url('admin-ajax.php'),
 'flash_swf_url'       => includes_url('js/plupload/plupload.flash.swf'),
@@ -89,6 +83,11 @@ jQuery(document).ready(function($){
 	
 	// a file was added in the queue
 	uploader.bind('FilesAdded', function(up, files){
+	
+		if(uploader.files.length > 1) {
+		    uploader.removeFile(uploader.files[0]);
+		    uploader.refresh();// must refresh for flash runtime
+		}
 		
 		var hundredmb = 100 * 1024 * 1024, max = parseInt(up.settings.max_file_size, 10);
 		
@@ -111,25 +110,19 @@ jQuery(document).ready(function($){
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
-	
-	var added_data = Array();
-	
+		
 	// a file was uploaded 
 	uploader.bind('FileUploaded', function(up, file, data) {
-	
-		// this is your ajax response, update the DOM with it or something...
-		console.log(data.response);
+		
+		var imageData = JSON.parse(data.response);
+		console.log( imageData);
 		
 		$('#percentage').html('');
 		
-		$('#plupload-upload-ui').append('<img class="media-activity-tmp" src="' + JSON.parse(data.response) + '">');
+		$('#plupload-upload-ui').append('<div class="media-activity"><span class="remove-attachment" data-id="' + imageData.id + '">X</span><img class="media-activity-tmp" src="' + imageData.url + '"></div>');
+			
+		$('#bp-media-attachment-id').val( imageData.id );
 		
-		added_data.push( JSON.parse(data.response) );
-		
-		$('#bp-media-images').val( added_data );
-		
-		console.log( added_data );
-	
 	});
 
 });   

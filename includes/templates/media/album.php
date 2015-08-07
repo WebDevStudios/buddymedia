@@ -18,18 +18,11 @@
  */
 do_action( 'bp_media_before_entry' ); ?>
 
-<li class="<?php bp_media_css_class(); ?>" id="media-<?php bp_media_css_id(); ?>">
-
-	<a href="<?php bp_media_album_link(); ?>">
-	
-		<img class="album-cover" src="<?php bp_album_cover_url(); ?>">
-		
-		<div class="album-title"><?php the_title(); ?></div>
-		
-		<div class="album-count"><?php bp_album_image_count(); ?></div>
-		
-	</a>
-	
-	
-	
-</li>
+<a href="<?php bp_media_album_link(); ?>">
+	<li class="<?php bp_media_css_class(); ?>" id="media-<?php bp_media_css_id(); ?>" style="background:url(<?php bp_album_cover_url(); ?>)">
+		<div class="album-info">
+			<div class="album-title"><?php the_title(); ?></div>
+			<div class="album-count"><?php bp_album_image_count(); ?></div>
+		</div>
+	</li>
+</a>

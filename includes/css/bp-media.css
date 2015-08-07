@@ -76,7 +76,7 @@ html, body {
 
 
 #buddypress ul#media-stream.grid-list .create-album {
-	line-height: 225px;
+	line-height: 150px;
 	text-align: center;
 	border: dashed 1px #e1e1e1;
 }
@@ -256,9 +256,14 @@ ul.commentlist p {
 }
 
 #plupload-upload-ui {
-	display: none;
-	margin: 0 0 10px 0;
+	display: inline;
 }
+
+body.bp-user #plupload-upload-ui {
+	display: none;
+	
+}
+
 
 .bp-media-activity-content {
 	display: block;
