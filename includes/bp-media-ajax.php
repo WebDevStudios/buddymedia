@@ -194,6 +194,7 @@ function bp_media_ajax_create_album(){
 
 	$title =  $_GET['title'];
 	$content =  $_GET['description'];
+	$permission =  ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
 	$user_id =  $_GET['user_id'];
 
 	// Create post object
@@ -206,7 +207,11 @@ function bp_media_ajax_create_album(){
 	);
 	
 	// Insert the post into the database
-	$post = wp_insert_post( $my_post );	
+	$post = wp_insert_post( $my_post );
+	
+	if( $post ) {
+		update_post_meta( $post, 'permission', $permission );
+	}
 	
 	// return album link
 	$data = array(
@@ -235,6 +240,7 @@ function bp_media_ajax_edit_album(){
 	$content =  $_GET['description'];
 	$user_id =  $_GET['user_id'];
 	$post_id =  $_GET['post_id'];
+	$permission =  $_GET['permission'];
 	
 	// Update post
 	$my_post = array(
@@ -245,6 +251,10 @@ function bp_media_ajax_edit_album(){
 	
 	// Update the post into the database
 	$post = wp_update_post( $my_post );
+	
+	if( $post ) {
+		update_post_meta( $post, 'permission', $permission );
+	}
 	
 	// return post id
 	$data = array(

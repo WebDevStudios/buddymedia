@@ -84,13 +84,14 @@ jQuery(document).ready(function() {
 			alert('Title required');
 			return false;
 		}
-					
+						
 		jQuery.ajax({
 		   url: ajaxurl,
 		   data: {
 		      'action':'bp_media_ajax_create_album',
 		      'title': jQuery('#album-title').val(),
 		      'description': jQuery('#album-description').val(),
+		      'permission': jQuery('input[name=permission]:radio:checked').val(),
 		      'user_id': jQuery('#album-user-id').val(),
 		      'nonce': jQuery('#nonce').val()
 		   },

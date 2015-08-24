@@ -182,7 +182,7 @@ class BP_Media_CPT {
 	
 		if( 'media' === $activity->component && 'new_album' === $activity->type ) {
 
-			$user_link = '<a href="'.bp_core_get_user_domain( $activity->user_id ).'">'.$activity->user_login.'</a>';
+			$user_link = '<a href="'.bp_core_get_user_domain( $activity->user_id ).'">'. bp_core_get_username( $activity->user_id ).'</a>';
 			$album_link = bp_core_get_user_domain( $activity->user_id ) . BP_MEDIA_SLUG . '/album/' . $activity->secondary_item_id;
 			
 			return sprintf( __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ), $user_link, $album_link  );

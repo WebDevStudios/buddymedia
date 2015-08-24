@@ -456,6 +456,17 @@ function bp_media_image_description() {
 		return;	
 	}
 	
+function bp_media_album_permission( $permission ) {
+	
+	$action_var = bp_action_variables();
+	
+	$meta = get_post_meta( $action_var[0], 'permission', true );
+	
+	if( $meta === $permission) {
+		echo 'checked="checkd"';
+	}
+	
+}
 	
 /**
  * bp_media_album_back_url function.

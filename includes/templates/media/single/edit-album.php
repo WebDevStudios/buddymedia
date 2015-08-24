@@ -19,6 +19,11 @@
 				<label><?php _e( 'Description', 'bp_media' ) ;?></label>
 				<textarea id="album-description"><?php bp_media_album_field('description') ;?></textarea>
 				
+				<label><?php _e( 'Permission', 'bp_media' ) ;?></label>
+				<input type="radio" name="permission" value="public" <?php bp_media_album_permission('public') ;?>/> Public<br />
+				<input type="radio" name="permission" value="friends" <?php bp_media_album_permission('friends') ;?>/> Friends<br />
+				<input type="radio" name="permission" value="private" <?php bp_media_album_permission('private') ;?>/> Private<br />
+				
 				<input id="album-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
 				<input id="album-post-id" type="hidden" value="<?php echo bp_media_album_id(); ?>">
 				<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "edit-album" ); ?>">
