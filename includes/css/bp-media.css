@@ -153,6 +153,17 @@ html, body {
 	
 }
 
+#buddypress .media-pop-wrapper li {
+	position: relative;
+}
+
+#buddypress .media-pop-wrapper .comment-options {
+	position: absolute;
+	right: 0;
+	top: 5px;
+	font-size: 12px;
+}
+
 /* comments form */
 
 /*.media-pop-wrapper .image-reply-form {

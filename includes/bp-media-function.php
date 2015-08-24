@@ -698,3 +698,21 @@ function bp_media_filter_album_attachments( $args, $type, $post ) {
 	return $args;
 }
 add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 3 );
+
+
+
+
+/**
+ * bp_media_user_can_delete function.
+ * 
+ * @access public
+ * @param mixed $user_id
+ * @return boolean
+ */
+function bp_media_user_can_delete( $user_id ) {
+	
+	if( bp_loggedin_user_id() === (int) $user_id ) {
+		return true;
+	}
+	return;
+}
