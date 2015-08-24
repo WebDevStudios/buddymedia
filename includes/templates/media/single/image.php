@@ -1,7 +1,7 @@
 <?php 
 $action_var = bp_action_variables();
-
 $photo_id = $action_var[0];
+$post = get_post( $photo_id );
 
 if( !$photo_id ) return; ?>
 
@@ -12,8 +12,8 @@ if( !$photo_id ) return; ?>
 	</div>
 	<div class="comment-column">
 		<div class="upload-author">
-			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $user_id ); ?></div>
-			<div class="upload-author-username"><?php echo bp_core_get_username( $user_id ) ; ?></div>
+			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $post->post_author ); ?></div>
+			<div class="upload-author-username"><?php echo bp_core_get_username( $post->post_author ) ; ?></div>
 			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
 			<div id="cleared"></div>
 			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>	

@@ -69,7 +69,7 @@ jQuery(document).ready(function() {
 			jQuery(window).bind('resize', bp_media_window_resize);
 	});
 	
-	jQuery( "#bp-media-add-photo" ).click(function() {     
+	jQuery( "#bp-media-add-photo" ).click(function() {   
     	jQuery('#plupload-upload-ui').slideToggle();        
 	});
 	

@@ -44,13 +44,15 @@ class BP_Media_CPT {
 	 */
 	private function setup_actions() {
 	
-		// Hook into the 'init' action
 		add_action( 'init', array( $this, 'bp_media_post_type'), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_bp_media_metaboxes' ) );
 		add_action(	'admin_menu', array( $this, 'remove_submenus' ) );
 		add_action(	'admin_init', array( $this, 'add_columns' ) );
 		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
 		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
+		
+		add_filter( 'bp_activity_custom_post_type_post_action', array( $this, 'bp_media_filter_activity_action' ), 10, 2 );
+		add_filter( 'bp_activity_permalink', array( $this, 'bp_media_filter_activity_action_permalink' ), 10, 2 );
 		
 	}
 	
@@ -110,7 +112,6 @@ class BP_Media_CPT {
 		
 	}
 	
-	
 	/**
 	 * add_columns function.
 	 * 
@@ -164,6 +165,57 @@ class BP_Media_CPT {
 	        'position'                 => 100,
 	    ) );
 	}
+	
+	
+	/**
+	 * bp_media_filter_activity_action function.
+	 *
+	 * this filters the CPT post link to link to the album on users profile 
+	 * 
+	 * @access public
+	 * @param mixed $action
+	 * @param mixed $activity
+	 * @return string
+	 */
+	public function bp_media_filter_activity_action( $action, $activity ) {
+	
+		if( 'media' === $activity->component && 'new_album' === $activity->type ) {
+
+			$user_link = '<a href="'.bp_core_get_user_domain( $activity->user_id ).'">'.$activity->user_login.'</a>';
+			$album_link = bp_core_get_user_domain( $activity->user_id ) . BP_MEDIA_SLUG . '/album/' . $activity->secondary_item_id;
+			
+			return sprintf( __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ), $user_link, $album_link  );
+			
+		}
+	
+		return $action;
+	}
+	
+	
+	
+	/**
+	 * bp_media_filter_activity_action_permalink function.
+	 *
+	 * this filter remove the link on the time stamp
+	 * 
+	 * @access public
+	 * @param mixed $activity_meta
+	 * @param mixed $activity
+	 * @return string
+	 */
+	public function bp_media_filter_activity_action_permalink( $activity_meta, $activity ) {
+	
+		if( 'media' === $activity->component && 'new_album' === $activity->type ) {
+		
+			$date_recorded  = bp_core_time_since( $activity->date_recorded );
+			return $activity->action . ' ' . $date_recorded;
+			
+		}
+			
+		return $activity_meta;
+		
+	}
+
 	
 
 	/**
@@ -307,7 +359,6 @@ class BP_Media_CPT {
 
 	
 }
-
 BP_Media_CPT::instance();
 
 
@@ -317,11 +368,9 @@ BP_Media_CPT::instance();
 function record_cpt_activity_content( $cpt ) {
 
 	if ( 'new_album' === $cpt['type'] ) {
-	
 		$cpt['content'] = 'what you need';
 	}
 	
-
 	return $cpt;
 }
 //add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');

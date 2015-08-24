@@ -260,10 +260,10 @@ function bp_media_gallery_content() {
 	$action_var = bp_action_variables();
 	
 	switch ( bp_current_action() ) {
-		case bp_get_friends_slug(): 
+		case ( bp_is_active('friends') ) ? bp_get_friends_slug() : '': 
 			 bp_media_get_template_part( 'single/friends');
 		break;
-		case bp_get_groups_slug(): 
+		case ( bp_is_active('groups') ) ? bp_get_groups_slug() : '': 
 			 bp_media_get_template_part( 'single/groups');
 		break;
 		case 'shared':
@@ -271,7 +271,7 @@ function bp_media_gallery_content() {
 		break;
 		case 'album':
 				
-				if( 'edit' === $action_var[1] ) {
+				if( isset( $action_var[1] ) && 'edit' === $action_var[1] ) {
 					bp_media_get_template_part( 'single/edit-album');
 				} else {
 					bp_media_get_template_part( 'single/album');
@@ -280,7 +280,7 @@ function bp_media_gallery_content() {
 		break;
 		case 'image':
 		
-				if( 'edit' === $action_var[1] ) {
+				if( isset( $action_var[1] ) && 'edit' === $action_var[1] ) {
 					bp_media_get_template_part( 'single/edit-image');
 				} else {
 					bp_media_get_template_part( 'single/image');

@@ -32,7 +32,7 @@ function bp_media_is_action_edit() {
 
 	$variables = bp_action_variables();
 	
-	if( 'edit' ===  $variables[1] ) {
+	if( isset( $variables[1] ) && 'edit' ===  $variables[1] ) {
 		return true;
 	}
 	
