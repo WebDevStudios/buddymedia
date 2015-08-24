@@ -86,6 +86,39 @@ function bp_media_loop_profile_filter( $query ) {
 add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 
 
+function bp_media_loop_permissions_filter( $query ) {
+
+	if( bp_is_user() ) { 
+
+		$author = bp_displayed_user_id();
+		
+		$query = array(
+			'post_type' => 'bp_media',
+			'author' => $author
+		);
+	
+	} else {
+	
+		$value = ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
+	
+		$query = array(
+			'post_type' => 'bp_media',
+			'meta_query' => array(
+			   array(
+			       'key'     => 'permission',
+			       'value'   => $value,
+			       'compare' => '='
+			   )
+			)
+		);
+		
+	}
+
+	return $query;
+}
+add_filter( 'bp_media_loop_filter', 'bp_media_loop_permissions_filter' );
+
+
 /**
  * bp_media_css_class function.
  * 
@@ -643,7 +676,7 @@ add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
 function bp_media_delete_attachments_before_delete_post( $id ){
 	global $post;
 	
-	if( 'bp_media' !== $post->post_type ) return;
+	if( $post && 'bp_media' !== $post->post_type ) return;
 	
 	$subposts = get_children(array( 
 	    'post_parent' => $id,
