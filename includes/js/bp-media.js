@@ -262,15 +262,49 @@ jQuery(document).ready(function() {
 			      'nonce': jQuery('#nonce').val()
 			   },
 			   error: function() {
-			     alert('nope');
+			     alert('Sorry, error posting comment.');
 			   },
 			   success: function(data) {
 			   	console.log(data);
+			   	jQuery('#upload-comment').val('');
 			   	jQuery('ul.commentlist').prepend(data);
 			   }
 			});
 			
 		}
+		
+	});
+	
+	jQuery('body').on( 'click', '.comment-options a.delete', function( event ) {
+	
+		event.preventDefault();
+	
+		var comment_id = jQuery(event.target).parent().parent().data('id');
+		var user_id = jQuery('#upload-user-id').val();
+		var that = this;
+		
+		console.log(comment_id);
+		
+		if( confirm('Are you sure you want to remove this comment?') ) { 
+			
+			jQuery.ajax({
+			   url: ajaxurl,
+			   data: {
+			      'action':'bp_media_ajax_delete_comment',
+			      'user_id': user_id,
+			      'comment_id': comment_id,
+			      'nonce': jQuery('#nonce').val()
+			   },
+			   error: function() {
+			     alert('Sorry, error deleting comment.');
+			   },
+			   success: function(data) {
+			   	console.log(data);
+			   	jQuery(that).parent().parent().slideUp(300);
+			   }
+			});
+		}
+			
 		
 	});
 	

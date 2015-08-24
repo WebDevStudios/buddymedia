@@ -7,7 +7,9 @@ if( !$photo_id ) return; ?>
 
 <div class="media-pop-wrapper">
 	<div class="photo-column">
+		<?php if ( bp_media_user_can_access() ) : ?>
 		<a href="<?php bp_media_edit_image_link(); ?>"><?php _e( 'edit', 'bp_media' ) ;?></a>
+		<?php endif; ?>
 		<div id="photo" class="media-image"><?php echo wp_get_attachment_image( $photo_id, 'large' ); ?></div>
 	</div>
 	<div class="comment-column">

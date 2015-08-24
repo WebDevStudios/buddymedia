@@ -339,12 +339,7 @@ function bp_media_ajax_edit_image(){
 		
 	// delete the post
 	update_post_meta( (int) $image_id, 'description', $description );
-	
-	// return post id
-	$data = array(
-		'id' =>  $image_id
-	);
-	
+		
 	$data = array(
 		'id' =>  $image_id,
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $image_id
@@ -390,6 +385,8 @@ function bp_media_ajax_add_comment(){
 	    'comment_approved' => 1,
 	);
 	
+	$data = apply_filters( 'bp_media_ajax_add_comment', $data );
+	
 	$comment_id = wp_insert_comment( $data );
 	$comment = array( get_comment( $comment_id ) );
 	
@@ -405,3 +402,28 @@ function bp_media_ajax_add_comment(){
 }
 add_action('wp_ajax_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
 //add_action('wp_ajax_nopriv_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
+
+
+
+/**
+ * bp_media_ajax_delete_comment function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_ajax_delete_comment(){
+
+	check_ajax_referer( 'add-comment', 'nonce' );
+
+	$user_id =  $_GET['user_id'];
+	$comment_id =  $_GET['comment_id'];
+
+	if( empty( $comment_id ) || bp_loggedin_user_id() !== (int) $user_id ) return;
+		
+	$comment_id = wp_delete_comment( $comment_id );
+		
+	wp_send_json( $comment_id );
+	
+}
+add_action('wp_ajax_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');
+//add_action('wp_ajax_nopriv_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');

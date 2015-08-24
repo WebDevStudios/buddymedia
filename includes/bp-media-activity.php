@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * bp_media_activity_button function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_activity_button() {
-	//echo '<button id="bp-media-activity-upload-button">' . __( 'Add Image', 'bp_media' ) . '</button>';
-	
 	echo '<div id="plupload-upload-ui">';
 		echo '<input id="plupload-browse-button" type="button" value="' . esc_attr__("Add Image") . '" class="button" />';	
 	echo '</div>';
@@ -12,6 +16,12 @@ function bp_media_activity_button() {
 add_action( 'bp_activity_post_form_post_options', 'bp_media_activity_button' );
 
 
+/**
+ * bp_media_activity_image_upload_form function.
+ * 
+ * @access public
+ * @return void
+ */
 function bp_media_activity_image_upload_form() {
 	bp_media_get_template_part( 'activity-upload-form');
 }

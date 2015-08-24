@@ -709,8 +709,34 @@ add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 
  * @param mixed $user_id
  * @return boolean
  */
-function bp_media_user_can_delete( $user_id ) {
+function bp_media_user_can_delete( $user_id = 0 ) {
+
+	if( 0 === $user_id  ) {
+		$user_id = bp_displayed_user_id();
+	}
 	
+	if( bp_loggedin_user_id() === (int) $user_id ) {
+		return true;
+	}
+	return;
+}
+
+
+/**
+ * bp_media_user_can_access function.
+ * 
+ * @access public
+ * @param int $user_id (default: 0)
+ * @return boolean
+ */
+function bp_media_user_can_access( $user_id = 0 ) {
+
+	if( 0 === $user_id  ) {
+		$user_id = bp_displayed_user_id();
+	}
+	
+	if( ! apply_filters( 'bp_media_user_can_access', $user_id ) ) return;
+
 	if( bp_loggedin_user_id() === (int) $user_id ) {
 		return true;
 	}
