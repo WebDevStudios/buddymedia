@@ -213,7 +213,6 @@ function bp_media_ajax_create_album(){
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
 	);
 	
-	
 	wp_send_json( $data );
 
 }

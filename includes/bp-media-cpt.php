@@ -50,6 +50,7 @@ class BP_Media_CPT {
 		add_action(	'admin_init', array( $this, 'add_columns' ) );
 		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
 		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
+		add_action( 'template_redirect', array( $this, 'bp_media_redirect_cpt_to_album' ) );
 		
 		add_filter( 'bp_activity_custom_post_type_post_action', array( $this, 'bp_media_filter_activity_action' ), 10, 2 );
 		add_filter( 'bp_activity_permalink', array( $this, 'bp_media_filter_activity_action_permalink' ), 10, 2 );
@@ -191,6 +192,26 @@ class BP_Media_CPT {
 		return $action;
 	}
 	
+
+
+	/**
+	 * bp_media_redirect_cpt_to_album function.
+	 *
+	 * redirect cpt page to user album
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	function bp_media_redirect_cpt_to_album() {
+		global $post;
+		
+		if( 'bp_media' === $post->post_type ) {
+			$redirect_url = bp_core_get_user_domain( $post->post_author ) . BP_MEDIA_SLUG . '/album/' . $post->ID;
+			wp_safe_redirect( $redirect_url );
+		}
+		
+	}
+	
 	
 	
 	/**
@@ -225,7 +246,7 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function add_bp_media_metaboxes() {
-		add_meta_box('user_media', 'Media', array( $this, 'user_media'), 'bp_media', 'normal', 'default');
+		add_meta_box( 'user_media', 'Media', array( $this, 'user_media' ), 'bp_media', 'normal', 'default' );
 	}
 	
 	
@@ -334,7 +355,7 @@ class BP_Media_CPT {
 	 */
 	function remove_submenus() {
 		global $submenu;
-		unset($submenu['edit.php?post_type=bp_media'][10]); // Removes 'Add New'.
+		unset( $submenu['edit.php?post_type=bp_media'][10] ); // Removes 'Add New'.
 	}
 	
 	
