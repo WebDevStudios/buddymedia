@@ -18,24 +18,27 @@ if( !$photo_id ) return; ?>
 			<div id="cleared"></div>
 			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>	
 		</div>
-		<ul class="commentlist">
-		    <?php    
-		        //Gather comments for a photo 
-		        $comments = get_comments(array(
-		            'post_id' => $photo_id,
-		            'status' => 'approve' //Change this to the type of comments to be displayed
-		        ));
-		               	        
-		        //Display the list of comments
-		        wp_list_comments(array(
-		        	'type' => 'comment',
-		        	'callback' => 'bp_media_comments',
-		            'per_page' => 10, //Allow comment pagination
-		            'reverse_top_level' => false //Show the latest comments at the top of the list
-		        ), $comments );
 		
-		    ?>
-		</ul>
+		<div class="activity-comments">
+			<ul class="has-comments commentlist">
+			    <?php    
+			        //Gather comments for a photo 
+			        $comments = get_comments(array(
+			            'post_id' => $photo_id,
+			            'status' => 'approve' //Change this to the type of comments to be displayed
+			        ));
+			               	        
+			        //Display the list of comments
+			        wp_list_comments(array(
+			        	'type' => 'comment',
+			        	'callback' => 'bp_media_comments',
+			            'per_page' => 10, //Allow comment pagination
+			            'reverse_top_level' => false //Show the latest comments at the top of the list
+			        ), $comments );
+			
+			    ?>
+			</ul>
+		</div>
 		<div class="image-reply-form">
 			<input id="upload-comment" type="text">
 			<input id="upload-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">

@@ -1,13 +1,22 @@
-<li id="div-comment-<?php comment_ID() ?>" class="comment-body">
 
-	<div class="comment-author vcard">
-	<?php echo get_avatar( $comment, 32 ); ?>
-		<div class="comment-author-username"><?php printf( __( '%s' ), get_comment_author_link() ); ?></div>
-		<?php comment_text(); ?>
+
+
+<li id="acomment-<?php comment_ID(); ?>">
+	<div class="acomment-avatar">
+		<?php echo get_avatar( $comment, 32 ); ?>
 	</div>
-	<?php if ( $comment->comment_approved == '0' ) : ?>
-		<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em>
-		<br />
-	<?php endif; ?>
+
+	<div class="acomment-meta">
+		<?php
+			$comment_id = get_comment_ID();
+			$id = get_comment( $comment_id );
+			$link = bp_core_get_user_domain( $id->user_id );
+			
+			echo sprintf( '<a href="%s">%s</a>', $link, get_comment_author() );
+		?>
+	</div>
+
+	<div class="acomment-content"><?php comment_text(); ?></div>
+
 
 </li>
