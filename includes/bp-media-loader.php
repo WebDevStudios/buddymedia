@@ -131,7 +131,7 @@ class BP_Media_Component extends BP_Component {
 
 		// Add the subnav items to the media nav item if we are using a theme that supports this
 		$sub_nav[] = array(
-			'name'            => _x( 'Albums', 'Profile media screen sub nav', 'buddypress' ),
+			'name'            => _x( 'Public', 'Profile media screen sub nav', 'buddypress' ),
 			'slug'            => 'media',
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
@@ -178,6 +178,27 @@ class BP_Media_Component extends BP_Component {
 				'position'        => 50
 			);
 		}
+		
+		if ( bp_is_active( 'friends' ) ) {
+			$sub_nav[] = array(
+				'name'            => _x( 'Friends', 'Friends media screen sub nav', 'bp-media' ),
+				'slug'            => 'friend',
+				'parent_url'      => $media_link,
+				'parent_slug'     => $this->slug,
+				'screen_function' => 'bp_media_screen_user_media',
+				'position'        => 20
+			);
+		}
+		
+		$sub_nav[] = array(
+			'name'            => _x( 'Private', 'Private media screen sub nav', 'bp-media' ),
+			'slug'            => 'private',
+			'parent_url'      => $media_link,
+			'parent_slug'     => $this->slug,
+			'screen_function' => 'bp_media_screen_user_media',
+			'position'        => 30,
+			'user_has_access' => bp_is_my_profile()
+		);
 		
 		/*
 
@@ -255,8 +276,26 @@ class BP_Media_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-personal',
-				'title'  => _x( 'Personal', 'My Account Media sub nav', 'buddypress' ),
+				'title'  => _x( 'Public', 'My private Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link )
+			);
+			
+			// Friends
+			if ( bp_is_active( 'friends' ) ) {
+				$wp_admin_nav[] = array(
+					'parent' => 'my-account-' . $this->id,
+					'id'     => 'my-account-' . $this->id . '-friend',
+					'title'  => _x( 'Friends', 'My friends Media sub nav', 'buddypress' ),
+					'href'   => trailingslashit( $media_link ) . 'friend'
+				);
+			}
+			
+			// Private
+			$wp_admin_nav[] = array(
+				'parent' => 'my-account-' . $this->id,
+				'id'     => 'my-account-' . $this->id . '-private',
+				'title'  => _x( 'Private', 'My Account Media sub nav', 'buddypress' ),
+				'href'   => trailingslashit( $media_link ) . 'private'
 			);
 			
 			/*

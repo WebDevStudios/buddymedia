@@ -73,10 +73,20 @@ function bp_media_loop_profile_filter( $query ) {
 	if( bp_is_user() ) { 
 
 		$author = bp_displayed_user_id();
+		$action = bp_current_action();
+		
+		$value = ( 'media' === $action ) ? 'public' : $action ;
 		
 		$query = array(
 			'post_type' => 'bp_media',
-			'author' => $author
+			'author' => $author,
+			'meta_query' => array(
+			   array(
+			       'key'     => 'permission',
+			       'value'   => $value,
+			       'compare' => '='
+			   )
+			)
 		);
 	
 	}
@@ -86,18 +96,16 @@ function bp_media_loop_profile_filter( $query ) {
 add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 
 
+/**
+ * bp_media_loop_permissions_filter function.
+ * 
+ * @access public
+ * @param mixed $query
+ * @return void
+ */
 function bp_media_loop_permissions_filter( $query ) {
 
-	if( bp_is_user() ) { 
-
-		$author = bp_displayed_user_id();
-		
-		$query = array(
-			'post_type' => 'bp_media',
-			'author' => $author
-		);
-	
-	} else {
+	if( !bp_is_user() ) { 
 	
 		$value = ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
 	
@@ -488,7 +496,38 @@ function bp_media_image_description() {
 		
 		return;	
 	}
+
+function bp_media_album_meta( $field = null ) {
+	echo bp_media_get_album_meta( $field );
+}
+	/**
+	 * bp_media_get_album_field function.
+	 * 
+	 * @access public
+	 * @param mixed $field (default: null)
+	 * @return void
+	 */
+	function bp_media_get_album_meta( $field = null ) {
 	
+		if( ! $field ) return;
+		
+		$action_var = bp_action_variables();
+		
+		$album = get_post_meta( $action_var[0], $field, true );
+		
+		if( $album ) return $album;
+		
+		return;	
+	}
+
+	
+/**
+ * bp_media_album_permission function.
+ * 
+ * @access public
+ * @param mixed $permission
+ * @return string
+ */
 function bp_media_album_permission( $permission ) {
 	
 	$action_var = bp_action_variables();

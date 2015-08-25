@@ -114,12 +114,13 @@ jQuery(document).ready(function() {
 		      'action':'bp_media_ajax_edit_album',
 		      'title': jQuery('#album-title').val(),
 		      'description': jQuery('#album-description').val(),
+		      'permission': jQuery('input[name=permission]:radio:checked').val(),
 		      'user_id': jQuery('#album-user-id').val(),
 		      'post_id': jQuery('#album-post-id').val(),
 		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
-		     alert('nope');
+		     alert('Sorry, error editing album.');
 		   },
 		   success: function(data) {
 		   	console.log(data);
@@ -144,7 +145,7 @@ jQuery(document).ready(function() {
 			      'nonce': jQuery('#nonce').val()
 			   },
 			   error: function() {
-			     alert('nope');
+			     alert('Sorry, error deleting album.');
 			   },
 			   success: function(data) {
 			   	console.log(data);

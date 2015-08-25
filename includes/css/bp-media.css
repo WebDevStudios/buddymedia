@@ -45,6 +45,7 @@ html, body {
 	width: 150px;
 	height: 150px;
 	position: relative;
+	background-size: cover !important;
 }
 
 #buddypress ul#media-stream.grid-list li img {
@@ -79,6 +80,14 @@ html, body {
 	line-height: 150px;
 	text-align: center;
 	border: dashed 1px #e1e1e1;
+}
+
+#buddypress .album-type {
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0 10px;
+	font-style: italic;
+	color: #777777;
 }
 
 

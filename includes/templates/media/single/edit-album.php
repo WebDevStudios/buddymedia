@@ -21,7 +21,9 @@
 				
 				<label><?php _e( 'Permission', 'bp_media' ) ;?></label>
 				<input type="radio" name="permission" value="public" <?php bp_media_album_permission('public') ;?>/> Public<br />
-				<input type="radio" name="permission" value="friends" <?php bp_media_album_permission('friends') ;?>/> Friends<br />
+				<?php if ( bp_is_active( 'friends' ) ) : ?>
+					<input type="radio" name="permission" value="friend" <?php bp_media_album_permission('friend') ;?>/> Friends<br />
+				<?php endif ; ?>
 				<input type="radio" name="permission" value="private" <?php bp_media_album_permission('private') ;?>/> Private<br />
 				
 				<input id="album-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">

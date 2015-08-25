@@ -205,6 +205,8 @@ class BP_Media_CPT {
 	function bp_media_redirect_cpt_to_album() {
 		global $post;
 		
+		if( !$post ) return;
+		
 		if( 'bp_media' === $post->post_type ) {
 			$redirect_url = bp_core_get_user_domain( $post->post_author ) . BP_MEDIA_SLUG . '/album/' . $post->ID;
 			wp_safe_redirect( $redirect_url );

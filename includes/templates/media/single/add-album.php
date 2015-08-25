@@ -10,7 +10,9 @@
 		
 		<label><?php _e( 'Permission', 'bp_media' ) ;?></label>
 		<input type="radio" name="permission" value="public"/> Public<br />
-		<input type="radio" name="permission" value="friends"/> Friends<br />
+		<?php if ( bp_is_active( 'friends' ) ) : ?>
+			<input type="radio" name="permission" value="friend"/> Friends<br />
+		<?php endif ; ?>
 		<input type="radio" name="permission" value="private"/> Private<br />
 		
 		<input id="album-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">

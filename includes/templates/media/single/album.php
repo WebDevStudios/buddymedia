@@ -13,7 +13,8 @@
 
 <?php endif ; ?>
 
-<h3 class="album-title"><?php bp_media_album_field( 'title' ) ;?></h3>
+<h3 class="album-title"><?php bp_media_album_field( 'title' ) ;?><span class="album-type"><?php bp_media_album_meta( 'permission' ) ;?></span></h3>
+
 
 <p class="album-description"><?php bp_media_album_field( 'description' ) ;?></p>
 
