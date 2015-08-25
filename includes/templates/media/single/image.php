@@ -7,9 +7,12 @@ if( !$photo_id ) return; ?>
 
 <div class="media-pop-wrapper">
 	<div class="photo-column">
-		<?php if ( bp_media_user_can_access() ) : ?>
-		<a href="<?php bp_media_edit_image_link(); ?>"><?php _e( 'edit', 'bp_media' ) ;?></a>
-		<?php endif; ?>
+		<div class="image-options">
+			<a href="<?php bp_media_album_back_url( $post->post_parent ) ;?>" class="left"><?php _e( 'back to album', 'bp_media' ) ; ?></a>
+			<?php if ( bp_media_user_can_access() ) : ?>
+			<a href="<?php bp_media_edit_image_link(); ?>" class="right"><?php _e( 'edit', 'bp_media' ) ;?></a>
+			<?php endif; ?>
+		</div>
 		<div id="photo" class="media-image"><?php echo wp_get_attachment_image( $photo_id, 'large' ); ?></div>
 	</div>
 	<div class="comment-column">
@@ -41,6 +44,7 @@ if( !$photo_id ) return; ?>
 			    ?>
 			</ul>
 		</div>
+		<?php if( bp_media_user_can_access() ) : ?>
 		<div class="image-reply-form">
 			<input id="upload-comment" type="text">
 			<input id="upload-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
@@ -48,6 +52,7 @@ if( !$photo_id ) return; ?>
 			<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "add-comment" ); ?>">
 			<button id="upload-comment-reply"><?php _e( 'reply', 'bp_media' ) ;?></button>
 		</div>
+		<?php endif ; ?>
 	</div>
 	<div id="cleared"></div>
 </div>

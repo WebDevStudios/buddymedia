@@ -6,7 +6,7 @@
 
 	<div class="bp-media-admin-album">
 	
-		<a id="back-album" href="<?php bp_media_album_back_url() ;?>"><?php _e( 'Back to Album', 'bp_media' ) ; ?></a>
+		<a id="back-album" href="<?php bp_media_album_back_url() ;?>"><?php _e( 'back to album', 'bp_media' ) ; ?></a>
 		
 		<h3><?php _e( 'Editing ', 'bp_media' ); ; ?><?php bp_media_album_field( 'title' ) ;?></h3>
 			
@@ -20,11 +20,11 @@
 				<textarea id="album-description"><?php bp_media_album_field('description') ;?></textarea>
 				
 				<label><?php _e( 'Permission', 'bp_media' ) ;?></label>
-				<input type="radio" name="permission" value="public" <?php bp_media_album_permission('public') ;?>/> Public<br />
+				<input type="radio" name="permission" value="public" <?php bp_media_album_permission('public') ;?>/><?php _e( 'Public', 'bp_media' ) ; ?><br />
 				<?php if ( bp_is_active( 'friends' ) ) : ?>
-					<input type="radio" name="permission" value="friend" <?php bp_media_album_permission('friend') ;?>/> Friends<br />
+					<input type="radio" name="permission" value="friend" <?php bp_media_album_permission('friend') ;?>/><?php _e( 'Friends', 'bp_media' ) ; ?><br />
 				<?php endif ; ?>
-				<input type="radio" name="permission" value="private" <?php bp_media_album_permission('private') ;?>/> Private<br />
+				<input type="radio" name="permission" value="private" <?php bp_media_album_permission('private') ;?>/><?php _e( 'Private', 'bp_media' ) ; ?><br />
 				
 				<input id="album-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
 				<input id="album-post-id" type="hidden" value="<?php echo bp_media_album_id(); ?>">

@@ -253,7 +253,7 @@ class BP_Media_CPT {
 	
 	
 	/**
-	 * checkin_user function.
+	 * user_media function.
 	 * 
 	 * @access public
 	 * @param mixed $post

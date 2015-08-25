@@ -15,6 +15,14 @@ html, body {
 	text-align: center;
 	padding: 10px 0;
 }
+
+#buddypress .left {
+	float: left;
+}
+
+#buddypress .right {
+	float: right;
+}
   
 #TB_ajaxWindowTitle {
 	display: none;
@@ -171,6 +179,10 @@ html, body {
 	right: 0;
 	top: 5px;
 	font-size: 12px;
+}
+
+#buddypress .image-options {
+	overflow: hidden;
 }
 
 /* comments form */

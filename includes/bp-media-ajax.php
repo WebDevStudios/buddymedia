@@ -206,9 +206,15 @@ function bp_media_ajax_create_album(){
 	  'post_type' => 'bp_media'
 	);
 	
+	// dont post activity if album is not public
+	if( 'public' !== $permission ) {
+		add_filter('bp_activity_type_before_save', '__return_false', 9999 );
+	}
+	
 	// Insert the post into the database
 	$post = wp_insert_post( $my_post );
 	
+	// add permission meta
 	if( $post ) {
 		update_post_meta( $post, 'permission', $permission );
 	}

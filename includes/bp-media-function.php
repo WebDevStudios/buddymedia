@@ -546,9 +546,15 @@ function bp_media_album_permission( $permission ) {
  * @access public
  * @return void
  */
-function bp_media_album_back_url() {
+function bp_media_album_back_url( $album_id = null ) {
+
 	$action_var = bp_action_variables();
-	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $action_var[0];
+	
+	if( !$album_id ) {
+		$album_id = $action_var[0];
+	}
+	
+	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $album_id;
 	
 }
 
@@ -783,8 +789,6 @@ function bp_media_filter_album_attachments( $args, $type, $post ) {
 add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 3 );
 
 
-
-
 /**
  * bp_media_user_can_delete function.
  * 
@@ -813,6 +817,8 @@ function bp_media_user_can_delete( $user_id = 0 ) {
  * @return boolean
  */
 function bp_media_user_can_access( $user_id = 0 ) {
+
+	if( !is_user_logged_in() ) return;
 
 	if( 0 === $user_id  ) {
 		$user_id = bp_displayed_user_id();
