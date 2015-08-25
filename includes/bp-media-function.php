@@ -825,3 +825,23 @@ function bp_media_user_can_access( $user_id = 0 ) {
 	}
 	return;
 }
+
+
+/**
+ * bp_is_friend_boolean function.
+ *
+ * return boolean if user is a friend
+ *
+ * thank you for being a friend
+ * 
+ * @access public
+ * @return void
+ */
+function bp_is_friend_boolean() {
+	$is_friend = bp_is_friend();
+	
+	if( 'is_friend' === $is_friend ) {
+		return true;
+	}
+	return false;
+}

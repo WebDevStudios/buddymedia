@@ -186,7 +186,8 @@ class BP_Media_Component extends BP_Component {
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 20
+				'position'        => 20,
+				'user_has_access' => bp_is_friend_boolean() || bp_is_my_profile()
 			);
 		}
 		
