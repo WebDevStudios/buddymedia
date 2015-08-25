@@ -457,6 +457,10 @@ function bp_media_album_field( $field = null ) {
 		
 		$album = get_post( $action_var[0] );
 		
+		if( ! $album ) {
+			die();
+		}
+		
 		switch ( $field ) {
 			case 'title': 
 				return esc_html( $album->post_title );
