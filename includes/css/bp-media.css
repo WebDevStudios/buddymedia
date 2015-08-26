@@ -190,6 +190,11 @@ html, body {
 	margin-bottom: 10px;	
 }
 
+body.bp-user #buddypress .media-activity,
+body.groups #buddypress .media-activity {
+	margin-top: -20px;	
+}
+
 #buddypress .activity-media-image {
 	position: relative;
 	width: 90px;
@@ -207,9 +212,9 @@ html, body {
 	border-radius: 50%;
 }
 
-body.groups #buddypress input#plupload-browse-button.button,
-body.bp-user #buddypress input#plupload-browse-button.button {
-	margin: 10px 0 0 0;
+#buddypress form#whats-new-form #whats-new-content {
+	min-height: 55px;
+	padding: 10px 0 0 20px;
 }
 
 /* comments form */
@@ -257,8 +262,9 @@ body.bp-user #buddypress input#plupload-browse-button.button {
 }
 
 /* activity post form */
-#plupload-upload-ui {
-	display: inline;
+#buddypress input#plupload-browse-button.activity-attach-button {
+	float: right;
+	margin: 14px 5px 0 0;
 }
 
 #buddypress .bp-media-activity-content {

@@ -8,12 +8,12 @@
  */
 function bp_media_activity_button() {
 	echo '<div id="plupload-upload-ui">';
-		echo '<input id="plupload-browse-button" type="button" value="' . esc_attr__("Add Image") . '" class="button" />';	
+		echo '<input id="plupload-browse-button" class="activity-attach-button" type="button" value="' . esc_attr__("Add Image") . '" class="button" />';	
 	echo '</div>';
 	echo '<input type="hidden" id="bp-media-attachment-id" name="bp-media-attachment-id" value=""/>';
 	echo '<input type="hidden" id="bp-media-user-id" name="bp-media-user-id" value="'. bp_loggedin_user_id() .'"/>';
 }
-add_action( 'bp_activity_post_form_post_options', 'bp_media_activity_button' );
+add_action( 'bp_activity_post_form_whats-new-options', 'bp_media_activity_button' );
 
 
 /**
