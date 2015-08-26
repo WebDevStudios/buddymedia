@@ -193,7 +193,7 @@ jQuery(document).ready(function() {
 		
 	});
 	
-	jQuery('body').on( 'click', '.remove-attachment', function( event ) {
+	jQuery('body').on( 'click', '.activity-remove-attachment', function( event ) {
 	
 		var id = jQuery( '#bp-media-attachment-id' ).val();		
 		var that = this;

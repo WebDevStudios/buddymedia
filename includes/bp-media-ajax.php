@@ -133,10 +133,13 @@ function bp_media_get_activity_album_id( $user_id ) {
 	  'post_type' => 'bp_media'
 	);
 	
+	add_filter('bp_activity_type_before_save', '__return_false', 9999 );
+	
 	// Insert the post into the database
 	$post = wp_insert_post( $my_post );	
 	
 	add_post_meta( $post, '_activity_album', true, true );
+	add_post_meta( $post, '_permission', 'public', true );
 		
 	return $post;
 }
@@ -216,7 +219,7 @@ function bp_media_ajax_create_album(){
 	
 	// add permission meta
 	if( $post ) {
-		update_post_meta( $post, 'permission', $permission );
+		update_post_meta( $post, '_permission', $permission );
 	}
 	
 	// return album link
@@ -259,7 +262,7 @@ function bp_media_ajax_edit_album(){
 	$post = wp_update_post( $my_post );
 	
 	if( $post ) {
-		update_post_meta( $post, 'permission', $permission );
+		update_post_meta( $post, '_permission', $permission );
 	}
 	
 	// return post id

@@ -185,41 +185,60 @@ html, body {
 	overflow: hidden;
 }
 
+#buddypress .media-activity {
+	padding: 0 0 10px 75px;
+	margin-bottom: 10px;	
+}
+
+#buddypress .activity-media-image {
+	position: relative;
+	width: 90px;
+	height: 90px;
+}
+
+#buddypress .activity-remove-attachment {
+	cursor: pointer;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	color: #ffffff;
+	background: #000000;
+	padding: 0 8px;
+	border-radius: 50%;
+}
+
+body.groups #buddypress input#plupload-browse-button.button,
+body.bp-user #buddypress input#plupload-browse-button.button {
+	margin: 10px 0 0 0;
+}
+
 /* comments form */
 
-/*.media-pop-wrapper .image-reply-form {
-	position: absolute;
-	bottom: 0;
-	margin: 0 -15px;
-	padding: 10px;
-	background: #efefef;
-	width: 100%
-}*/
-
-.media-pop-wrapper .image-reply-form input {
+#buddypress .media-pop-wrapper .image-reply-form input {
 	width: 80%;
 }
 
-.bp-media-buttons {
+#buddypress .bp-media-buttons {
 	margin-bottom: 20px;
 }
 
-.bp-media-buttons div {
+#buddypress .bp-media-buttons div {
 	display: inline-block;
 }
 
 /* album grids */
 
-.bp-media-admin-album label {
+#buddypress .bp-media-admin-album label {
 	width: 100%;
 	display: block;
 }
 
-.media-thumbnail {
+#buddypress .media-thumbnail {
 	float: left;
 	padding: 5px;
 }
-.media-thumbnail img {
+
+#buddypress .media-thumbnail img {
 	border-radius: 0px;
 	box-shadow: none;
 }
@@ -233,11 +252,69 @@ html, body {
 	cursor: pointer;
 }
 
-.error {
+#buddypress .error {
 	color: red;
 }
 
-/* pop up window */
+/* activity post form */
+#plupload-upload-ui {
+	display: inline;
+}
+
+#buddypress .bp-media-activity-content {
+	display: block;
+	clear: both;
+}
+
+#buddypress .bp-media-activity-content img {
+	width: 75px;
+	height: 75px;
+}
+
+#buddypress .media-image {
+	margin: 10px 0;
+}
+
+#buddypress #delete-album.error,
+#buddypress .image-action-delete.error {
+	font-size: 14px;
+	float: right;
+	text-decoration: none;
+}
+
+body.media #buddypress a {
+	border: none;
+	cursor: pointer;
+}
+
+#buddypress .image-action-links {
+	font-size: 14px;
+}
+
+#buddypress #percentage {
+	display: none;
+	height: 15px;
+	width: 100%;
+	margin: 0 0 10px 0;
+}
+
+#buddypress #percentage progress {
+	height: 15px;
+	width: 100%;
+}
+
+#buddypress .activity-media-tmp {
+	width: 100%;
+	height: 100%;
+}
+
+#buddypress #image-description {
+	margin: 0 0 10px 0; 
+}
+
+
+
+/* media pop up window */
 
 #TB_window {
 	overflow: hidden;
@@ -299,63 +376,4 @@ html, body {
 
 #TB_ajaxContent .upload-author {
 	margin: 0 0 20px 0;
-}
-
-#plupload-upload-ui {
-	display: inline;
-}
-
-body.bp-user #plupload-upload-ui {
-	display: none;
-	
-}
-
-
-.bp-media-activity-content {
-	display: block;
-	clear: both;
-}
-
-.bp-media-activity-content img {
-	width: 75px;
-	height: 75px;
-}
-
-#buddypress .media-image {
-	margin: 10px 0;
-}
-
-#buddypress #delete-album.error,
-#buddypress .image-action-delete.error {
-	font-size: 14px;
-	float: right;
-	text-decoration: none;
-}
-
-body.media #buddypress a {
-	border: none;
-	cursor: pointer;
-}
-
-#buddypress .image-action-links {
-	font-size: 14px;
-}
-
-#buddypress #percentage {
-	height: 15px;
-	width: 100%;
-	margin: 0 0 10px 0;
-}
-
-#buddypress #percentage progress {
-	height: 15px;
-	width: 100%;
-}
-
-#buddypress .media-activity-tmp {
-	margin: 5px;
-}
-
-#buddypress #image-description {
-	margin: 0 0 10px 0; 
 }

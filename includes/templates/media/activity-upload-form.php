@@ -107,7 +107,8 @@ jQuery(document).ready(function($){
 		up.start();
 	});
 	
-	uploader.bind('UploadProgress', function(up, file) {	        
+	uploader.bind('UploadProgress', function(up, file) {
+		$('#percentage').show();	        
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
@@ -119,8 +120,9 @@ jQuery(document).ready(function($){
 		console.log( imageData);
 		
 		$('#percentage').html('');
+		$('#percentage').hide();
 		
-		$('#attachment-holder').append('<div class="media-activity"><span class="remove-attachment" data-id="' + imageData.id + '">X</span><img class="media-activity-tmp" src="' + imageData.url + '"></div>');
+		$('#attachment-holder').append('<div class="media-activity"><div class="activity-media-image"><img class="activity-media-tmp" src="' + imageData.url + '"><span class="activity-remove-attachment" data-id="' + imageData.id + '">X</span></div></div>');
 			
 		$('#bp-media-attachment-id').val( imageData.id );
 		

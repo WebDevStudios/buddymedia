@@ -82,7 +82,7 @@ function bp_media_loop_profile_filter( $query ) {
 			'author' => $author,
 			'meta_query' => array(
 			   array(
-			       'key'     => 'permission',
+			       'key'     => '_permission',
 			       'value'   => $value,
 			       'compare' => '='
 			   )
@@ -113,7 +113,7 @@ function bp_media_loop_permissions_filter( $query ) {
 			'post_type' => 'bp_media',
 			'meta_query' => array(
 			   array(
-			       'key'     => 'permission',
+			       'key'     => '_permission',
 			       'value'   => $value,
 			       'compare' => '='
 			   )
@@ -217,7 +217,7 @@ function bp_media_create_album_link() {
 	 * @return void
 	 */
 	function bp_media_get_create_album_link() {
-		return bp_media_userlink( bp_displayed_user_id() ) . 'create';
+		return bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/create';
 	}
 	
 	
@@ -536,7 +536,7 @@ function bp_media_album_permission( $permission ) {
 	
 	$action_var = bp_action_variables();
 	
-	$meta = get_post_meta( $action_var[0], 'permission', true );
+	$meta = get_post_meta( $action_var[0], '_permission', true );
 	
 	if( $meta === $permission) {
 		echo 'checked="checkd"';
