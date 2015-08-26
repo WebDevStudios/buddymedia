@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
 		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
-		     alert('Error creating album');
+		     alert(bp_media.bp_media_ajax_create_album_error);
 		   },
 		   success: function(data) {
 		   	console.log(data);
@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
 		      'nonce': jQuery('#nonce').val()
 		   },
 		   error: function() {
-		     alert('Sorry, error editing album.');
+		     alert(bp_media.bp_media_ajax_edit_album_error);
 		   },
 		   success: function(data) {
 		   	console.log(data);
@@ -145,7 +145,7 @@ jQuery(document).ready(function() {
 			      'nonce': jQuery('#nonce').val()
 			   },
 			   error: function() {
-			     alert('Sorry, error deleting album.');
+			     alert(bp_media.bp_media_ajax_create_album_error);
 			   },
 			   success: function(data) {
 			   	console.log(data);

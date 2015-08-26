@@ -30,8 +30,7 @@ class BP_Media_Component extends BP_Component {
 
 		$bp->active_components[$this->id] = '1';
 
-		$this->includes();
-		
+		$this->includes();	
 	}
 
 	/**
