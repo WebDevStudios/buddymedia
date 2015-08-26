@@ -26,3 +26,50 @@ function bp_media_activity_image_upload_form() {
 	bp_media_get_template_part( 'activity-upload-form');
 }
 add_action( 'bp_after_activity_post_form', 'bp_media_activity_image_upload_form' );
+
+
+
+/**
+ * bp_media_register_template_location function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_register_template_location() {
+    return BP_MEDIA_DIR . '/includes/templates/';
+}
+
+
+/**
+ * bp_media_replace_get_post_form_template function.
+ * 
+ * @access public
+ * @param mixed $templates
+ * @param mixed $slug
+ * @param mixed $name
+ * @return void
+ */
+function bp_media_replace_get_post_form_template( $templates, $slug, $name ) {
+
+	 if( 'activity/post-form' != $slug )
+        return $templates;
+         
+    return array( 'media/post-form.php' );
+}
+
+
+/**
+ * bp_media_replace_post_form function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_replace_post_form() {
+     
+    if( function_exists( 'bp_register_template_stack' ) )
+        bp_register_template_stack( 'bp_media_register_template_location' );
+     
+    add_filter( 'bp_get_template_part', 'bp_media_replace_get_post_form_template', 10, 3 );
+     
+}
+add_action( 'bp_init', 'bp_media_replace_post_form' );

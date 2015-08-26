@@ -47,6 +47,9 @@ if ( !class_exists( 'BP_Media' ) ) :
 			$instance->constants();
 			$instance->includes();
 			$instance->setup_actions();
+			
+			define( 'BP_MEDIA_DIR', dirname( __FILE__ ) );
+			
 		}
 
 		// Always return the instance
