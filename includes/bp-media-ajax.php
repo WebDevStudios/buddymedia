@@ -317,7 +317,7 @@ function bp_media_ajax_delete_image(){
 
 	check_ajax_referer( 'edit-album', 'nonce' );
 
-	$user_id =  $_GET['user_id'];
+	$user_id =  ( !empty( $_GET['user_id'] ) ) ?  $_GET['user_id'] : get_current_user_id();
 	$image_id =  $_GET['image_id'];
 	
 	$parent = get_post_field( 'post_parent', $image_id);
