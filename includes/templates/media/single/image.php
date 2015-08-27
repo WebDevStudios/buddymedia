@@ -18,10 +18,14 @@ if( !$photo_id ) return; ?>
 	<div class="comment-column">
 		<div class="upload-author">
 			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $post->post_author ); ?></div>
-			<div class="upload-author-username"><?php echo bp_core_get_username( $post->post_author ) ; ?></div>
-			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
+			<div class="upload-author-username">
+				<?php echo bp_core_get_username( $post->post_author ) ; ?>
+				<span class="upload-time-since">  <?php echo bp_media_time_since( $photo_id ) ; ?></span>
+			</div>
 			<div id="cleared"></div>
-			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>	
+			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>
+			
+			<div class="upload-posted-in"><?php bp_media_posted_in() ; ?></div>
 		</div>
 		
 		<div class="activity-comments">

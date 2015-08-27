@@ -117,6 +117,7 @@ html, body {
 #buddypress .media-pop-wrapper .upload-author, 
 #buddypress .media-pop-wrapper .comment-author {
 	overflow: hidden;
+	position: relative;
 }
 
 #buddypress .media-pop-wrapper .upload-author-avatar, 
@@ -128,6 +129,20 @@ html, body {
 #buddypress .media-pop-wrapper .upload-author-username,
 #buddypress .media-pop-wrapper .comment-author-username {
 	font-weight: bold;
+}
+
+#buddypress .media-pop-wrapper .upload-posted-in {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 12px;
+	color: #777777;
+}
+
+#buddypress .media-pop-wrapper .upload-time-since {
+	color: #777777;
+	font-size: 13px;
+	font-weight: normal;
 }
 
 /* comments list */

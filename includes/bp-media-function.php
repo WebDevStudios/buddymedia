@@ -523,6 +523,27 @@ function bp_media_album_meta( $field = null ) {
 		
 		return;	
 	}
+	
+function bp_media_posted_in() {
+	echo bp_get_media_posted_in();
+}
+
+	function bp_get_media_posted_in() {
+		global $bp;
+	
+		$action_var = bp_action_variables();	
+		$meta = get_post_meta( $action_var[0], 'secondary_item_id', true );
+		
+		if( !$meta ) return;
+		
+		if( $meta !== '0' ) {
+		
+			$group = groups_get_group( array( 'group_id' => (int) $meta ) );
+			return __( 'Posted in the group <a href="' . home_url( $bp->groups->slug . '/' . $group->slug ) . '">'. $group->name .'</a>' , 'bp-media' );
+		}
+		
+		return;
+	}
 
 	
 /**

@@ -77,7 +77,7 @@ jQuery(document).ready(function($){
   
 	uploader.bind('BeforeUpload', function(up, file) {
 		 
-	   	//up.settings.multipart_params['description'] = $('#whats-new').val();
+	   	up.settings.multipart_params['whats-new-post-in'] = $('#whats-new-post-in').val();
 	    
 		console.log( up.settings.multipart_params );
 	});

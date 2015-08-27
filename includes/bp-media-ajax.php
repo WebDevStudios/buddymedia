@@ -89,6 +89,7 @@ function bp_media_photo_activity_attach() {
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 	
 	update_post_meta( $attach_id, 'bp_media', '1' );
+	update_post_meta( $attach_id, 'secondary_item_id', (int) $_POST['whats-new-post-in'] );
 	
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
 	
