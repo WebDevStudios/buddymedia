@@ -611,6 +611,24 @@ function bp_media_image_link( $id ) {
 
 
 /**
+ * bp_media_group_image_link function.
+ * 
+ * @access public
+ * @param mixed $id
+ * @param mixed $user_id
+ * @return void
+ */
+function bp_media_group_image_link( $id, $user_id ) {
+	echo bp_media_get_group_image_link( $id, $user_id );
+}
+
+	function bp_media_get_group_image_link( $id, $user_id ) {
+		return  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $id;
+	}
+
+
+
+/**
  * bp_media_album_id function.
  * 
  * @access public

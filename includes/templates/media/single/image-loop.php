@@ -6,7 +6,7 @@ $attachments = get_attached_media( 'image', $variables[0] );
 
 if( !$attachments ) {
 
-	_e( '<p class="center">There are no images in this album.</p>', 'bp_media' );
+	_e( '<p class="center">There are no images in this album.</p>', 'bp-media' );
 	
 } else {
 	

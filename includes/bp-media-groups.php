@@ -21,7 +21,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
 	     */
 	    function display( $group_id = NULL ) {
 	        $group_id = bp_get_group_id();
-	        echo 'What a cool plugin!';
+	        bp_media_get_template_part( 'group/image-loop');
 	    }
 	 
 	}
@@ -93,3 +93,41 @@ function bp_media_group_is_enabled() {
 	}
 }
 add_action( 'bp_setup_nav', 'bp_media_group_is_enabled' );
+
+
+
+/**
+ * bp_media_group_image_loop function.
+ * 
+ * @access public
+ * @return void
+ */
+function bp_media_group_image_loop() {
+
+	$attachment_args = array(
+        'post_type' => 'attachment',
+        'post_mime_type' => 'image',
+        'post_status' => null, // attachments don't have statuses
+		'meta_query' => array(
+		   array(
+		       'key'     => 'secondary_item_id',
+		       'value'   => bp_get_group_id(),
+		       'compare' => '='
+		   )
+		)
+    );
+    // get the attachments
+    $this_posts_attachments = get_posts( $attachment_args );
+	
+	foreach( $this_posts_attachments as $key => $image ) {
+	
+		$image_url = wp_get_attachment_image( $this_posts_attachments[$key]->ID, 'thumbnail' );
+		
+		echo '<a href="' . bp_media_get_group_image_link( $this_posts_attachments[$key]->ID, $this_posts_attachments[$key]->post_author ) . '">';
+		echo '<li>';
+		echo $image_url;
+		echo '</li>';
+		echo '</a>';
+		
+	}
+}
