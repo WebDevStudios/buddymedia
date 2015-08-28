@@ -113,6 +113,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 		require( dirname( __FILE__ ) . '/includes/bp-media-ajax.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-activity.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-library-filter.php' );
+		require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
 
 	}
 
@@ -203,7 +204,7 @@ endif; // end of line...
 function bpmedia() {
 	return BP_Media::instance();
 }
-add_action( 'bp_include', 'bpmedia');
+add_action( 'bp_include', 'bpmedia', 999);
 
 
 

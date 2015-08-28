@@ -7,6 +7,9 @@
  * @return void
  */
 function bp_media_activity_button() {
+
+	if( bp_is_group() && !groups_get_groupmeta( bp_get_group_id(), 'group_extension_bp_media_setting' ) ) return;
+
 	echo '<div id="plupload-upload-ui">';
 		echo '<input id="plupload-browse-button" class="activity-attach-button" type="button" value="' . esc_attr__("Add Image") . '" class="button" />';	
 	echo '</div>';
