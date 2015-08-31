@@ -346,6 +346,18 @@ body.media #buddypress a {
 }
 
 
+#buddypress div.pagination .pag-links {
+	float: right;
+	margin-right: 10px;
+}
+
+#buddypress div.pagination .pag-links a, 
+#buddypress div.pagination .pag-links span {
+	font-size: 90%;
+	padding: 0 5px;
+}
+
+
 
 /* media pop up window */
 
@@ -410,3 +422,5 @@ body.media #buddypress a {
 #TB_ajaxContent .upload-author {
 	margin: 0 0 20px 0;
 }
+
+

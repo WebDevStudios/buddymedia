@@ -47,11 +47,15 @@ function bp_media_is_action_edit() {
  * @return void
  */
 function bp_media_loop_filter() {
+	global $bp;
 	
+	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+
 	$query = array(
 		'post_type' => 'bp_media',
 		'posts_per_page' => 12,
-		'orderby' => 'modified'
+		'orderby' => 'modified',
+		'paged' => $paged
 	);
 	
 	$query = apply_filters( 'bp_media_loop_filter', $query );
@@ -70,6 +74,8 @@ function bp_media_loop_filter() {
  */
 function bp_media_loop_profile_filter( $query ) {
 
+	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+
 	if( bp_is_user() ) { 
 
 		$author = bp_displayed_user_id();
@@ -80,6 +86,9 @@ function bp_media_loop_profile_filter( $query ) {
 		$query = array(
 			'post_type' => 'bp_media',
 			'author' => $author,
+			'posts_per_page' => 12,
+			'orderby' => 'modified',
+			'paged' => $paged,
 			'meta_query' => array(
 			   array(
 			       'key'     => '_permission',
@@ -105,12 +114,17 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
  */
 function bp_media_loop_permissions_filter( $query ) {
 
+	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+	
 	if( !bp_is_user() ) { 
 	
 		$value = ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
 	
 		$query = array(
 			'post_type' => 'bp_media',
+			'posts_per_page' => 12,
+			'orderby' => 'modified',
+			'paged' => $paged,
 			'meta_query' => array(
 			   array(
 			       'key'     => '_permission',
@@ -894,3 +908,72 @@ function bp_is_friend_boolean() {
 	}
 	return false;
 }
+
+
+
+
+function bp_media_pagination_count( $query ) {
+	echo bp_media_get_pagination_count( $query );
+}
+	/**
+	 * Generate the "Viewing x-y of z groups" pagination message.
+	 *
+	 * @return string
+	 */
+	function bp_media_get_pagination_count( $query ) {
+		
+		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+		$posts_per_page = $query->query['posts_per_page'];
+		
+		$start_num = intval( ( $paged - 1 ) * $posts_per_page ) + 1;
+		$from_num  = bp_core_number_format( $start_num );
+		$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
+		$total     = bp_core_number_format( $query->found_posts );
+	
+		//var_dump( ( $query->post_count * $query->max_num_pages ) );
+	
+		if ( 1 == $query->found_posts ) {
+			$message = __( 'Viewing 1 album', 'bp-media' );
+		} else {
+			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s albums', 'Viewing %1$s - %2$s of %3$s albums', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
+		}
+
+		/**
+		 * Filters the "Viewing x-y of z groups" pagination message.
+		 *
+		 * @param string $message  "Viewing x-y of z groups" text.
+		 * @param string $from_num Total amount for the low value in the range.
+		 * @param string $to_num   Total amount for the high value in the range.
+		 * @param string $total    Total amount of groups found.
+		 */
+		return apply_filters( 'bp_media_get_pagination_count', $message, $from_num, $to_num, $total );
+	}
+
+
+function bp_media_pagination_links( $query ) {
+	echo bp_media_get_pagination_links( $query );
+}
+
+	function bp_media_get_pagination_links( $query ) {
+	
+			$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+	
+			$pag_args = array(
+				'mpage' => '%#%'
+			);
+			
+			if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
+				$base = remove_query_arg( 's', wp_get_referer() );
+			} else {
+				$base = '';
+			}
+			
+			echo paginate_links( array(
+				'base'      => add_query_arg( $pag_args, $base ),
+				'format'    => '',
+				'total'     => ceil( (int) $query->found_posts / (int)  $query->query['posts_per_page'] ),
+				'current'   => $paged,
+				'prev_text' => _x( '&larr;', 'Album pagination previous text', 'bp-media' ),
+				'next_text' => _x( '&rarr;', 'Album pagination next text', 'bp-media' ),
+			) );
+	}

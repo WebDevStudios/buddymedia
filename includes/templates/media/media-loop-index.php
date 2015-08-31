@@ -16,4 +16,22 @@
 		<?php endif; ?>
 	
 	</ul>
+
+
+</div>
+
+<div id="pag-bottom" class="pagination">
+
+	<div class="pag-count" id="group-dir-count-bottom">
+
+		<?php bp_media_pagination_count( $query ); ?>
+
+	</div>
+
+	<div class="pag-links" id="group-dir-pag-bottom">
+
+		<?php bp_media_pagination_links( $query ); ?>
+
+	</div>
+
 </div>

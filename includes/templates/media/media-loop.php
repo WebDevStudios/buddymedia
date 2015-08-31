@@ -1,4 +1,4 @@
-<?php $query = new WP_Query( bp_media_loop_filter() ); add_thickbox(); ?>
+<?php $query = new WP_Query( bp_media_loop_filter() ); ?>
 
 <div class="media no-ajax" role="main">
 
@@ -30,3 +30,19 @@
 	
 	<div id="pop"></div>
 </div>
+
+<div id="pag-bottom" class="pagination">
+
+	<div class="pag-count" id="group-dir-count-bottom">
+
+		<?php bp_media_pagination_count( $query ); ?>
+
+	</div>
+
+	<div class="pag-links" id="group-dir-pag-bottom">
+
+		<?php bp_media_pagination_links( $query ); ?>
+
+	</div>
+
+</div
