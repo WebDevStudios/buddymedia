@@ -14,7 +14,7 @@
 						<?php echo wp_get_attachment_image( get_the_ID(), 'thumbnail' ); ?>
 						
 						<?php if( bp_media_is_action_edit() ) : ?>
-							<div class="image-action-links" data-id="<?php echo $get_the_ID(); ?>">
+							<div class="image-action-links" data-id="<?php echo get_the_ID(); ?>">
 								<a href="<?php bp_media_edit_image_link( get_the_ID() ); ?>" class="image-action-edit"><?php _e( 'edit', 'bp_media' ) ;?></a> 
 								<a class="image-action-delete error"><?php _e( 'delete', 'bp_media' ) ;?></a>
 							</div>

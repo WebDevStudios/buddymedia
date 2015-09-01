@@ -81,7 +81,7 @@ function bp_media_loop_profile_filter( $query ) {
 		$author = bp_displayed_user_id();
 		$action = bp_current_action();
 		$action_var = bp_action_variables();
-				
+						
 		$value = ( 'media' === $action ) ? 'public' : $action ;
 		
 		$query = array(
@@ -938,6 +938,8 @@ function bp_media_pagination_count( $query ) {
 	 * @return string
 	 */
 	function bp_media_get_pagination_count( $query ) {
+	
+		$action = ( 'media' === bp_current_action() ) ? 'album' : 'image' ;
 		
 		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
 		$posts_per_page = $query->query['posts_per_page'];
@@ -947,12 +949,12 @@ function bp_media_pagination_count( $query ) {
 		$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
 		$total     = bp_core_number_format( $query->found_posts );
 	
-		//var_dump( ( $query->post_count * $query->max_num_pages ) );
-	
+		
+		
 		if ( 1 == $query->found_posts ) {
-			$message = __( 'Viewing 1 album', 'bp-media' );
+			$message = __( 'Viewing 1 ' . $action, 'bp-media' );
 		} else {
-			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s albums', 'Viewing %1$s - %2$s of %3$s albums', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
+			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s '.$action.'s', 'Viewing %1$s - %2$s of %3$s '.$action.'s', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
 		}
 
 		/**
