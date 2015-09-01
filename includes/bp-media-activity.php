@@ -28,7 +28,7 @@ add_action( 'bp_activity_post_form_whats-new-options', 'bp_media_activity_button
 function bp_media_activity_image_upload_form() {
 	bp_media_get_template_part( 'activity-upload-form');
 }
-add_action( 'bp_after_activity_post_form', 'bp_media_activity_image_upload_form' );
+add_action( 'bp_activity_post_form_content', 'bp_media_activity_image_upload_form' );
 
 
 

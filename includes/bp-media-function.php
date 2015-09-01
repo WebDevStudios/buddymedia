@@ -938,7 +938,7 @@ function bp_media_pagination_count( $query ) {
 	echo bp_media_get_pagination_count( $query );
 }
 	/**
-	 * Generate the "Viewing x-y of z groups" pagination message.
+	 * Generate the "Viewing x-y of z albums" pagination message.
 	 *
 	 * @return string
 	 */
@@ -960,12 +960,12 @@ function bp_media_pagination_count( $query ) {
 		}
 
 		/**
-		 * Filters the "Viewing x-y of z groups" pagination message.
+		 * Filters the "Viewing x-y of z albums" pagination message.
 		 *
-		 * @param string $message  "Viewing x-y of z groups" text.
+		 * @param string $message  "Viewing x-y of z album" text.
 		 * @param string $from_num Total amount for the low value in the range.
 		 * @param string $to_num   Total amount for the high value in the range.
-		 * @param string $total    Total amount of groups found.
+		 * @param string $total    Total amount of albums found.
 		 */
 		return apply_filters( 'bp_media_get_pagination_count', $message, $from_num, $to_num, $total );
 	}
@@ -976,7 +976,7 @@ function bp_media_pagination_count( $query ) {
  * 
  * @access public
  * @param mixed $query
- * @return string
+ * @return void
  */
 function bp_media_pagination_links( $query ) {
 	echo bp_media_get_pagination_links( $query );

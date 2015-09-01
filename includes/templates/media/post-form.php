@@ -20,12 +20,12 @@
 	 */
 	do_action( 'bp_before_activity_post_form' ); ?>
 
+	<div id="whats-new-content">
 	<div id="whats-new-avatar">
 		<a href="<?php echo bp_loggedin_user_domain(); ?>">
 			<?php bp_loggedin_user_avatar( 'width=' . bp_core_avatar_thumb_width() . '&height=' . bp_core_avatar_thumb_height() ); ?>
 		</a>
 	</div>
-	<div id="whats-new-content">
 		<div id="whats-new-textarea">
 			<textarea class="bp-suggestions" name="whats-new" id="whats-new" cols="50" rows="10" placeholder="<?php if ( bp_is_group() )
 		printf( __( "What's new in %s, %s?", 'buddypress' ), bp_get_group_name(), bp_get_user_firstname( bp_get_loggedin_user_fullname() ) );
@@ -35,7 +35,10 @@
 				<?php if ( bp_is_group() ) : ?>data-suggestions-group-id="<?php echo esc_attr( (int) bp_get_current_group_id() ); ?>" <?php endif; ?>
 			><?php if ( isset( $_GET['r'] ) ) : ?>@<?php echo esc_textarea( $_GET['r'] ); ?> <?php endif; ?></textarea>
 		</div>
-
+		
+		<?php do_action( 'bp_activity_post_form_content' ); ?>
+		
+	</div><!-- #whats-new-content -->
 		<div id="whats-new-options">
 			<div id="whats-new-submit">
 				<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="<?php esc_attr_e( 'Post Update', 'buddypress' ); ?>" />
@@ -80,7 +83,7 @@
 			do_action( 'bp_activity_post_form_options' ); ?>
 
 		</div><!-- #whats-new-options -->
-	</div><!-- #whats-new-content -->
+	
 
 	<?php wp_nonce_field( 'post_update', '_wpnonce_post_update' ); ?>
 	<?php
