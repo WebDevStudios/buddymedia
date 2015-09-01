@@ -970,8 +970,8 @@ function bp_media_pagination_count( $query ) {
 	 */
 	function bp_media_get_pagination_count( $query ) {
 	
-		$action = ( 'media' == bp_current_action() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
-		
+		$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
+				
 		if( bp_is_directory() && !bp_current_action() ) {
 			$action = __('album', 'bp-media');
 		}
