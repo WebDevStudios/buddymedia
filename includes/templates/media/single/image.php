@@ -3,7 +3,7 @@ $action_var = bp_action_variables();
 $photo_id = $action_var[0];
 $post = get_post( $photo_id );
 
-if( !$photo_id ) return; ?>
+if( $post ) : ?>
 
 <div class="media-pop-wrapper">
 	<div class="photo-column">
@@ -48,7 +48,7 @@ if( !$photo_id ) return; ?>
 			    ?>
 			</ul>
 		</div>
-		<?php if( bp_media_user_can_access() ) : ?>
+		<?php if( is_user_logged_in() ) : ?>
 		<div class="image-reply-form">
 			<input id="upload-comment" type="text">
 			<input id="upload-user-id" type="hidden" value="<?php echo bp_loggedin_user_id(); ?>">
@@ -58,5 +58,8 @@ if( !$photo_id ) return; ?>
 		</div>
 		<?php endif ; ?>
 	</div>
+	<?php else : ?>
+		<div class="center"><?php _e( 'No image found.', 'bp_media' ) ;?></div>
+	<?php endif ; ?>
 	<div id="cleared"></div>
 </div>

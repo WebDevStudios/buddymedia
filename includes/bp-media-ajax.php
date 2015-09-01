@@ -44,9 +44,6 @@ function bp_media_upload_photo() {
 	);
 	
 	wp_send_json( $data );
-	
-	
-	exit;
 }
 add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 

@@ -209,6 +209,10 @@ body.groups #buddypress .media-activity {
 	margin-top: -40px;	
 }
 
+body.album #plupload-upload-ui {
+	display: none;
+}
+
 #buddypress .activity-media-image {
 	position: relative;
 	width: 90px;

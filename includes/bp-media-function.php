@@ -80,13 +80,14 @@ function bp_media_loop_profile_filter( $query ) {
 
 		$author = bp_displayed_user_id();
 		$action = bp_current_action();
-		
+		$action_var = bp_action_variables();
+				
 		$value = ( 'media' === $action ) ? 'public' : $action ;
 		
 		$query = array(
 			'post_type' => 'bp_media',
 			'author' => $author,
-			'posts_per_page' => 12,
+			'posts_per_page' => 11,
 			'orderby' => 'modified',
 			'paged' => $paged,
 			'meta_query' => array(
@@ -97,6 +98,22 @@ function bp_media_loop_profile_filter( $query ) {
 			   )
 			)
 		);
+		
+		
+		if( 'album' === $action ) {
+				
+			$query = array(
+				'post_type' => 'attachment',
+				'post_parent' => $action_var[0],
+				'post_status' => 'inherit',
+				'posts_per_page' => 12,
+				'orderby' => 'modified',
+				'paged' => $paged,
+			);
+			
+		}
+		
+		
 	
 	}
 

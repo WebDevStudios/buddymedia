@@ -109,7 +109,8 @@ jQuery(document).ready(function($){
 		up.start();
 	});
 	
-	uploader.bind('UploadProgress', function(up, file) {	        
+	uploader.bind('UploadProgress', function(up, file) {	
+		$('#percentage').show();        
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
@@ -123,17 +124,15 @@ jQuery(document).ready(function($){
 		console.log( imageData);
 		
 		$('#percentage').html('');
+		$('#percentage').hide();
 		
-		//$('#plupload-upload-ui').append('<div class="media-user"><img class="media-user-tmp" src="' + imageData.url + '"></div>');
+		$('#plupload-upload-ui').append('<div class="media-user"><img class="media-user-tmp" src="' + imageData.url + '"></div>');
 		
 		added_data.push(imageData );
 		
 		$('#bp-media-images').val( added_data );
 		
 		console.log( added_data );
-	
-		
-	
 	});
 	
 	uploader.bind('UploadComplete', function(up, file, data) {

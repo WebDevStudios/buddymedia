@@ -40,7 +40,6 @@
 			<div id="whats-new-submit">
 				<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="<?php esc_attr_e( 'Post Update', 'buddypress' ); ?>" />
 			</div>
-			
 			<?php do_action( 'bp_activity_post_form_whats-new-options' ); ?>
 
 			<?php if ( bp_is_active( 'groups' ) && !bp_is_my_profile() && !bp_is_group() ) : ?>
