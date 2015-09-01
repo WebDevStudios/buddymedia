@@ -109,6 +109,7 @@ html, body {
 /*comments header */
 #buddypress .media-pop-wrapper .upload-author {
 	border-bottom: 1px solid #efefef;
+	padding: 0 0 10px 0;
 }
 
 #buddypress .media-pop-wrapper .upload-author, 
