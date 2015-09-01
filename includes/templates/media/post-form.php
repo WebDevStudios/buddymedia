@@ -21,11 +21,11 @@
 	do_action( 'bp_before_activity_post_form' ); ?>
 
 	<div id="whats-new-content">
-	<div id="whats-new-avatar">
-		<a href="<?php echo bp_loggedin_user_domain(); ?>">
-			<?php bp_loggedin_user_avatar( 'width=' . bp_core_avatar_thumb_width() . '&height=' . bp_core_avatar_thumb_height() ); ?>
-		</a>
-	</div>
+		<div id="whats-new-avatar">
+			<a href="<?php echo bp_loggedin_user_domain(); ?>">
+				<?php bp_loggedin_user_avatar( 'width=' . bp_core_avatar_thumb_width() . '&height=' . bp_core_avatar_thumb_height() ); ?>
+			</a>
+		</div>
 		<div id="whats-new-textarea">
 			<textarea class="bp-suggestions" name="whats-new" id="whats-new" cols="50" rows="10" placeholder="<?php if ( bp_is_group() )
 		printf( __( "What's new in %s, %s?", 'buddypress' ), bp_get_group_name(), bp_get_user_firstname( bp_get_loggedin_user_fullname() ) );
