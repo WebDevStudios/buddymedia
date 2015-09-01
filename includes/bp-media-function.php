@@ -927,8 +927,13 @@ function bp_is_friend_boolean() {
 }
 
 
-
-
+/**
+ * bp_media_pagination_count function.
+ * 
+ * @access public
+ * @param mixed $query
+ * @return string
+ */
 function bp_media_pagination_count( $query ) {
 	echo bp_media_get_pagination_count( $query );
 }
@@ -940,7 +945,6 @@ function bp_media_pagination_count( $query ) {
 	function bp_media_get_pagination_count( $query ) {
 	
 		$action = ( 'media' === bp_current_action() ) ? 'album' : 'image' ;
-		
 		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
 		$posts_per_page = $query->query['posts_per_page'];
 		
@@ -949,8 +953,6 @@ function bp_media_pagination_count( $query ) {
 		$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
 		$total     = bp_core_number_format( $query->found_posts );
 	
-		
-		
 		if ( 1 == $query->found_posts ) {
 			$message = __( 'Viewing 1 ' . $action, 'bp-media' );
 		} else {
@@ -969,6 +971,13 @@ function bp_media_pagination_count( $query ) {
 	}
 
 
+/**
+ * bp_media_pagination_links function.
+ * 
+ * @access public
+ * @param mixed $query
+ * @return string
+ */
 function bp_media_pagination_links( $query ) {
 	echo bp_media_get_pagination_links( $query );
 }
@@ -992,7 +1001,7 @@ function bp_media_pagination_links( $query ) {
 				'format'    => '',
 				'total'     => ceil( (int) $query->found_posts / (int)  $query->query['posts_per_page'] ),
 				'current'   => $paged,
-				'prev_text' => _x( '&larr;', 'Album pagination previous text', 'bp-media' ),
-				'next_text' => _x( '&rarr;', 'Album pagination next text', 'bp-media' ),
+				'prev_text' => _x( '&larr;', 'Media pagination previous text', 'bp-media' ),
+				'next_text' => _x( '&rarr;', 'Media pagination next text', 'bp-media' ),
 			) );
 	}
