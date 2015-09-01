@@ -131,6 +131,7 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
  */
 function bp_media_loop_permissions_filter( $query ) {
 
+	$action = bp_current_action();
 	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
 	
 	if( !bp_is_user() ) { 
@@ -150,6 +151,31 @@ function bp_media_loop_permissions_filter( $query ) {
 			   )
 			)
 		);
+		
+	}
+	
+	
+	if( bp_is_group() ) {
+	
+		if( 'media' === $action ) {
+				
+			$query = array(
+				'post_type' => 'attachment',
+				'post_parent' => false,
+				'post_status' => 'inherit',
+				'posts_per_page' => 12,
+				'orderby' => 'modified',
+				'paged' => $paged,
+				'meta_query' => array(
+				   array(
+				       'key'     => 'secondary_item_id',
+				       'value'   => bp_get_group_id(),
+				       'compare' => '='
+				   )
+				)
+			);
+			
+		}
 		
 	}
 
@@ -944,7 +970,12 @@ function bp_media_pagination_count( $query ) {
 	 */
 	function bp_media_get_pagination_count( $query ) {
 	
-		$action = ( 'media' === bp_current_action() ) ? 'album' : 'image' ;
+		$action = ( 'media' == bp_current_action() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
+		
+		if( bp_is_directory() && !bp_current_action() ) {
+			$action = __('album', 'bp-media');
+		}
+		
 		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
 		$posts_per_page = $query->query['posts_per_page'];
 		
