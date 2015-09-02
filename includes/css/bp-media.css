@@ -290,6 +290,11 @@ body.album #plupload-upload-ui {
 #whats-new-textarea {
 	float: left;
 	width: 90%;
+	
+}
+
+#buddypress form#whats-new-form textarea {
+	outline: none;
 }
 
 #whats-new-avatar  {
@@ -352,7 +357,8 @@ body.media #buddypress a {
 }
 
 #buddypress #attachment-holder {
-	display: none;
+	clear: both;
+	float: left;
 }
 
 #buddypress #image-tmp {
