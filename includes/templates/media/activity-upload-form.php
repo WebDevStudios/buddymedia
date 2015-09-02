@@ -123,13 +123,12 @@ jQuery(document).ready(function($){
 		
 		setTimeout(function() {
 		
-		
 			$('#percentage').html('');
 			$('#percentage').hide();
 			
 			$('#attachment-holder').html('<div class="media-activity"><div class="activity-media-image"><img class="activity-media-tmp" src="' + imageData.url + '"><span class="activity-remove-attachment" data-id="' + imageData.id + '">X</span></div></div>');
 		
-		}, 500);
+		}, 100);
 			
 		$('#bp-media-attachment-id').val( imageData.id );
 		

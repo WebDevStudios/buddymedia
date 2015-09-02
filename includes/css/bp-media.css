@@ -351,6 +351,10 @@ body.media #buddypress a {
 	font-size: 14px;
 }
 
+#buddypress #attachment-holder {
+	display: none;
+}
+
 #buddypress #image-tmp {
 	width: 90px;
 	height: 90px;
@@ -365,31 +369,12 @@ body.media #buddypress a {
 	display: none;
 	height: 10px;
 	width: 100%;
-	margin: 25px 0 0 0;
+	margin: 32px 0 0 0;
 }
 
 #buddypress #percentage progress {
 	height: 100%;
 	width: 100%;
-	color: #e2e2e2;
-}
-
-#buddypress #percentage progress[value] {
-  /* Reset the default appearance */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-   appearance: none;
-}
-
-#buddypress #percentage progress::-webkit-progress-value {
-	 background-color: #e2e2e2;
-}
-#buddypress #percentage progress::-webkit-progress-bar {
-	 background-color: #e2e2e2;
-}
-
-#buddypress #percentage progress::-moz-progress-bar {
-	background-color: #e2e2e2;
 }
 
 #buddypress .activity-media-tmp {
