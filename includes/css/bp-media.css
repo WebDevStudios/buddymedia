@@ -223,7 +223,7 @@ body.album #plupload-upload-ui {
 	top: 3px;
 	right: 3px;
 	color: #ffffff;
-	background: #000000;
+	background: #909090;
 	padding: 0 8px;
 	border-radius: 50%;
 }
@@ -351,16 +351,45 @@ body.media #buddypress a {
 	font-size: 14px;
 }
 
+#buddypress #image-tmp {
+	width: 90px;
+	height: 90px;
+	background: #fbfbfb;
+	border: 1px solid #efefef;
+	margin: 20px 10px 0 10px;
+	float: left;
+	padding: 1px;
+}
+
 #buddypress #percentage {
 	display: none;
-	height: 15px;
+	height: 10px;
 	width: 100%;
-	margin: 0 0 10px 0;
+	margin: 25px 0 0 0;
 }
 
 #buddypress #percentage progress {
-	height: 15px;
+	height: 100%;
 	width: 100%;
+	color: #e2e2e2;
+}
+
+#buddypress #percentage progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
+}
+
+#buddypress #percentage progress::-webkit-progress-value {
+	 background-color: #e2e2e2;
+}
+#buddypress #percentage progress::-webkit-progress-bar {
+	 background-color: #e2e2e2;
+}
+
+#buddypress #percentage progress::-moz-progress-bar {
+	background-color: #e2e2e2;
 }
 
 #buddypress .activity-media-tmp {

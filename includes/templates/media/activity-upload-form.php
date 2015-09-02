@@ -11,7 +11,7 @@
 
 
 
-<div id="percentage"></div>
+
 <div id="attachment-holder"></div>
 
 <?php
@@ -108,6 +108,8 @@ jQuery(document).ready(function($){
 	});
 	
 	uploader.bind('UploadProgress', function(up, file) {
+		
+		$('#attachment-holder').html('<div id="image-tmp"><div id="percentage"></div></div>');
 		$('#percentage').show();	        
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
@@ -119,10 +121,15 @@ jQuery(document).ready(function($){
 		var imageData = JSON.parse(data.response);
 		console.log( imageData);
 		
-		$('#percentage').html('');
-		$('#percentage').hide();
+		setTimeout(function() {
 		
-		$('#attachment-holder').append('<div class="media-activity"><div class="activity-media-image"><img class="activity-media-tmp" src="' + imageData.url + '"><span class="activity-remove-attachment" data-id="' + imageData.id + '">X</span></div></div>');
+		
+			$('#percentage').html('');
+			$('#percentage').hide();
+			
+			$('#attachment-holder').html('<div class="media-activity"><div class="activity-media-image"><img class="activity-media-tmp" src="' + imageData.url + '"><span class="activity-remove-attachment" data-id="' + imageData.id + '">X</span></div></div>');
+		
+		}, 500);
 			
 		$('#bp-media-attachment-id').val( imageData.id );
 		
