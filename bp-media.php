@@ -1,24 +1,21 @@
 <?php
 /*
-Plugin Name: BP Media Component
+Plugin Name: BuddyMedia
 Plugin URI: https://github.com/WebDevStudios/WDS-BP-Media
-Description: Media component for BuddyPress.
+Description: Media component for BuddyPress from WebDevStudios.
 Version: 1.0
 Tested up to: 4.2
 Requires at least: 3.9
 License: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
 Author: WebDevStudios
 Author URI: https://webdevstudios.com
-Network: True
-Text Domain: bp_media
+Text Domain: bp-media
 */
 
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-
-/** Constants *****************************************************************/
 
 if ( !class_exists( 'BP_Media' ) ) :
 
@@ -201,10 +198,10 @@ endif; // end of line...
  * @access public
  * @return void
  */
-function bpmedia() {
+function buddymedia() {
 	return BP_Media::instance();
 }
-add_action( 'bp_include', 'bpmedia', 999);
+add_action( 'bp_include', 'buddymedia', 999);
 
 
 

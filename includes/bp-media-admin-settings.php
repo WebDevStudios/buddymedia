@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * bp_media_admin_settings function.
  * 
