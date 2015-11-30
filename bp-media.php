@@ -44,9 +44,9 @@ if ( !class_exists( 'BP_Media' ) ) :
 			$instance->constants();
 			$instance->includes();
 			$instance->setup_actions();
-			
+
 			define( 'BP_MEDIA_DIR', dirname( __FILE__ ) );
-			
+
 		}
 
 		// Always return the instance
@@ -111,6 +111,7 @@ if ( !class_exists( 'BP_Media' ) ) :
 		require( dirname( __FILE__ ) . '/includes/bp-media-activity.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-library-filter.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
+		require( dirname( __FILE__ ) . '/includes/bp-media-options.php' );
 
 	}
 
@@ -135,11 +136,11 @@ if ( !class_exists( 'BP_Media' ) ) :
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-	
-	
+
+
 		wp_register_script( 'bp-media-js', plugins_url( 'includes/js/bp-media.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media.js' ) );
-		
-		
+
+
 		// Localize the script with new data
 		$translation_array = array(
 			'bp_media_ajax_create_album_error' => __( 'Error creating album', 'bp-media' ),
@@ -147,12 +148,12 @@ if ( !class_exists( 'BP_Media' ) ) :
 			'bp_media_ajax_edit_album_error' => __( 'Error editing album', 'bp-media' )
 		);
 		wp_localize_script( 'bp-media-js', 'bp_media', $translation_array );
-	
-	
+
+
 		wp_enqueue_script( 'bp-media-js');
-		
-		
-		wp_enqueue_style( 'bp-media-css', plugins_url( 'includes/css/bp-media.css' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/css/bp-media.css' ) );		
+
+
+		wp_enqueue_style( 'bp-media-css', plugins_url( 'includes/css/bp-media.css' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/css/bp-media.css' ) );
 
 	}
 
