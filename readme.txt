@@ -11,6 +11,8 @@ Media component for BuddyPress
 == Description ==
 Adds a media component to BuddyPress to allow users to attach media to activity postings and user generated media albums.
 
+[Pluginize](https://pluginize.com/?utm_source=buddy-media&utm_medium=text&utm_campaign=wporg) was launched in 2016 by [WebDevStudios](https://webdevstudios.com/) to promote, support, and house all of their [WordPress products](https://pluginize.com/shop/?utm_source=buddy-media&utm_medium=text&utm_campaign=wporg). Pluginize is dedicated to creating products that make your [BuddyPress site](https://pluginize.com/product-category/buddypress/?utm_source=buddy-media&utm_medium=text&utm_campaign=wporg) easy to manage, without having to touch a line of code. Pluginize also provides [ongoing support and development for WordPress community favorites like CPTUI](https://wordpress.org/plugins/custom-post-type-ui/), [CMB2](https://wordpress.org/plugins/cmb2/), and more.
+
 == Installation ==
 = Automatic Installation =
 1. From inside your WordPress administration panel, visit \'Plugins -> Add New\'
