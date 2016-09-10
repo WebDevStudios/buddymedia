@@ -55,23 +55,23 @@ $plupload_init = apply_filters('plupload_init', $plupload_init); ?>
 jQuery(document).ready(function($){
 
 	var $plupload_init = <?php echo json_encode($plupload_init); ?>;
-	
+
 	// create the uploader and pass the config from above
 	var uploader = new plupload.Uploader($plupload_init);
-	
+
 	//console.log( $plupload_init );
-	
+
 	// checks if browser supports drag and drop upload, makes some css adjustments if necessary
 	uploader.bind('Init', function(up){
-			
+
 		var uploaddiv = $('#plupload-upload-ui');
-		
+
 		if(up.features.dragdrop){
 		  uploaddiv.addClass('drag-drop');
 		    $('#drag-drop-area')
 		      .bind('dragover.wp-uploader', function(){ uploaddiv.addClass('drag-over'); })
 		      .bind('dragleave.wp-uploader, drop.wp-uploader', function(){ uploaddiv.removeClass('drag-over'); });
-		
+
 		}else{
 		  uploaddiv.removeClass('drag-drop');
 		  $('#drag-drop-area').unbind('.wp-uploader');
@@ -79,30 +79,30 @@ jQuery(document).ready(function($){
 	});
 
   uploader.init();
-  
+
 	uploader.bind('BeforeUpload', function(up, file) {
-		 
+
 	   // up.settings.multipart_params['description'] = $('#image-description').val();
-	    
+
 		console.log( up.settings.multipart_params );
 	});
-	
+
 	// a file was added in the queue
 	uploader.bind('FilesAdded', function(up, files){
-		
+
 		var hundredmb = 100 * 1024 * 1024, max = parseInt(up.settings.max_file_size, 10);
-		
+
 		plupload.each(files, function(file){
 		  if (max > hundredmb && file.size > hundredmb && up.runtime != 'html5'){
 		    // file size error?
-		
+
 		  }else{
-		
+
 		    // a file was added, you may want to update your DOM here...
 		    console.log(file);
 		  }
 		});
-		
+
 		up.refresh();
 		up.start();
 	});
@@ -112,33 +112,33 @@ jQuery(document).ready(function($){
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
-	
+
 	var added_data = Array();
 
 	// a file was uploaded
 	uploader.bind('FileUploaded', function(up, file, data) {
-	
+
 		var imageData = JSON.parse(data.response);
 		console.log( imageData);
-		
+
 		$('#percentage').html('');
 		$('#percentage').hide();
-		
+
 		$('#plupload-upload-ui').append('<div class="media-user"><img class="media-user-tmp" src="' + imageData.url + '"></div>');
-		
+
 		added_data.push(imageData );
-		
+
 		$('#bp-media-images').val( added_data );
 		
 		console.log( added_data );
 	});
-	
+
 	uploader.bind('UploadComplete', function(up, file, data) {
-		
+
 		window.location.reload();
-	
+
 	});
 
-});   
+});
 
 </script>
