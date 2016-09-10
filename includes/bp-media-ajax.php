@@ -361,14 +361,14 @@ function bp_media_ajax_add_comment(){
 	$data = apply_filters( 'bp_media_ajax_add_comment', $data );
 
 	$comment_id = wp_insert_comment( $data );
-	$comment = array( get_comment( $comment_id ) );
-	
-    wp_list_comments(array(
-    	'type' => 'comment',
-    	'callback' => 'bp_media_comments',
-        'per_page' => 10, //Allow comment pagination
-        'reverse_top_level' => false
-    ), $comment );
+	$comment    = array( get_comment( $comment_id ) );
+
+	wp_list_comments( array(
+		'type'              => 'comment',
+		'callback'          => 'bp_media_comments',
+		'per_page'          => 10, // Allow comment pagination.
+		'reverse_top_level' => false,
+	), $comment );
 
 	die();
 
