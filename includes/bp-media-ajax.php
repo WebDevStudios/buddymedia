@@ -1,10 +1,7 @@
 <?php 
 
 /**
- * bp_media_upload_photo function.
- * 
- * @access public
- * @return void
+ * The bp_media_upload_photo function.
  */
 function bp_media_upload_photo() {
 
@@ -15,8 +12,8 @@ function bp_media_upload_photo() {
 	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'photo_gallery_upload' ) );
 	
 	$wp_upload_dir = wp_upload_dir();
-	
-	//Adds file as attachment to WordPress
+
+	// Adds file as attachment to WordPress.
 	$attachment = array(
 		'guid'           	=> $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
 		'post_mime_type' 	=> $status['type'],
@@ -51,24 +48,21 @@ add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
 
 
 /**
- * bp_media_photo_activity_attach function.
- * 
- * @access public
- * @return void
+ * The bp_media_photo_activity_attach function.
  */
 function bp_media_photo_activity_attach() {
 
 	check_ajax_referer('photo-upload');
-	
-	// upload file
+
+	// Upload file.
 	$file = $_FILES['async-upload'];
 	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'bp_media_photo_activity_attach' ) );
 	
 	if( ! $album_id = bp_media_get_activity_album_id( $_POST['user_id'] ) ) exit;
 		
 	$wp_upload_dir = wp_upload_dir();
-	
-	//Adds file as attachment to WordPress
+
+	// Adds file as attachment to WordPress.
 	$attachment = array(
 		'guid'           	=> $wp_upload_dir['url'] . '/' . basename( $status['file'] ), 
 		'post_mime_type' 	=> $status['type'],
@@ -104,11 +98,11 @@ add_action('wp_ajax_bp_media_photo_activity_attach', 'bp_media_photo_activity_at
 
 
 /**
- * bp_media_get_activity_album_id function.
- * 
- * @access public
- * @param mixed $user_id
- * @return void
+ * The bp_media_get_activity_album_id function.
+ *
+ * @param mixed $user_id User ID.
+ *
+ * @return int
  */
 function bp_media_get_activity_album_id( $user_id ) {
 
@@ -132,10 +126,10 @@ function bp_media_get_activity_album_id( $user_id ) {
 	);
 	
 	add_filter('bp_activity_type_before_save', '__return_false', 9999 );
-	
-	// Insert the post into the database
-	$post = wp_insert_post( $my_post );	
-	
+
+	// Insert the post into the database.
+	$post = wp_insert_post( $my_post );
+
 	add_post_meta( $post, '_activity_album', true, true );
 	add_post_meta( $post, '_permission', 'public', true );
 		
@@ -144,10 +138,7 @@ function bp_media_get_activity_album_id( $user_id ) {
 
 
 /**
- * bp_media_get_image function.
- * 
- * @access public
- * @return void
+ * The bp_media_get_image function.
  */
 function bp_media_get_image(){
 	
@@ -167,10 +158,7 @@ add_action('wp_ajax_nopriv_bp_media_get_image', 'bp_media_get_image');
 
 
 /**
- * bp_media_add_album function.
- * 
- * @access public
- * @return void
+ * The bp_media_add_album function.
  */
 function bp_media_add_album(){
 	
@@ -184,10 +172,7 @@ add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
 
 
 /**
- * bp_media_ajax_create_album function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_create_album function.
  */
 function bp_media_ajax_create_album(){
 
@@ -198,7 +183,7 @@ function bp_media_ajax_create_album(){
 	$permission =  ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
 	$user_id =  $_GET['user_id'];
 
-	// Create post object
+	// Create post object.
 	$my_post = array(
 	  'post_title'    => sanitize_text_field( $title ),
 	  'post_content'  => sanitize_text_field( $content ),
@@ -211,16 +196,16 @@ function bp_media_ajax_create_album(){
 	if( 'public' !== $permission ) {
 		add_filter('bp_activity_type_before_save', '__return_false', 9999 );
 	}
-	
-	// Insert the post into the database
+
+	// Insert the post into the database.
 	$post = wp_insert_post( $my_post );
 	
 	// add permission meta
 	if( $post ) {
 		update_post_meta( $post, '_permission', $permission );
 	}
-	
-	// return album link
+
+	// Return album link.
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
 	);
@@ -234,10 +219,7 @@ add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
 
 
 /**
- * bp_media_ajax_edit_album function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_edit_album function.
  */
 function bp_media_ajax_edit_album(){
 
@@ -255,15 +237,15 @@ function bp_media_ajax_edit_album(){
 	  'post_title'    => sanitize_text_field( $title ),
 	  'post_content'  => sanitize_text_field( $content ),
 	);
-	
-	// Update the post into the database
+
+	// Update the post into the database.
 	$post = wp_update_post( $my_post );
 	
 	if( $post ) {
 		update_post_meta( $post, '_permission', $permission );
 	}
-	
-	// return post id
+
+	// Return post id.
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '/edit'
 	);
@@ -275,12 +257,8 @@ add_action('wp_ajax_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
 //add_action('wp_ajax_nopriv_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
 
 
-
-/*
- * bp_media_ajax_delete_album function.
- * 
- * @access public
- * @return void
+/**
+ * The bp_media_ajax_delete_album function.
  */
 function bp_media_ajax_delete_album(){
 
@@ -291,8 +269,8 @@ function bp_media_ajax_delete_album(){
 		
 	// delete the post
 	wp_delete_post( (int) $post_id, true );
-	
-	// return post id
+
+	// Return post id.
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG
 	);
@@ -306,10 +284,7 @@ add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
 
 
 /**
- * bp_media_ajax_delete_image function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_delete_image function.
  */
 function bp_media_ajax_delete_image(){
 
@@ -323,11 +298,11 @@ function bp_media_ajax_delete_image(){
 	if( $activity_id = get_post_meta( $image_id, 'activity_id', true ) ) {
 		bp_activity_delete( array( 'id' => $activity_id ) );
 	}
-		
-	// delete the post
+
+	// Delete the post.
 	wp_delete_attachment( (int) $image_id, true );
-	
-	// return post id
+
+	// Return post id.
 	$data = array(
 		'id' =>  $image_id,
 		'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $parent
@@ -341,10 +316,7 @@ add_action('wp_ajax_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
 
 
 /**
- * bp_media_ajax_edit_image function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_edit_image function.
  */
 function bp_media_ajax_edit_image(){
 
@@ -370,10 +342,7 @@ add_action('wp_ajax_bp_media_ajax_edit_image', 'bp_media_ajax_edit_image');
 
 
 /**
- * bp_media_ajax_add_comment function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_add_comment function.
  */
 function bp_media_ajax_add_comment(){
 
@@ -423,10 +392,7 @@ add_action('wp_ajax_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
 
 
 /**
- * bp_media_ajax_delete_comment function.
- * 
- * @access public
- * @return void
+ * The bp_media_ajax_delete_comment function.
  */
 function bp_media_ajax_delete_comment(){
 
