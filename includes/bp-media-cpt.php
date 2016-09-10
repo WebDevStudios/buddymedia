@@ -1,9 +1,9 @@
 <?php
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * AppBuddy_Ajax class.
@@ -132,12 +132,12 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function add_new_gallery_columns( $gallery_columns ) {
-		
-	    $new_columns['cb'] = '<input type="checkbox" />';
-	    $new_columns['title'] = _x('Album Name', 'bp-media');
-	    $new_columns['author'] = __('Author');
-	    $new_columns['date'] = _x('Date', 'bp-media');
-	 
+
+	    $new_columns['cb']     = '<input type="checkbox" />';
+		$new_columns['title']  = _x( 'Album Name', 'bp-media' );
+		$new_columns['author'] = __( 'Author' );
+		$new_columns['date']   = _x( 'Date', 'bp-media' );
+
 	    return $new_columns;
 	}
 	
@@ -179,8 +179,8 @@ class BP_Media_CPT {
 	 * @return string
 	 */
 	public function bp_media_filter_activity_action( $action, $activity ) {
-	
-		if( 'media' === $activity->component && 'new_album' === $activity->type ) {
+
+		if ( 'media' === $activity->component && 'new_album' === $activity->type ) {
 
 			$user_link = '<a href="'.bp_core_get_user_domain( $activity->user_id ).'">'. bp_core_get_username( $activity->user_id ).'</a>';
 			$album_link = bp_core_get_user_domain( $activity->user_id ) . BP_MEDIA_SLUG . '/album/' . $activity->secondary_item_id;
@@ -204,10 +204,12 @@ class BP_Media_CPT {
 	 */
 	function bp_media_redirect_cpt_to_album() {
 		global $post;
-		
-		if( !$post ) return;
-		
-		if( 'bp_media' === $post->post_type ) {
+
+		if ( ! $post ) {
+			return;
+		}
+
+		if ( 'bp_media' === $post->post_type ) {
 			$redirect_url = bp_core_get_user_domain( $post->post_author ) . BP_MEDIA_SLUG . '/album/' . $post->ID;
 			wp_safe_redirect( $redirect_url );
 		}
@@ -227,9 +229,9 @@ class BP_Media_CPT {
 	 * @return string
 	 */
 	public function bp_media_filter_activity_action_permalink( $activity_meta, $activity ) {
-	
-		if( 'media' === $activity->component && 'new_album' === $activity->type ) {
-		
+
+		if ( 'media' === $activity->component && 'new_album' === $activity->type ) {
+
 			$date_recorded  = bp_core_time_since( $activity->date_recorded );
 			return $activity->action . ' ' . $date_recorded;
 			
@@ -260,12 +262,14 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function user_media( $post ) {
-	
-		if( ! $post ) return;
-		
+
+		if ( ! $post ) {
+			return;
+		}
+
 		$attachments = get_attached_media( 'image', $post->ID );
-		
-		?>	
+
+		?>
 			<style>
 				.user-media li {
 					overflow: hidden;
@@ -368,8 +372,8 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	function hide_add_new_button() {
-	
-    	if( 'bp_media' == get_post_type() ) {
+
+    	if ( 'bp_media' == get_post_type() ) {
 		  echo '<style type="text/css">
 		    	#favorite-actions {display:none;}
 				.add-new-h2{display:none;}
