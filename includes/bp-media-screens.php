@@ -11,7 +11,7 @@
  * @since BuddyPress (1.7.0)
  */
 class BP_Media_Theme_Compat {
- 
+
 
     /**
      * __construct function.
@@ -20,12 +20,12 @@ class BP_Media_Theme_Compat {
      * @return void
      */
     public function __construct() {
-    
+
     	$this->setup_actions();
 
     }
-    
-    
+
+
     /**
      * setup_actions function.
      * 
@@ -39,9 +39,9 @@ class BP_Media_Theme_Compat {
     	
         // hook bp_setup_theme_compat and swap post data with template
         add_action( 'bp_setup_theme_compat', array( $this, 'is_media' ) );
-	    
+
     }
-    
+
 
 	/**
 	 * media_screen_index function.
@@ -52,14 +52,14 @@ class BP_Media_Theme_Compat {
 	public function media_screen_index() {
 	    // check if on media directory...
 	    if ( !bp_displayed_user_id() && bp_is_current_component( 'media' ) && !bp_current_action() ) {
-	    
+
 	        bp_update_is_directory( true, 'media' );
 	        bp_core_load_template( apply_filters( 'media_screen_index', 'media/directory-index' ) );
-	     
+
 	    }
 	}
-	   
-    
+
+
 	/**
 	 * template_hierarchy function.
 	 * 
@@ -70,15 +70,15 @@ class BP_Media_Theme_Compat {
 	public function template_hierarchy( $templates ) {
 	    // if on a page of  plugin, then we add our path to the template path array
 	    if ( bp_is_current_component( 'media' ) ) {
-	 
+
 	        $templates[] = BP_MEDIA_PLUGIN_DIR . '/includes/templates';
 	    }
-	    
+
 	    return $templates;
 	}
-	 
-	   
-    
+
+
+
 
     /**
      * is_media function.
@@ -87,9 +87,9 @@ class BP_Media_Theme_Compat {
      * @return void
      */
     public function is_media() {
-        
+
         if ( ! bp_current_action() && !bp_displayed_user_id() && bp_is_current_component( 'media' ) ) {
-        
+
         	do_action( 'bp_media_screen_index' );
         
         	// add plugin path to template stack
@@ -98,10 +98,10 @@ class BP_Media_Theme_Compat {
             add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'directory_dummy_post' ) );
             // then we filter 'the_content'
             add_filter( 'bp_replace_the_content', array( $this, 'directory_content' ) );
- 
+
         }
     }
- 
+
 
 
     /**
@@ -113,7 +113,7 @@ class BP_Media_Theme_Compat {
      * @return void
      */
     public function directory_dummy_post() {
- 
+
         bp_theme_compat_reset_post( array(
             'ID'             => 0,
             'post_title'     => 'Media Directory',
@@ -137,9 +137,9 @@ class BP_Media_Theme_Compat {
     public function directory_content() {
         bp_buffer_template_part( 'media/directory-index');
     }
-    
+
 }
- 
+
 new BP_Media_Theme_Compat();
 
 
@@ -220,7 +220,6 @@ function bp_media_locate_template( $template_names, $load = false, $require_once
 			break;
 		}
 	}
-	
 
 	if ( ( true == $load ) && ! empty( $located ) )
 		load_template( $located, $require_once );
@@ -256,9 +255,9 @@ function bp_media_screen_user_media() {
 function bp_media_gallery_content() {
 
 	do_action( 'bp_media_gallery_content' );
-	
+
 	$action_var = bp_action_variables();
-	
+
 	switch ( bp_current_action() ) {
 		case ( bp_is_active('friends') ) ? bp_get_friends_slug() : '': 
 			 bp_media_get_template_part( 'single/friends');
@@ -270,22 +269,22 @@ function bp_media_gallery_content() {
 			 bp_media_get_template_part( 'single/shared');
 		break;
 		case 'album':
-				
+
 				if( isset( $action_var[1] ) && 'edit' === $action_var[1] ) {
 					bp_media_get_template_part( 'single/edit-album');
 				} else {
 					bp_media_get_template_part( 'single/album');
 				}
-		
+
 		break;
 		case 'image':
-		
+
 				if( isset( $action_var[1] ) && 'edit' === $action_var[1] ) {
 					bp_media_get_template_part( 'single/edit-image');
 				} else {
 					bp_media_get_template_part( 'single/image');
 				}
-				
+
 		break;
 		case 'create':
 			 bp_media_get_template_part( 'single/create');
@@ -294,6 +293,6 @@ function bp_media_gallery_content() {
 			 bp_media_get_template_part( 'single/home');
 		break;
 	}
-	 
-	 
+
+
 }
