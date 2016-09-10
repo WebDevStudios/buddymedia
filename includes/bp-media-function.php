@@ -298,7 +298,7 @@ function bp_media_create_album_link_ajax() {
  * The bp_media_album_link function.
  */
 function bp_media_album_link() {
-		echo bp_get_media_album_link();	
+		echo bp_get_media_album_link();
 }
 
 	/**
@@ -457,16 +457,16 @@ function bp_media_album_field( $field = null ) {
 		}
 
 		switch ( $field ) {
-			case 'title': 
+			case 'title':
 				return esc_html( $album->post_title );
 			break;
-			case 'description': 
+			case 'description':
 				return esc_html( $album->post_content );
 			break;
 
 		}
-		
-		return;	
+
+		return;
 	}
 
 
@@ -483,13 +483,13 @@ function bp_media_image_description() {
 	 * @return string
 	 */
 	function bp_media_get_image_description() {
-		
-		$action_var = bp_action_variables();	
+
+		$action_var = bp_action_variables();
 		$meta = get_post_meta( $action_var[0], 'description', true );
-		
+
 		if( $meta ) return esc_html( $meta );
-		
-		return;	
+
+		return;
 	}
 
 function bp_media_album_meta( $field = null ) {
@@ -510,8 +510,8 @@ function bp_media_album_meta( $field = null ) {
 		$album = get_post_meta( $action_var[0], $field, true );
 
 		if( $album ) return $album;
-		
-		return;	
+
+		return;
 	}
 
 function bp_media_posted_in() {
@@ -520,8 +520,8 @@ function bp_media_posted_in() {
 
 	function bp_get_media_posted_in() {
 		global $bp;
-	
-		$action_var = bp_action_variables();	
+
+		$action_var = bp_action_variables();
 		$meta = get_post_meta( $action_var[0], 'secondary_item_id', true );
 
 		if( !$meta ) return;
@@ -612,7 +612,7 @@ function bp_media_group_image_link( $id, $user_id ) {
  * The bp_media_album_id function.
  */
 function bp_media_album_id() {
-	echo bp_media_get_album_id();	
+	echo bp_media_get_album_id();
 }
 
 
@@ -692,10 +692,10 @@ function bp_media_display_attachment_image() {
 		 * @param string media size
 		*/
 		$attachment_size = apply_filters( 'bp_media_display_attachment_size', 'medium' );
-		
-		$attachment_src = wp_get_attachment_image_src( $attachment_id, $attachment_size );	
+
+		$attachment_src = wp_get_attachment_image_src( $attachment_id, $attachment_size );
 		$attachment_url = bp_core_get_user_domain( bp_get_activity_user_id() ) . BP_MEDIA_SLUG . '/image/' . $attachment_id;
-		
+
 		/**
 		 * Filter activity attachment markup and parameters.
 		 *
@@ -726,10 +726,10 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 	global $post;
 
 	if( $post && 'bp_media' !== $post->post_type ) return;
-	
-	$subposts = get_children(array( 
+
+	$subposts = get_children(array(
 	    'post_parent' => $id,
-	    'post_type'   => 'any', 
+	    'post_type'   => 'any',
 	    'numberposts' => -1,
 	    'post_status' => 'any'
 	));
