@@ -9,9 +9,9 @@ function bp_media_settings_init() {
 
 	register_setting( 'settings', 'bp_media_settings', 'bp_media_sanitize_callback' );
 
-/*
-* file typ options
- */
+	/*
+	 * File type options.
+	 */
 	add_settings_section(
 		'bp_media_media_types_section',
 		__( 'Media Types', 'buddymedia' ),
@@ -55,9 +55,9 @@ function bp_media_settings_init() {
 add_action( 'admin_init', 'bp_media_settings_init' );
 
 /**
- * bp_media_media_types_section_callback
+ * The bp_media_media_types_section_callback.
  *
- * files types options
+ * Files types options.
  */
 function bp_media_media_types_section_callback(  ) {
 	echo __( 'Allowed media types.', 'buddymedia' );
@@ -80,9 +80,9 @@ function bp_media_media_types_section_callback(  ) {
 		}
 
 /**
- * bp_media_storage_options_section_callback
+ * The bp_media_storage_options_section_callback.
  *
- * file storage options
+ * File storage options.
  */
 function bp_media_storage_options_section_callback(  ) {
 	echo __( 'Allowed storage quotas.', 'buddymedia' );
@@ -98,9 +98,9 @@ function bp_media_storage_options_section_callback(  ) {
 
 function bp_media_sanitize_callback( $fields ) {
 
-	// Initialize the new array that will hold the sanitize values
+	// Initialize the new array that will hold the sanitize values.
 	$input = array();
-	// Loop through the input and sanitize each of the values
+	// Loop through the input and sanitize each of the values.
 	foreach ( $fields as $key => $val ) {
 		switch ( $key ) {
 			case 'bp_media_image_types':
@@ -118,9 +118,9 @@ function bp_media_sanitize_callback( $fields ) {
 }
 
 /**
- * bp_media_options_page
+ * The bp_media_options_page.
  *
- * BuddyMedia options page markup
+ * BuddyMedia options page markup.
  */
 function bp_media_options_page(  ) {
 
