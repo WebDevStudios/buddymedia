@@ -163,8 +163,9 @@ function bp_media_get_template_part( $slug, $name = null, $load = true ) {
 
 	// Setup possible parts.
 	$templates = array();
-	if ( isset( $name ) )
+	if ( isset( $name ) ) {
 		$templates[] = $slug . '-' . $name . '.php';
+	}
 	$templates[] = $slug . '.php';
 
 	// Allow template parts to be filtered.
@@ -190,12 +191,13 @@ function bp_media_locate_template( $template_names, $load = false, $require_once
 
 	// Try to find a template file.
 	foreach ( (array) $template_names as $template_name ) {
- 
-		// Continue if template is empty
-		if ( empty( $template_name ) )
+
+		// Continue if template is empty.
+		if ( empty( $template_name ) ) {
 			continue;
-			
-		// Trim off any slashes from the template name
+		}
+
+		// Trim off any slashes from the template name.
 		$template_name = ltrim( $template_name, '/' );
 
 		// Check child theme first.
@@ -215,9 +217,11 @@ function bp_media_locate_template( $template_names, $load = false, $require_once
 		}
 	}
 
-	if ( ( true == $load ) && ! empty( $located ) )
+
+	if ( ( true == $load ) && ! empty( $located ) ) {
 		load_template( $located, $require_once );
- 
+	}
+
 	return $located;
 }
 
@@ -229,7 +233,7 @@ function bp_media_locate_template( $template_names, $load = false, $require_once
  * @return void
  */
 function bp_media_screen_user_media() {
-	global $bp;
+	$bp = buddypress();
 
 	do_action( 'bp_media_screen_user_media' );
 
@@ -253,10 +257,10 @@ function bp_media_gallery_content() {
 	$action_var = bp_action_variables();
 
 	switch ( bp_current_action() ) {
-		case ( bp_is_active('friends') ) ? bp_get_friends_slug() : '': 
+		case ( bp_is_active('friends') ) ? bp_get_friends_slug() : '':
 			 bp_media_get_template_part( 'single/friends');
 		break;
-		case ( bp_is_active('groups') ) ? bp_get_groups_slug() : '': 
+		case ( bp_is_active('groups') ) ? bp_get_groups_slug() : '':
 			 bp_media_get_template_part( 'single/groups');
 		break;
 		case 'shared':
