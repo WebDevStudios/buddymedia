@@ -139,9 +139,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		);
 		wp_localize_script( 'bp-media-js', 'bp_media', $translation_array );
 
-
 		wp_enqueue_script( 'bp-media-js');
-
 
 		wp_enqueue_style( 'bp-media-css', plugins_url( 'includes/css/bp-media.css' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/css/bp-media.css' ) );
 
