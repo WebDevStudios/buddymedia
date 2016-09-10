@@ -1,4 +1,4 @@
-<?php 
+<?php
 $action_var = bp_action_variables();
 $photo_id = $action_var[0];
 $post = get_post( $photo_id );
@@ -27,7 +27,7 @@ if( $post ) : ?>
 			
 			<div class="upload-posted-in"><?php bp_media_posted_in() ; ?></div>
 		</div>
-		
+
 		<div class="activity-comments">
 			<ul class="has-comments commentlist">
 			    <?php    
@@ -44,7 +44,7 @@ if( $post ) : ?>
 			            'per_page' => 10, //Allow comment pagination
 			            'reverse_top_level' => false //Show the latest comments at the top of the list
 			        ), $comments );
-			
+
 			    ?>
 			</ul>
 		</div>
