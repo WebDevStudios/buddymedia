@@ -17,7 +17,7 @@ class BP_Media_Component extends BP_Component {
 	 */
 	public function __construct() {
 
-		global $bp;
+		$bp = buddypress();
 
 		parent::start(
 			'media',
@@ -329,15 +329,15 @@ class BP_Media_Component extends BP_Component {
 
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
-	
-	
+
+
 }
 
 /**
  * Bootstrap the Media component.
  */
 function bp_setup_media() {
-	global $bp;
+	$bp = buddypress();
 	$bp->media = new BP_Media_Component();
 }
 add_action( 'bp_loaded', 'bp_setup_media' );
