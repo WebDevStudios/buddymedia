@@ -21,24 +21,23 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 	/**
 	 * Main BP_Media Class
-	 *
 	 */
 	class BP_Media {
 
 
 	/**
-	 * instance function.
+	 * The instance function.
 	 *
 	 * @access public
 	 * @static
-	 * @return $instance
+	 * @return object $instance
 	 */
 	public static function instance() {
 
-		// Store the instance locally to avoid private static replication
+		// Store the instance locally to avoid private static replication.
 		static $instance = null;
 
-		// Only run these methods if they haven't been run previously
+		// Only run these methods if they haven't been run previously.
 		if ( null === $instance ) {
 			$instance = new BP_Media;
 			$instance->constants();
@@ -49,7 +48,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 		}
 
-		// Always return the instance
+		// Always return the instance.
 		return $instance;
 
 		// The last transport is away! Rebel scum.
@@ -60,7 +59,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 	 * __construct function.
 	 *
 	 * @access private
-	 * @return void
 	 */
 	private function __construct() { /* Do nothing here */ }
 
@@ -69,21 +67,17 @@ if ( ! class_exists( 'BP_Media' ) ) :
 	 * Magic method to prevent notices and errors from invalid method calls.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __call( $name = '', $args = array() ) { unset( $name, $args ); return null; }
 
-
-
 	/**
-	 * constants function.
+	 * The constants function.
 	 *
 	 * @access private
-	 * @return void
 	 */
 	private function constants() {
 
-		// Path and URL
+		// Path and URL.
 		if ( ! defined( 'BP_MEDIA_PLUGIN_DIR' ) ) {
 			define( 'BP_MEDIA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		}
@@ -96,7 +90,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 
 	/**
-	 * includes function.
+	 * The includes function.
 	 *
 	 * @access private
 	 * @return void
@@ -117,10 +111,9 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 
 	/**
-	 * setup_actions function.
+	 * The setup_actions function.
 	 *
 	 * @access private
-	 * @return void
 	 */
 	private function setup_actions() {
 		add_action( 'plugins_loaded', array( $this, 'bp_media_bp_check' ), 999 );
@@ -130,18 +123,15 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 
 	/**
-	 * enqueue_scripts function.
+	 * The enqueue_scripts function.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function enqueue_scripts() {
 
-
 		wp_register_script( 'bp-media-js', plugins_url( 'includes/js/bp-media.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media.js' ) );
 
-
-		// Localize the script with new data
+		// Localize the script with new data.
 		$translation_array = array(
 			'bp_media_ajax_create_album_error' => __( 'Error creating album', 'bp-media' ),
 			'bp_media_ajax_delete_album_error' => __( 'Error deleteing album', 'bp-media' ),
@@ -160,10 +150,9 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 
 	/**
-	 * bp_media_bp_check function.
+	 * The bp_media_bp_check function.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function bp_media_bp_check() {
 		if ( !class_exists('BuddyPress') ) {
@@ -174,10 +163,9 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 
 	/**
-	 * bp_media_install_buddypress_notice function.
+	 * The bp_media_install_buddypress_notice function.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function bp_media_install_buddypress_notice() {
 		echo '<div id="message" class="error fade"><p style="line-height: 150%">';
@@ -185,19 +173,16 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		echo '</p></div>';
 	}
 
-
 }
-
-endif; // end of line...
+endif; // End of line...
 
 
 /**
- * bpmedia function.
+ * The bpmedia function.
  *
- * fire bpmedia instance method
+ * Fire bpmedia instance method
  *
- * @access public
- * @return void
+ * @return object
  */
 function buddymedia() {
 	return BP_Media::instance();
@@ -208,10 +193,7 @@ add_action( 'bp_include', 'buddymedia', 999);
 
 
 /**
- * enqueue_scripts function.
- *
- * @access public
- * @return void
+ * The enqueue_scripts function.
  */
 function bp_media_enqueue_admin_scripts() {
 	wp_enqueue_script( 'bp-media-admin-js', plugins_url( 'includes/js/bp-media-admin.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media-admin.js' ), true );
