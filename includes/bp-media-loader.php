@@ -1,6 +1,6 @@
 <?php
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -43,7 +43,7 @@ class BP_Media_Component extends BP_Component {
 	 * @param array $includes See BP_Component::includes() for a description.
 	 */
 	public function includes( $includes = array() ) {
-		// Files to include
+		// Files to include.
 		$includes = array(
 			'template',
 			'screens',
@@ -56,7 +56,7 @@ class BP_Media_Component extends BP_Component {
 	/**
 	 * Set up component global variables.
 	 *
-	 * @since BuddyPress (1.5.0)
+	 * @since 1.5.0
 	 *
 	 * @see BP_Component::setup_globals() for a description of arguments.
 	 *
@@ -99,7 +99,7 @@ class BP_Media_Component extends BP_Component {
 	 */
 	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
-		// Add 'Media' to the main navigation
+		// Add 'Media' to the main navigation.
 		$main_nav = array(
 			'name'                => _x( 'Media', 'Profile media screen nav', 'buddypress' ),
 			'slug'                => $this->slug,
@@ -109,11 +109,11 @@ class BP_Media_Component extends BP_Component {
 			'item_css_id'         => $this->id
 		);
 
-		// Stop if there is no user displayed or logged in
+		// Stop if there is no user displayed or logged in.
 		if ( !is_user_logged_in() && !bp_displayed_user_id() )
 			return;
 
-		// Determine user to use
+		// Determine user to use.
 		if ( bp_displayed_user_domain() ) {
 			$user_domain = bp_displayed_user_domain();
 		} elseif ( bp_loggedin_user_domain() ) {
@@ -122,13 +122,13 @@ class BP_Media_Component extends BP_Component {
 			return;
 		}
 
-		// User link
+		// User link.
 		$media_link = trailingslashit( $user_domain . $this->slug );
 
 		if ( !defined( 'BP_MEDIA_USER_SLUG' ) )
 			define( 'BP_MEDIA_USER_SLUG', $media_link );
 
-		// Add the subnav items to the media nav item if we are using a theme that supports this
+		// Add the subnav items to the media nav item if we are using a theme that supports this.
 		$sub_nav[] = array(
 			'name'            => _x( 'Public', 'Profile media screen sub nav', 'buddypress' ),
 			'slug'            => 'media',
@@ -256,15 +256,15 @@ class BP_Media_Component extends BP_Component {
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
 		$bp = buddypress();
 
-		// Menus for logged in user
+		// Menus for logged in user.
 		if ( is_user_logged_in() ) {
 
-			// Setup the logged in user variables
+			// Setup the logged in user variables.
 			$user_domain   = bp_loggedin_user_domain();
 			$media_link = trailingslashit( $user_domain . $this->slug );
 
 
-			// Add the "Media" sub menu
+			// Add the "Media" sub menu.
 			$wp_admin_nav[] = array(
 				'parent' => $bp->my_account_menu_id,
 				'id'     => 'my-account-' . $this->id,
@@ -272,15 +272,15 @@ class BP_Media_Component extends BP_Component {
 				'href'   => trailingslashit( $media_link )
 			);
 
-			// Personal
+			// Personal.
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-personal',
 				'title'  => _x( 'Public', 'My private Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link )
 			);
-			
-			// Friends
+
+			// Friends.
 			if ( bp_is_active( 'friends' ) ) {
 				$wp_admin_nav[] = array(
 					'parent' => 'my-account-' . $this->id,
@@ -289,15 +289,15 @@ class BP_Media_Component extends BP_Component {
 					'href'   => trailingslashit( $media_link ) . 'friend'
 				);
 			}
-			
-			// Private
+
+			// Private.
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-private',
 				'title'  => _x( 'Private', 'My Account Media sub nav', 'buddypress' ),
 				'href'   => trailingslashit( $media_link ) . 'private'
 			);
-			
+
 			/*
 
 			// Groups
