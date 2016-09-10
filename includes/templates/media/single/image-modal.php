@@ -1,9 +1,11 @@
-<?php 
+<?php
 $action_var = bp_action_variables();
 
 $photo_id = $action_var[0];
 
-if( !$photo_id ) return; ?>
+if ( ! $photo_id ) {
+	return;
+} ?>
 
 <div class="media-pop-wrapper">
 	<div class="photo-column">
