@@ -79,10 +79,9 @@ class BP_Media_Theme_Compat {
 
 
     /**
-     * is_media function.
-     * 
+     * The is_media function.
+     *
      * @access public
-     * @return void
      */
     public function is_media() {
 
