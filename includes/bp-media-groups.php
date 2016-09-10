@@ -75,7 +75,7 @@ add_action( 'groups_group_settings_edited', 'bp_media_save_enable_media' );
  * The bp_media_group_is_enabled function.
  */
 function bp_media_group_is_enabled() {
-	global $bp;
+	$bp = buddypress();
 	if ( isset( $bp->groups->current_group->slug ) && $bp->groups->current_group->slug == $bp->current_item ) {
          $meta = groups_get_groupmeta( $bp->groups->current_group->id );
          if ( '1' === $meta['enable_media'][0] || defined('ENABLE_MEDIA') ) {
