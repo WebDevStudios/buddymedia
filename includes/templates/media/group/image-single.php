@@ -1,20 +1,13 @@
 <?php
-
 /**
  * BuddyPress - Media Stream (Single Item)
  *
  * This template is used by media-loop.php and AJAX functions to show
  * each gallery.
- *
  */
-
-?>
-
-<?php
 
 /**
  * Fires before the display of an media entry.
- *
  */
 do_action( 'bp_media_before_entry' ); ?>
 
