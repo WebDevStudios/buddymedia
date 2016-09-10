@@ -1,11 +1,10 @@
 <?php
-add_action( 'admin_menu', 'bp_media_add_admin_menu' );
-add_action( 'admin_init', 'bp_media_settings_init' );
 
 
 function bp_media_add_admin_menu(  ) {
 	add_submenu_page( 'edit.php?post_type=bp_media', 'Settings', 'Settings', 'manage_options', 'settings', 'bp_media_options_page' );
 }
+add_action( 'admin_menu', 'bp_media_add_admin_menu' );
 
 
 function bp_media_settings_init(  ) {
@@ -55,6 +54,7 @@ function bp_media_settings_init(  ) {
 
 
 }
+add_action( 'admin_init', 'bp_media_settings_init' );
 
 /**
  * bp_media_media_types_section_callback
