@@ -51,9 +51,9 @@ function bp_media_loop_filter() {
 		'orderby'        => 'modified',
 		'paged'          => $paged
 	);
-	
+
 	$query = apply_filters( 'bp_media_loop_filter', $query );
-	
+
 	return $query;
 }
 
