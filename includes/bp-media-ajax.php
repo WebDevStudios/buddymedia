@@ -10,7 +10,7 @@ function bp_media_upload_photo() {
 	// Upload file.
 	$file   = $_FILES['async-upload'];
 	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'photo_gallery_upload' ) );
-	
+
 	$wp_upload_dir = wp_upload_dir();
 
 	// Adds file as attachment to WordPress.
@@ -25,27 +25,24 @@ function bp_media_upload_photo() {
 
 	// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	
+
 	// Generate the metadata for the attachment, and update the database record.
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
-	
+
 	update_post_meta( $attach_id, 'description', $_POST['description'] );
 	update_post_meta( $attach_id, 'bp_media', '1' );
-	
+
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
-	
+
 	$data = array(
 		'id'  => $attach_id,
 		'url' => $image[0],
 	);
-	
+
 	wp_send_json( $data );
 }
 add_action('wp_ajax_photo_gallery_upload', 'bp_media_upload_photo' );
-
-
-
 
 /**
  * The bp_media_photo_activity_attach function.
@@ -71,31 +68,30 @@ function bp_media_photo_activity_attach() {
 		'post_status'    => 'inherit'
 	);
 	$attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $album_id );
-	
+
 	// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	
+
 	// Generate the metadata for the attachment, and update the database record.
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $status['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
-	
+
 	update_post_meta( $attach_id, 'bp_media', '1' );
 	update_post_meta( $attach_id, 'secondary_item_id', (int) $_POST['whats-new-post-in'] );
-	
+
 	$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
-	
+
 	$data = array(
 		'id'       => $attach_id,
 		'album_id' => $album_id,
 		'url'      => $image[0],
 	);
-	
+
 	wp_send_json( $data );
-	
+
 	exit;
 }
 add_action('wp_ajax_bp_media_photo_activity_attach', 'bp_media_photo_activity_attach' );
-
 
 /**
  * The bp_media_get_activity_album_id function.
@@ -124,7 +120,7 @@ function bp_media_get_activity_album_id( $user_id ) {
 	  'post_author'  => (int) $user_id,
 	  'post_type'    => 'bp_media',
 	);
-	
+
 	add_filter('bp_activity_type_before_save', '__return_false', 9999 );
 
 	// Insert the post into the database.
@@ -132,7 +128,7 @@ function bp_media_get_activity_album_id( $user_id ) {
 
 	add_post_meta( $post, '_activity_album', true, true );
 	add_post_meta( $post, '_permission', 'public', true );
-		
+
 	return $post;
 }
 
@@ -160,9 +156,9 @@ add_action('wp_ajax_nopriv_bp_media_get_image', 'bp_media_get_image');
  * The bp_media_add_album function.
  */
 function bp_media_add_album(){
-	
+
 	include_once( bp_media_get_template_part( 'single/add-album') );
-	
+
 	die();
 }
 add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
@@ -208,7 +204,7 @@ function bp_media_ajax_create_album(){
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
 	);
-	
+
 	wp_send_json( $data );
 
 }
@@ -273,8 +269,7 @@ function bp_media_ajax_delete_album(){
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG
 	);
-	
-	
+
 	wp_send_json( $data );
 
 }
@@ -305,7 +300,7 @@ function bp_media_ajax_delete_image(){
 		'id'  => $image_id,
 		'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $parent,
 	);
-	
+
 	wp_send_json( $data );
 
 }
@@ -326,12 +321,12 @@ function bp_media_ajax_edit_image(){
 
 	// Delete the post.
 	update_post_meta( (int) $image_id, 'description', $description );
-		
+
 	$data = array(
 		'id'  => $image_id,
 		'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $image_id,
 	);
-	
+
 	wp_send_json( $data );
 
 }
@@ -353,7 +348,7 @@ function bp_media_ajax_add_comment(){
 	if( empty( $comment ) ) return;
 		
 	$time = current_time('mysql');
-	
+
 	$data = array(
 	    'comment_post_ID'      => $post_id,
 	    'comment_author'       => '',
@@ -368,9 +363,9 @@ function bp_media_ajax_add_comment(){
 	    'comment_date'         => $time,
 	    'comment_approved'     => 1,
 	);
-	
+
 	$data = apply_filters( 'bp_media_ajax_add_comment', $data );
-	
+
 	$comment_id = wp_insert_comment( $data );
 	$comment = array( get_comment( $comment_id ) );
 	
@@ -380,9 +375,9 @@ function bp_media_ajax_add_comment(){
         'per_page' => 10, //Allow comment pagination
         'reverse_top_level' => false
     ), $comment );
-	
+
 	die();
-	
+
 }
 add_action('wp_ajax_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
 //add_action('wp_ajax_nopriv_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
@@ -402,9 +397,9 @@ function bp_media_ajax_delete_comment(){
 	if( empty( $comment_id ) || bp_loggedin_user_id() !== (int) $user_id ) return;
 		
 	$comment_id = wp_delete_comment( $comment_id );
-		
+
 	wp_send_json( $comment_id );
-	
+
 }
 add_action('wp_ajax_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');
 //add_action('wp_ajax_nopriv_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');
