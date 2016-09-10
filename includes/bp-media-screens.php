@@ -32,12 +32,12 @@ class BP_Media_Theme_Compat {
      * @return void
      */
     public function setup_actions() {
-	    
-	    // set page as a directory, flag it true
-    	add_action( 'bp_screens', array( $this, 'media_screen_index' ) ); 
-    	
-        // hook bp_setup_theme_compat and swap post data with template
-        add_action( 'bp_setup_theme_compat', array( $this, 'is_media' ) );
+
+		// Set page as a directory, flag it true.
+		add_action( 'bp_screens', array( $this, 'media_screen_index' ) );
+
+		// Hook bp_setup_theme_compat and swap post data with template.
+		add_action( 'bp_setup_theme_compat', array( $this, 'is_media' ) );
 
     }
 
@@ -88,13 +88,13 @@ class BP_Media_Theme_Compat {
         if ( ! bp_current_action() && !bp_displayed_user_id() && bp_is_current_component( 'media' ) ) {
 
         	do_action( 'bp_media_screen_index' );
-        
-        	// add plugin path to template stack
-			add_filter( 'bp_get_template_stack', array( $this, 'template_hierarchy' ), 10, 1 ); 
-            // first we reset the post
-            add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'directory_dummy_post' ) );
-            // then we filter 'the_content'
-            add_filter( 'bp_replace_the_content', array( $this, 'directory_content' ) );
+
+			// Add plugin path to template stack.
+			add_filter( 'bp_get_template_stack', array( $this, 'template_hierarchy' ), 10, 1 );
+			// First we reset the post.
+			add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'directory_dummy_post' ) );
+			// Then we filter 'the_content'.
+			add_filter( 'bp_replace_the_content', array( $this, 'directory_content' ) );
 
         }
     }
