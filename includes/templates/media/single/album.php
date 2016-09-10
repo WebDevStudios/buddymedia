@@ -14,14 +14,14 @@
 			<a href="<?php bp_media_edit_album_link() ;?>" ><?php _e( 'Edit Album', 'bp_media' ); ?></a>
 		</div>
 	</div>
-	
+
 	<?php bp_media_get_template_part( 'upload-form' ); ?>
 
 <?php endif ; ?>
 
 <ul id="media-stream" class="media-list grid-list">
 	<?php
-	//add_thickbox();
+	// This adds add_thickbox().
 	bp_media_get_template_part( 'single/image-loop' );
 	?>
 </ul>
