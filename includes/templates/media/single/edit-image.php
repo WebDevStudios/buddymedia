@@ -1,4 +1,9 @@
-<?php if( !bp_get_media_image_id() ||  !bp_media_can_edit() || !wp_get_attachment_image( bp_get_media_image_id() ) ) : ?>
+<?php
+if (
+	! bp_get_media_image_id() ||
+	! bp_media_can_edit() ||
+	! wp_get_attachment_image( bp_get_media_image_id() )
+) : ?>
 
 		<?php _e( 'Nothing to see here.', 'bp-media'); ?>
 		
