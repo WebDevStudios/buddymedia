@@ -298,7 +298,7 @@ class BP_Media_CPT {
 				.image-action-delete {
 					cursor: pointer;
 				}
-			</style> 
+			</style>
 			<?php
 
 		echo '<ul class="user-media">';
@@ -315,8 +315,8 @@ class BP_Media_CPT {
 							<?php echo wp_get_attachment_image( $attachment->ID, 'thumbnail' ); ?>
 						</a>
 					</div>
-					
-					<div class="media-info">						
+
+					<div class="media-info">
 						<div class="media-description">
 							<?php _e( 'Description: ', 'bp_media' ); ?>
 							<?php echo $attachments[$attachment->ID]->post_content; ?>
