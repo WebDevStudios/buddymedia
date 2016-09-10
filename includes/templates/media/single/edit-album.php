@@ -1,4 +1,4 @@
-<?php if( !bp_get_media_album_id() ||  !bp_media_can_edit() ) : ?>
+<?php if ( ! bp_get_media_album_id() || ! bp_media_can_edit() ) : ?>
 
 		<?php _e( 'Nothing to see here.', 'bp-media'); ?>
 		
