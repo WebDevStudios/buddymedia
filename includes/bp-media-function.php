@@ -2,10 +2,9 @@
 
 
 /**
- * bp_media_is_option function.
- * 
- * @access public
- * @param mixed $option
+ * The bp_media_is_option function.
+ *
+ * @param mixed $option Option to fetch.
  * @return boolean
  */
 function bp_media_is_option( $option ) {
@@ -23,10 +22,7 @@ function bp_media_is_option( $option ) {
 
 
 /**
- * bp_media_is_action_edit function.
- * 
- * @access public
- * @return void
+ * The bp_media_is_action_edit function.
  */
 function bp_media_is_action_edit() {
 
@@ -41,10 +37,9 @@ function bp_media_is_action_edit() {
 
 
 /**
- * bp_media_loop_filter function.
- * 
+ * The bp_media_loop_filter function.
+ *
  * @access public
- * @return void
  */
 function bp_media_loop_filter() {
 	global $bp;
@@ -66,11 +61,10 @@ function bp_media_loop_filter() {
 
 
 /**
- * bp_media_loop_profile_filter function.
- * 
- * @access public
- * @param mixed $query
- * @return void
+ * The bp_media_loop_profile_filter function.
+ *
+ * @param mixed $query Object.
+ * @return object
  */
 function bp_media_loop_profile_filter( $query ) {
 
@@ -123,11 +117,10 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 
 
 /**
- * bp_media_loop_permissions_filter function.
- * 
- * @access public
- * @param mixed $query
- * @return void
+ * The bp_media_loop_permissions_filter function.
+ *
+ * @param mixed $query Object.
+ * @return object
  */
 function bp_media_loop_permissions_filter( $query ) {
 
@@ -185,19 +178,15 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_permissions_filter' );
 
 
 /**
- * bp_media_css_class function.
- * 
- * @access public
- * @return void
+ * The bp_media_css_class function.
  */
 function bp_media_css_class() {
 	echo bp_get_media_css_class();
 }
 	/**
-	 * bp_get_media_css_class function.
-	 * 
-	 * @access public
-	 * @return void
+	 * The bp_get_media_css_class function.
+	 *
+	 * @return string
 	 */
 	function bp_get_media_css_class() {
 		return 'bp-media';
@@ -205,33 +194,25 @@ function bp_media_css_class() {
 
 
 /**
- * bp_media_css_id function.
- * 
- * @access public
- * @return void
+ * The bp_media_css_id function.
  */
 function bp_media_css_id() {
 	echo bp_get_media_css_id();
 }
 	/**
-	 * bp_get_media_css_id function.
-	 * 
-	 * @access public
-	 * @return post id
+	 * The bp_get_media_css_id function.
+	 *
+	 * @return int
 	 */
 	function bp_get_media_css_id() {
 		global $post;
-		
+
 		return $post->ID;
 	}
 
 
 /**
- * bp_media_userlink function.
- * 
- * @access public
- * @param mixed $user_id (default: null)
- * @return void
+ * The bp_media_userlink function.
  */
 function bp_media_userlink() {
 		echo bp_media_get_userlink();
@@ -239,11 +220,7 @@ function bp_media_userlink() {
 }
 
 	/**
-	 * bp_media_get_userlink function.
-	 * 
-	 * @access public
-	 * @param mixed $user_id (default: null)
-	 * @return void
+	 * The bp_media_get_userlink function.
 	 */
 	function bp_media_get_userlink() {
 		global  $post;
@@ -257,10 +234,7 @@ function bp_media_userlink() {
 
 
 /**
- * bp_media_create_album_link function.
- * 
- * @access public
- * @return void
+ * The bp_media_create_album_link function.
  */
 function bp_media_create_album_link() {
 	echo bp_media_get_create_album_link();
@@ -268,10 +242,7 @@ function bp_media_create_album_link() {
 
 	
 	/**
-	 * bp_media_get_create_album_link function.
-	 * 
-	 * @access public
-	 * @return void
+	 * The bp_media_get_create_album_link function.
 	 */
 	function bp_media_get_create_album_link() {
 		return bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/create';
@@ -279,10 +250,7 @@ function bp_media_create_album_link() {
 	
 	
 /**
- * bp_media_edit_album_link function.
- * 
- * @access public
- * @return void
+ * The bp_media_edit_album_link function.
  */
 function bp_media_edit_album_link() {
 	echo bp_media_get_edit_album_link();
@@ -290,10 +258,7 @@ function bp_media_edit_album_link() {
 
 	
 	/**
-	 * bp_media_get_edit_album_link function.
-	 * 
-	 * @access public
-	 * @return void
+	 * The bp_media_get_edit_album_link function.
 	 */
 	function bp_media_get_edit_album_link() {
 		return bp_media_userlink( bp_displayed_user_id() ) . 'edit';
@@ -302,10 +267,9 @@ function bp_media_edit_album_link() {
 
 
 /**
- * bp_media_edit_image_link function.
- * 
- * @access public
- * @return void
+ * The bp_media_edit_image_link function.
+ *
+ * @param int|null $id ID.
  */
 function bp_media_edit_image_link( $id = null ) {
 
@@ -319,10 +283,7 @@ function bp_media_edit_image_link( $id = null ) {
 	
 	
 /**
- * bp_media_create_album_link_ajax function.
- * 
- * @access public
- * @return void
+ * The bp_media_create_album_link_ajax function.
  */
 function bp_media_create_album_link_ajax() {
 
@@ -338,24 +299,17 @@ function bp_media_create_album_link_ajax() {
 
 
 /**
- * bp_media_album_link function.
- * 
- * @access public
- * @param mixed $user_id
- * @param mixed $post_id
- * @return void
+ * The bp_media_album_link function.
  */
 function bp_media_album_link() {
 		echo bp_get_media_album_link();	
 }
 
 	/**
-	 * bp_get_media_album_link function.
-	 * 
+	 * The bp_get_media_album_link function.
+	 *
 	 * @access public
-	 * @param mixed $user_id
-	 * @param mixed $post_id
-	 * @return album link
+	 * @return string link
 	 */
 	function bp_get_media_album_link() {
 		global $post;
@@ -369,11 +323,10 @@ function bp_media_album_link() {
 	
 	
 /**
- * bp_media_time_since function.
- * 
- * @access public
- * @param mixed $photo_id
- * @return void
+ * The bp_media_time_since function.
+ *
+ * @param mixed $photo_id Photo ID.
+ * @return string
  */
 function bp_media_time_since( $photo_id ) {
 
@@ -386,10 +339,7 @@ function bp_media_time_since( $photo_id ) {
 
 	
 /**
- * bp_album_cover_url function.
- * 
- * @access public
- * @return void
+ * The bp_album_cover_url function.
  */
 function bp_album_cover_url() {
 	global $post;
@@ -419,10 +369,7 @@ function bp_album_cover_url() {
 
 
 /**
- * bp_album_image_count function.
- * 
- * @access public
- * @return void
+ * The bp_album_image_count function.
  */
 function bp_album_image_count() {
 	global $post;
@@ -452,10 +399,7 @@ function bp_album_image_count() {
 
 
 /**
- * bp_get_media_image_id function.
- * 
- * @access public
- * @return void
+ * The bp_get_media_image_id function.
  */
 function bp_get_media_image_id() {
 
@@ -471,10 +415,9 @@ function bp_get_media_image_id() {
 
 
 /**
- * bp_get_media_album_id function.
- * 
- * @access public
- * @return void
+ * The bp_get_media_album_id function.
+ *
+ * @return mixed
  */
 function bp_get_media_album_id() {
 
@@ -490,21 +433,19 @@ function bp_get_media_album_id() {
 
 
 /**
- * bp_media_album_field function.
- * 
- * @access public
- * @param mixed $field (default: null)
+ * The bp_media_album_field function.
+ *
+ * @param mixed $field (default: null).
  * @return void
  */
 function bp_media_album_field( $field = null ) {
 	echo bp_media_get_album_field( $field );
 }
 	/**
-	 * bp_media_get_album_field function.
-	 * 
-	 * @access public
-	 * @param mixed $field (default: null)
-	 * @return void
+	 * The bp_media_get_album_field function.
+	 *
+	 * @param mixed $field (default: null).
+	 * @return string
 	 */
 	function bp_media_get_album_field( $field = null ) {
 	
@@ -533,20 +474,16 @@ function bp_media_album_field( $field = null ) {
 
 	
 /**
- * bp_media_image_description function.
- * 
- * @access public
- * @return void
+ * The bp_media_image_description function.
  */
 function bp_media_image_description() {
 	echo bp_media_get_image_description();
 }
 
 	/**
-	 * bp_media_get_image_description function.
-	 * 
-	 * @access public
-	 * @return void
+	 * The bp_media_get_image_description function.
+	 *
+	 * @return string
 	 */
 	function bp_media_get_image_description() {
 		
@@ -562,11 +499,10 @@ function bp_media_album_meta( $field = null ) {
 	echo bp_media_get_album_meta( $field );
 }
 	/**
-	 * bp_media_get_album_field function.
-	 * 
-	 * @access public
-	 * @param mixed $field (default: null)
-	 * @return void
+	 * The bp_media_get_album_field function.
+	 *
+	 * @param mixed $field (default: null).
+	 * @return mixed
 	 */
 	function bp_media_get_album_meta( $field = null ) {
 	
@@ -604,11 +540,9 @@ function bp_media_posted_in() {
 
 	
 /**
- * bp_media_album_permission function.
- * 
- * @access public
- * @param mixed $permission
- * @return string
+ * The bp_media_album_permission function.
+ *
+ * @param mixed $permission Unknown.
  */
 function bp_media_album_permission( $permission ) {
 	
@@ -623,10 +557,9 @@ function bp_media_album_permission( $permission ) {
 }
 	
 /**
- * bp_media_album_back_url function.
- * 
- * @access public
- * @return void
+ * The bp_media_album_back_url function.
+ *
+ * @param string|null $album_id Album ID to show.
  */
 function bp_media_album_back_url( $album_id = null ) {
 
@@ -642,10 +575,7 @@ function bp_media_album_back_url( $album_id = null ) {
 
 
 /**
- * bp_media_image_back_url function.
- * 
- * @access public
- * @return void
+ * The bp_media_image_back_url function.
  */
 function bp_media_image_back_url() {
 	$action_var = bp_action_variables();
@@ -655,11 +585,9 @@ function bp_media_image_back_url() {
 
 
 /**
- * bp_media_image_link function.
- * 
- * @access public
- * @param mixed $id
- * @return void
+ * The bp_media_image_link function.
+ *
+ * @param mixed $id Media image ID.
  */
 function bp_media_image_link( $id ) {
 	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $id;
@@ -668,12 +596,10 @@ function bp_media_image_link( $id ) {
 
 
 /**
- * bp_media_group_image_link function.
- * 
- * @access public
- * @param mixed $id
- * @param mixed $user_id
- * @return void
+ * The bp_media_group_image_link function.
+ *
+ * @param mixed $id      Media image ID.
+ * @param mixed $user_id User ID.
  */
 function bp_media_group_image_link( $id, $user_id ) {
 	echo bp_media_get_group_image_link( $id, $user_id );
@@ -686,10 +612,7 @@ function bp_media_group_image_link( $id, $user_id ) {
 
 
 /**
- * bp_media_album_id function.
- * 
- * @access public
- * @return void
+ * The bp_media_album_id function.
  */
 function bp_media_album_id() {
 	echo bp_media_get_album_id();	
@@ -697,10 +620,9 @@ function bp_media_album_id() {
 
 
 	/**
-	 * bp_media_get_album_id function.
-	 * 
-	 * @access public
-	 * @return void
+	 * The bp_media_get_album_id function.
+	 *
+	 * @return array|bool
 	 */
 	function bp_media_get_album_id() {
 		$action_var = bp_action_variables();
@@ -710,10 +632,7 @@ function bp_media_album_id() {
 
 
 /**
- * bp_media_enqueue_scripts function.
- * 
- * @access public
- * @return void
+ * The bp_media_enqueue_scripts function.
  */
 function bp_media_enqueue_scripts() {
 	 wp_enqueue_script('plupload-all');
@@ -723,13 +642,9 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
 
 
 /**
- * bp_media_comments function.
- * 
- * @access public
- * @param mixed $comment
- * @param mixed $args
- * @param mixed $depth
- * @return void
+ * The bp_media_comments function.
+ *
+ * @param mixed $comment Comments.
  */
 function bp_media_comments( $comment ) {
 	bp_media_get_template_part('comments' );
@@ -738,10 +653,7 @@ function bp_media_comments( $comment ) {
 
 
 /**
- * bp_media_can_edit function.
- * 
- * @access public
- * @return void
+ * The bp_media_can_edit function.
  */
 function bp_media_can_edit() {
 	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() || is_super_admin() || is_admin() ) return true;
@@ -750,11 +662,9 @@ function bp_media_can_edit() {
 
 
 /**
- * bp_media_add_activity_meta function.
- * 
- * @access public
- * @param mixed $activity
- * @return void
+ * The bp_media_add_activity_meta function.
+ *
+ * @param mixed $activity Activity object.
  */
 function bp_media_add_activity_meta( $activity ) {
 
@@ -769,17 +679,14 @@ add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
 
 
 /**
- * bp_media_display_attachment_image function.
- * 
- * @access public
- * @return void
+ * The bp_media_display_attachment_image function.
  */
 function bp_media_display_attachment_image() {
 	
 	if( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
 	
 		/**
-		 * filter activity attachment media size.
+		 * Filter activity attachment media size.
 		 *
 		 * @since 1.0.0
 		 *
@@ -791,7 +698,7 @@ function bp_media_display_attachment_image() {
 		$attachment_url = bp_core_get_user_domain( bp_get_activity_user_id() ) . BP_MEDIA_SLUG . '/image/' . $attachment_id;
 		
 		/**
-		 * filter activity attachment markup and parameters.
+		 * Filter activity attachment markup and parameters.
 		 *
 		 * @since 1.0.0
 		 *
@@ -810,13 +717,11 @@ add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
 
 
 /**
- * bp_media_delete_attachments_before_delete_post function.
+ * The bp_media_delete_attachments_before_delete_post function.
  *
- * this is album clean up, deletes attachents/images when album is deleted
- * 
- * @access public
- * @param mixed $id
- * @return void
+ * This is album clean up, deletes attachents/images when album is deleted
+ *
+ * @param mixed $id Attachemnt ID.
  */
 function bp_media_delete_attachments_before_delete_post( $id ){
 	global $post;
@@ -860,21 +765,20 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 		}
 	}
 }
-// till wp 3.1
+// Till wp 3.1.
 add_action( 'delete_post', 'bp_media_delete_attachments_before_delete_post' );
-// from wp 3.2
+// Trom wp 3.2.
 add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_post' );
 
 
 
 /**
- * bp_media_filter_album_attachments function.
- * 
- * @access public
- * @param mixed $args
- * @param mixed $type
- * @param mixed $post
- * @return void
+ * The bp_media_filter_album_attachments function.
+ *
+ * @param mixed $args Media args.
+ * @param mixed $type Media type.
+ * @param mixed $post Post object.
+ * @return array
  */
 function bp_media_filter_album_attachments( $args, $type, $post ) {
 	
@@ -890,10 +794,9 @@ add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 
 
 
 /**
- * bp_media_user_can_delete function.
- * 
- * @access public
- * @param mixed $user_id
+ * The bp_media_user_can_delete function.
+ *
+ * @param mixed $user_id User ID.
  * @return boolean
  */
 function bp_media_user_can_delete( $user_id = 0 ) {
@@ -910,10 +813,9 @@ function bp_media_user_can_delete( $user_id = 0 ) {
 
 
 /**
- * bp_media_user_can_access function.
- * 
- * @access public
- * @param int $user_id (default: 0)
+ * The bp_media_user_can_access function.
+ *
+ * @param int $user_id (default: 0).
  * @return boolean
  */
 function bp_media_user_can_access( $user_id = 0 ) {
@@ -934,14 +836,11 @@ function bp_media_user_can_access( $user_id = 0 ) {
 
 
 /**
- * bp_is_friend_boolean function.
+ * The bp_is_friend_boolean function.
  *
- * return boolean if user is a friend
+ * Thank you for being a friend.
  *
- * thank you for being a friend
- * 
- * @access public
- * @return void
+ * @return boolean
  */
 function bp_is_friend_boolean() {
 	$is_friend = bp_is_friend();
@@ -954,11 +853,9 @@ function bp_is_friend_boolean() {
 
 
 /**
- * bp_media_pagination_count function.
- * 
- * @access public
- * @param mixed $query
- * @return string
+ * The bp_media_pagination_count function.
+ *
+ * @param object $query Query object.
  */
 function bp_media_pagination_count( $query ) {
 	echo bp_media_get_pagination_count( $query );
@@ -966,6 +863,7 @@ function bp_media_pagination_count( $query ) {
 	/**
 	 * Generate the "Viewing x-y of z albums" pagination message.
 	 *
+	 * @param object $query Query object.
 	 * @return string
 	 */
 	function bp_media_get_pagination_count( $query ) {
@@ -1003,11 +901,9 @@ function bp_media_pagination_count( $query ) {
 
 
 /**
- * bp_media_pagination_links function.
- * 
- * @access public
- * @param mixed $query
- * @return void
+ * The bp_media_pagination_links function.
+ *
+ * @param mixed $query Query object.
  */
 function bp_media_pagination_links( $query ) {
 	echo bp_media_get_pagination_links( $query );
