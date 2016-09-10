@@ -1,16 +1,11 @@
 <?php
-
 /**
  * BuddyPress - Media Activity Upload Form
  *
  * This template has AJAX functions to attach images to activity items
- *
  */
 
 ?>
-
-
-
 
 <div id="attachment-holder"></div>
 
@@ -23,7 +18,7 @@ $plupload_init = array(
 'browse_button'       => 'plupload-browse-button',
 'container'           => 'plupload-upload-ui',
 'drop_element'        => 'drag-drop-area',
-'file_data_name'      => 'async-upload',            
+'file_data_name'      => 'async-upload',
 'multiple_queues'     => true,
 'multi_selection' => false,
 'max_file_size'       => wp_max_upload_size().'b',
@@ -34,15 +29,15 @@ $plupload_init = array(
 'multipart'           => true,
 'urlstream_upload'    => true,
 
-// additional post data to send to our ajax hook
+// Additional post data to send to our ajax hook.
 'multipart_params'    => array(
   '_ajax_nonce' => wp_create_nonce('photo-upload'),
-  'action'      => 'bp_media_photo_activity_attach',            // the ajax action name
+  'action'      => 'bp_media_photo_activity_attach', // The ajax action name.
   'user_id' => bp_loggedin_user_id(),
 ),
 );
 
-// we should probably not apply this filter, plugins may expect wp's media uploader...
+// We should probably not apply this filter, plugins may expect wp's media uploader.
 $plupload_init = apply_filters('plupload_init', $plupload_init); ?>
 
 <script type="text/javascript">
@@ -53,20 +48,20 @@ jQuery(document).ready(function($){
 
 	// create the uploader and pass the config from above
 	var uploader = new plupload.Uploader($plupload_init);
-	
+
 	//console.log( $plupload_init );
-	
+
 	// checks if browser supports drag and drop upload, makes some css adjustments if necessary
 	uploader.bind('Init', function(up){
-			
+
 		var uploaddiv = $('#plupload-upload-ui');
-		
+
 		if(up.features.dragdrop){
 		  uploaddiv.addClass('drag-drop');
 		    $('#drag-drop-area')
 		      .bind('dragover.wp-uploader', function(){ uploaddiv.addClass('drag-over'); })
 		      .bind('dragleave.wp-uploader, drop.wp-uploader', function(){ uploaddiv.removeClass('drag-over'); });
-		
+
 		}else{
 		  uploaddiv.removeClass('drag-drop');
 		  $('#drag-drop-area').unbind('.wp-uploader');
@@ -74,66 +69,66 @@ jQuery(document).ready(function($){
 	});
 
 	uploader.init();
-  
+
 	uploader.bind('BeforeUpload', function(up, file) {
-		 
+
 	   	up.settings.multipart_params['whats-new-post-in'] = $('#whats-new-post-in').val();
-	    
+
 		console.log( up.settings.multipart_params );
 	});
-	
+
 	// a file was added in the queue
 	uploader.bind('FilesAdded', function(up, files){
-	
+
 		if(uploader.files.length > 1) {
 		    uploader.removeFile(uploader.files[0]);
 		    uploader.refresh();// must refresh for flash runtime
 		}
-		
+
 		var hundredmb = 100 * 1024 * 1024, max = parseInt(up.settings.max_file_size, 10);
-		
+
 		plupload.each(files, function(file){
 		  if (max > hundredmb && file.size > hundredmb && up.runtime != 'html5'){
 		    // file size error?
-		
+
 		  }else{
-		  	
+
 		    // a file was added, you may want to update your DOM here...
 		    console.log(file);
 		  }
 		});
-		
+
 		up.refresh();
 		up.start();
 	});
-	
+
 	uploader.bind('UploadProgress', function(up, file) {
-		
+
 		$('#attachment-holder').html('<div id="image-tmp"><div id="percentage"></div></div>');
-		$('#percentage').show();	        
+		$('#percentage').show();
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
-		
-	// a file was uploaded 
+
+	// a file was uploaded
 	uploader.bind('FileUploaded', function(up, file, data) {
-		
+
 		var imageData = JSON.parse(data.response);
 		console.log( imageData);
-		
+
 		setTimeout(function() {
-		
+
 			$('#percentage').html('');
 			$('#percentage').hide();
 			
 			$('#attachment-holder').html('<div class="media-activity"><div class="activity-media-image"><img class="activity-media-tmp" src="' + imageData.url + '"><span class="activity-remove-attachment" data-id="' + imageData.id + '">X</span></div></div>');
-		
+
 		}, 100);
-			
+
 		$('#bp-media-attachment-id').val( imageData.id );
-		
+
 	});
 
-});   
+});
 
 </script>
