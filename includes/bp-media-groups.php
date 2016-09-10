@@ -19,15 +19,13 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
 	     *
 	     * @param int|null $group_id Group ID.
 	     */
-	    function display( $group_id = NULL ) {
+	    function display( $group_id = null ) {
 	        $group_id = bp_get_group_id();
 	        bp_media_get_template_part( 'group/image-loop');
 	    }
-	 
+
 	}
-endif; // if ( class_exists( 'BP_Group_Extension' ) )
-
-
+endif;
 
 /**
  * The bp_media_group_settings function.
@@ -52,9 +50,10 @@ add_action( 'bp_after_group_settings_admin', 'bp_media_group_settings' );
 function bp_media_show_media_setting() {
 
 	$meta = groups_get_groupmeta( bp_get_group_id() );
-		
-	if ( isset( $meta['enable_media'] ) && '1' === $meta['enable_media'][0] )
+
+	if ( isset( $meta['enable_media'] ) && '1' === $meta['enable_media'][0] ) {
 		echo ' checked="checked"';
+	}
 }
 
 
@@ -79,8 +78,9 @@ function bp_media_group_is_enabled() {
 	global $bp;
 	if ( isset( $bp->groups->current_group->slug ) && $bp->groups->current_group->slug == $bp->current_item ) {
          $meta = groups_get_groupmeta( $bp->groups->current_group->id );
-         if( '1' === $meta['enable_media'][0] || defined('ENABLE_MEDIA') ) 
-         bp_register_group_extension( 'Group_Extension_BP_MEDIA' );	 		 
+         if ( '1' === $meta['enable_media'][0] || defined('ENABLE_MEDIA') ) {
+	         bp_register_group_extension( 'Group_Extension_BP_MEDIA' );
+         }
 	}
 }
 add_action( 'bp_setup_nav', 'bp_media_group_is_enabled' );
