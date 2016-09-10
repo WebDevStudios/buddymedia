@@ -54,9 +54,11 @@ function bp_media_photo_activity_attach() {
 	// Upload file.
 	$file = $_FILES['async-upload'];
 	$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'bp_media_photo_activity_attach' ) );
-	
-	if( ! $album_id = bp_media_get_activity_album_id( $_POST['user_id'] ) ) exit;
-		
+
+	if ( ! $album_id = bp_media_get_activity_album_id( $_POST['user_id'] ) ) {
+		exit;
+	}
+
 	$wp_upload_dir = wp_upload_dir();
 
 	// Adds file as attachment to WordPress.
@@ -102,17 +104,21 @@ add_action('wp_ajax_bp_media_photo_activity_attach', 'bp_media_photo_activity_at
  */
 function bp_media_get_activity_album_id( $user_id ) {
 
-	if( ! $user_id ) return;
+	if ( ! $user_id ) {
+		return;
+	}
 
 	$post = get_posts( array(
 	    'meta_key'  => '_activity_album',
 	    'author'    => (int) $user_id,
 	    'post_type' => 'bp_media',
 	) );
-	
-	if( $post ) return $post[0]->ID;
 
-	// Create post object
+	if ( $post ) {
+		return $post[0]->ID;
+	}
+
+	// Create post object.
 	$my_post = array(
 	  'post_title'   => __( 'Activity Attachments', 'bp-media' ),
 	  'post_content' => __( 'Images upload while posting activity.', 'bp-media' ),
@@ -186,17 +192,17 @@ function bp_media_ajax_create_album(){
 		'post_author'  => (int) $user_id,
 		'post_type'    => 'bp_media',
 	);
-	
-	// dont post activity if album is not public
-	if( 'public' !== $permission ) {
+
+	// Dont post activity if album is not public.
+	if ( 'public' !== $permission ) {
 		add_filter('bp_activity_type_before_save', '__return_false', 9999 );
 	}
 
 	// Insert the post into the database.
 	$post = wp_insert_post( $my_post );
-	
-	// add permission meta
-	if( $post ) {
+
+	// Add permission meta.
+	if ( $post ) {
 		update_post_meta( $post, '_permission', $permission );
 	}
 
@@ -235,8 +241,8 @@ function bp_media_ajax_edit_album(){
 
 	// Update the post into the database.
 	$post = wp_update_post( $my_post );
-	
-	if( $post ) {
+
+	if ( $post ) {
 		update_post_meta( $post, '_permission', $permission );
 	}
 
@@ -259,10 +265,10 @@ function bp_media_ajax_delete_album(){
 
 	check_ajax_referer( 'edit-album', 'nonce' );
 
-	$user_id =  $_GET['user_id'];
-	$post_id =  $_GET['post_id'];
-		
-	// delete the post
+	$user_id = $_GET['user_id'];
+	$post_id = $_GET['post_id'];
+
+	// Delete the post.
 	wp_delete_post( (int) $post_id, true );
 
 	// Return post id.
@@ -341,12 +347,14 @@ function bp_media_ajax_add_comment(){
 
 	check_ajax_referer( 'add-comment', 'nonce' );
 
-	$user_id =  $_GET['user_id'];
-	$post_id =  $_GET['post_id'];
-	$comment =  $_GET['upload_comment'];
-	
-	if( empty( $comment ) ) return;
-		
+	$user_id = $_GET['user_id'];
+	$post_id = $_GET['post_id'];
+	$comment = $_GET['upload_comment'];
+
+	if ( empty( $comment ) ) {
+		return;
+	}
+
 	$time = current_time('mysql');
 
 	$data = array(
@@ -394,8 +402,10 @@ function bp_media_ajax_delete_comment(){
 	$user_id =  $_GET['user_id'];
 	$comment_id =  $_GET['comment_id'];
 
-	if( empty( $comment_id ) || bp_loggedin_user_id() !== (int) $user_id ) return;
-		
+	if ( empty( $comment_id ) || bp_loggedin_user_id() !== (int) $user_id ) {
+		return;
+	}
+
 	$comment_id = wp_delete_comment( $comment_id );
 
 	wp_send_json( $comment_id );
