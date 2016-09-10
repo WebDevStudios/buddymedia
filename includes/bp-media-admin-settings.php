@@ -1,10 +1,7 @@
 <?php
 
 /**
- * bp_media_admin_settings function.
- * 
- * @access public
- * @return void
+ * The bp_media_admin_settings function.
  */
 function bp_media_admin_settings() {
  
@@ -63,10 +60,7 @@ add_action( 'bp_register_admin_settings', 'bp_media_admin_settings', 999 );
  
 
 /**
- * bp_plugin_setting_callback_section function.
- * 
- * @access public
- * @return void
+ * The bp_plugin_setting_callback_section function.
  */
 function bp_plugin_setting_callback_section() {
     ?>
@@ -76,10 +70,7 @@ function bp_plugin_setting_callback_section() {
  
 
 /**
- * bp_media_setting_field_callback function.
- * 
- * @access public
- * @return void
+ * The bp_media_setting_field_callback function.
  */
 function bp_media_setting_field_callback() {
    
