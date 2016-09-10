@@ -75,9 +75,9 @@ function bp_media_loop_profile_filter( $query ) {
 		$author = bp_displayed_user_id();
 		$action = bp_current_action();
 		$action_var = bp_action_variables();
-						
+
 		$value = ( 'media' === $action ) ? 'public' : $action ;
-		
+
 		$query = array(
 			'post_type' => 'bp_media',
 			'author' => $author,
@@ -104,11 +104,9 @@ function bp_media_loop_profile_filter( $query ) {
 				'orderby' => 'modified',
 				'paged' => $paged,
 			);
-			
+
 		}
-		
-		
-	
+
 	}
 
 	return $query;
@@ -167,9 +165,9 @@ function bp_media_loop_permissions_filter( $query ) {
 				   )
 				)
 			);
-			
+
 		}
-		
+
 	}
 
 	return $query;
@@ -238,32 +236,32 @@ function bp_media_userlink() {
  */
 function bp_media_create_album_link() {
 	echo bp_media_get_create_album_link();
-}	
+}
 
-	
+
 	/**
 	 * The bp_media_get_create_album_link function.
 	 */
 	function bp_media_get_create_album_link() {
 		return bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/create';
 	}
-	
-	
+
+
 /**
  * The bp_media_edit_album_link function.
  */
 function bp_media_edit_album_link() {
 	echo bp_media_get_edit_album_link();
-}	
+}
 
-	
+
 	/**
 	 * The bp_media_get_edit_album_link function.
 	 */
 	function bp_media_get_edit_album_link() {
 		return bp_media_userlink( bp_displayed_user_id() ) . 'edit';
 	}
-	
+
 
 
 /**
@@ -318,10 +316,10 @@ function bp_media_album_link() {
 			return bp_media_userlink( $post->post_author ) . '/album/' . $post->ID;
 			
 		return;
-		
+
 	}
-	
-	
+
+
 /**
  * The bp_media_time_since function.
  *
@@ -332,18 +330,18 @@ function bp_media_time_since( $photo_id ) {
 
 	$attachment = get_post( $photo_id );
 	$post_date = sprintf( __( '%1$s ago', 'bp_media' ), human_time_diff( strtotime( $attachment->post_date ), current_time('timestamp') ) );
-	
+
 	return $post_date;
 }
-	
 
-	
+
+
 /**
  * The bp_album_cover_url function.
  */
 function bp_album_cover_url() {
 	global $post;
-	
+
 	$args = array(
 		'order'          => 'asc',
 		'orderby'        => 'date',
@@ -353,9 +351,9 @@ function bp_album_cover_url() {
 		'post_status'    => null,
 		'numberposts'    => 1,
 	);
-	
+
 	$attachments = get_posts($args);
-	
+
   	if ( $attachments ) {
 		foreach ($attachments as $attachment) {
 			$cover =  wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
@@ -364,7 +362,7 @@ function bp_album_cover_url() {
 	} else {
 		echo BP_MEDIA_PLUGIN_URL . 'includes/images/no-image.png';
 	}
-	
+
 }
 
 
@@ -373,7 +371,7 @@ function bp_album_cover_url() {
  */
 function bp_album_image_count() {
 	global $post;
-	
+
 	$args = array(
 		'order'          => 'ASC',
 		'orderby'        => 'menu_order',
@@ -383,18 +381,18 @@ function bp_album_image_count() {
 		'post_status'    => null,
 		'numberposts'    => -1,
 	);
-	
+
 	$attachments = get_posts( $args );
-	
+
 	$count = 0;
 	foreach ( $attachments as $attachment ) {
 	    $count += count( $attachment );
 	}
-	
+
 	$text = ( $count === 1 ) ? __( ' image', 'bp_media' ) : __( ' images', 'bp_media' ) ;
-	
+
 	echo $count . $text;
-	
+
 }
 
 
@@ -405,7 +403,7 @@ function bp_get_media_image_id() {
 
 	$action_var = bp_action_variables();
 	$photo_id = $action_var[0];
-	
+
 	if ( FALSE === get_post_status( $photo_id ) ) {
 	  $photo_id = FALSE;
 	} 
@@ -423,7 +421,7 @@ function bp_get_media_album_id() {
 
 	$action_var = bp_action_variables();
 	$album_id = $action_var[0];
-	
+
 	if ( FALSE === get_post_status( $album_id ) ) {
 	  $album_id = FALSE;
 	} 
@@ -448,17 +446,17 @@ function bp_media_album_field( $field = null ) {
 	 * @return string
 	 */
 	function bp_media_get_album_field( $field = null ) {
-	
+
 		if( ! $field ) return;
-		
+
 		$action_var = bp_action_variables();
-		
+
 		$album = get_post( $action_var[0] );
-		
+
 		if( ! $album ) {
 			die();
 		}
-		
+
 		switch ( $field ) {
 			case 'title': 
 				return esc_html( $album->post_title );
@@ -466,13 +464,13 @@ function bp_media_album_field( $field = null ) {
 			case 'description': 
 				return esc_html( $album->post_content );
 			break;
-			
+
 		}
 		
 		return;	
 	}
 
-	
+
 /**
  * The bp_media_image_description function.
  */
@@ -505,18 +503,18 @@ function bp_media_album_meta( $field = null ) {
 	 * @return mixed
 	 */
 	function bp_media_get_album_meta( $field = null ) {
-	
+
 		if( ! $field ) return;
-		
+
 		$action_var = bp_action_variables();
-		
+
 		$album = get_post_meta( $action_var[0], $field, true );
-		
+
 		if( $album ) return $album;
 		
 		return;	
 	}
-	
+
 function bp_media_posted_in() {
 	echo bp_get_media_posted_in();
 }
@@ -526,36 +524,36 @@ function bp_media_posted_in() {
 	
 		$action_var = bp_action_variables();	
 		$meta = get_post_meta( $action_var[0], 'secondary_item_id', true );
-		
+
 		if( !$meta ) return;
-		
+
 		if( $meta !== '0' ) {
-		
+
 			$group = groups_get_group( array( 'group_id' => (int) $meta ) );
 			return __( 'Posted in the group <a href="' . home_url( $bp->groups->slug . '/' . $group->slug ) . '">'. $group->name .'</a>' , 'bp-media' );
 		}
-		
+
 		return;
 	}
 
-	
+
 /**
  * The bp_media_album_permission function.
  *
  * @param mixed $permission Unknown.
  */
 function bp_media_album_permission( $permission ) {
-	
+
 	$action_var = bp_action_variables();
-	
+
 	$meta = get_post_meta( $action_var[0], '_permission', true );
-	
+
 	if( $meta === $permission) {
 		echo 'checked="checkd"';
 	}
-	
+
 }
-	
+
 /**
  * The bp_media_album_back_url function.
  *
@@ -564,7 +562,7 @@ function bp_media_album_permission( $permission ) {
 function bp_media_album_back_url( $album_id = null ) {
 
 	$action_var = bp_action_variables();
-	
+
 	if( !$album_id ) {
 		$album_id = $action_var[0];
 	}
@@ -580,7 +578,7 @@ function bp_media_album_back_url( $album_id = null ) {
 function bp_media_image_back_url() {
 	$action_var = bp_action_variables();
 	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $action_var[0];
-	
+
 }
 
 
@@ -648,7 +646,6 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
  */
 function bp_media_comments( $comment ) {
 	bp_media_get_template_part('comments' );
-
 }
 
 
@@ -706,12 +703,12 @@ function bp_media_display_attachment_image() {
 		 * @param string $attachment_src src of attachment %2$s.
 		*/
 		$attachment_html_string = apply_filters( 'bp_media_attachment_html', '<div class="bp-media-activity-attachment"><a href="%1$s"><img src="%2$s"></a></div>', $attachment_url, $attachment_src[0] );
-		
+
 		$attachment = sprintf( $attachment_html_string, $attachment_url, $attachment_src[0] );
-		
+
 		echo $attachment;
 	}
-	
+
 }
 add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
 
@@ -725,7 +722,7 @@ add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
  */
 function bp_media_delete_attachments_before_delete_post( $id ){
 	global $post;
-	
+
 	if( $post && 'bp_media' !== $post->post_type ) return;
 	
 	$subposts = get_children(array( 
@@ -734,14 +731,14 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 	    'numberposts' => -1,
 	    'post_status' => 'any'
 	));
-	
+
 	if ( is_array( $subposts ) && count( $subposts ) > 0 ){
 		$uploadpath = wp_upload_dir();
-	 	
+
 		foreach( $subposts as $subpost ){
-			
+
 			$_wp_attached_file = get_post_meta( $subpost->ID, '_wp_attached_file', true );
-			
+
 			$original = basename( $_wp_attached_file );
 			$pos = strpos( strrev( $original ), '.' );
 			if (strpos( $original, '.' ) !== false ){
@@ -751,7 +748,7 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 				$ext = explode( '-', strrev( $original ) );
 				$ext = strrev( $ext[0] );
 			}
-			
+
 			$pattern = $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'-[0-9]*x[0-9]*.'.$ext;
 			$original= $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'.'.$ext;
 			if ( getimagesize( $original ) ){
@@ -781,12 +778,12 @@ add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_pos
  * @return array
  */
 function bp_media_filter_album_attachments( $args, $type, $post ) {
-	
+
 	if( 'bp_media' === $post->post_type ) {
-		
+
 		$args['orderby'] = 'date';
 		$args['order'] = 'desc';
-		
+
 	}
 	return $args;
 }
@@ -804,7 +801,7 @@ function bp_media_user_can_delete( $user_id = 0 ) {
 	if( 0 === $user_id  ) {
 		$user_id = bp_displayed_user_id();
 	}
-	
+
 	if( bp_loggedin_user_id() === (int) $user_id ) {
 		return true;
 	}
@@ -825,7 +822,7 @@ function bp_media_user_can_access( $user_id = 0 ) {
 	if( 0 === $user_id  ) {
 		$user_id = bp_displayed_user_id();
 	}
-	
+
 	if( ! apply_filters( 'bp_media_user_can_access', $user_id ) ) return;
 
 	if( bp_loggedin_user_id() === (int) $user_id ) {
@@ -844,7 +841,7 @@ function bp_media_user_can_access( $user_id = 0 ) {
  */
 function bp_is_friend_boolean() {
 	$is_friend = bp_is_friend();
-	
+
 	if( 'is_friend' === $is_friend ) {
 		return true;
 	}
@@ -867,21 +864,21 @@ function bp_media_pagination_count( $query ) {
 	 * @return string
 	 */
 	function bp_media_get_pagination_count( $query ) {
-	
+
 		$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
-				
+
 		if( bp_is_directory() && !bp_current_action() ) {
 			$action = __('album', 'bp-media');
 		}
-		
+
 		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
 		$posts_per_page = $query->query['posts_per_page'];
-		
+
 		$start_num = intval( ( $paged - 1 ) * $posts_per_page ) + 1;
 		$from_num  = bp_core_number_format( $start_num );
 		$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
 		$total     = bp_core_number_format( $query->found_posts );
-	
+
 		if ( 1 == $query->found_posts ) {
 			$message = __( 'Viewing 1 ' . $action, 'bp-media' );
 		} else {
@@ -910,19 +907,19 @@ function bp_media_pagination_links( $query ) {
 }
 
 	function bp_media_get_pagination_links( $query ) {
-	
+
 			$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
-	
+
 			$pag_args = array(
 				'mpage' => '%#%'
 			);
-			
+
 			if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
 				$base = remove_query_arg( 's', wp_get_referer() );
 			} else {
 				$base = '';
 			}
-			
+
 			echo paginate_links( array(
 				'base'      => add_query_arg( $pag_args, $base ),
 				'format'    => '',
