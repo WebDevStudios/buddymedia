@@ -18,39 +18,37 @@ function bp_media_settings_init() {
 		'bp_media_media_types_section_callback',
 		'settings'
 	);
-			add_settings_field(
-				'bp_media_image_types',
-				__( 'Allowed extensions for images', 'buddymedia' ),
-				'bp_media_image_types_render',
-				'settings',
-				'bp_media_media_types_section'
-			);
-			add_settings_field(
-				'bp_media_doc_types',
-				__( 'Allowed extensions for docs', 'buddymedia' ),
-				'bp_media_doc_types_render',
-				'settings',
-				'bp_media_media_types_section'
-			);
+	add_settings_field(
+		'bp_media_image_types',
+		__( 'Allowed extensions for images', 'buddymedia' ),
+		'bp_media_image_types_render',
+		'settings',
+		'bp_media_media_types_section'
+	);
+	add_settings_field(
+		'bp_media_doc_types',
+		__( 'Allowed extensions for docs', 'buddymedia' ),
+		'bp_media_doc_types_render',
+		'settings',
+		'bp_media_media_types_section'
+	);
 
-/*
-* storage options
- */
+	/*
+	 * storage options
+	 */
 	add_settings_section(
 		'bp_media_storage_options_section',
 		__( 'Storage Options', 'buddymedia' ),
 		'bp_media_storage_options_section_callback',
 		'settings'
 	);
-			add_settings_field(
-				'bp_media_file_size',
-				__( 'Maximum Upload size per file(MB)?', 'buddymedia' ),
-				'bp_media_file_size_render',
-				'settings',
-				'bp_media_storage_options_section'
-			);
-
-
+	add_settings_field(
+		'bp_media_file_size',
+		__( 'Maximum Upload size per file(MB)?', 'buddymedia' ),
+		'bp_media_file_size_render',
+		'settings',
+		'bp_media_storage_options_section'
+	);
 }
 add_action( 'admin_init', 'bp_media_settings_init' );
 
