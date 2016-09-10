@@ -30,7 +30,7 @@ class BP_Media_Component extends BP_Component {
 
 		$bp->active_components[$this->id] = '1';
 
-		$this->includes();	
+		$this->includes();
 	}
 
 	/**
@@ -65,9 +65,10 @@ class BP_Media_Component extends BP_Component {
 	public function setup_globals( $args = array() ) {
 		$bp = buddypress();
 
-		// Define a slug, if necessary
-		if ( !defined( 'BP_MEDIA_SLUG' ) )
+		// Define a slug, if necessary.
+		if ( !defined( 'BP_MEDIA_SLUG' ) ) {
 			define( 'BP_MEDIA_SLUG', $this->id );
+		}
 
 		// All globals for media component.
 		// Note that global_tables is included in this array.
@@ -137,7 +138,7 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 10
 		);
-		
+
 		$sub_nav[] = array(
 			'name'            => ' ',
 			'slug'            => 'album',
@@ -146,7 +147,7 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 40
 		);
-		
+
 		$sub_nav[] = array(
 			'name'            => ' ',
 			'slug'            => 'image',
@@ -166,7 +167,7 @@ class BP_Media_Component extends BP_Component {
 				'position'        => 50
 			);
 		}
-		
+
 		if( is_user_logged_in() ) {
 			$sub_nav[] = array(
 				'name'            => ' ',
@@ -177,7 +178,7 @@ class BP_Media_Component extends BP_Component {
 				'position'        => 50
 			);
 		}
-		
+
 		if ( bp_is_active( 'friends' ) ) {
 			$sub_nav[] = array(
 				'name'            => _x( 'Friends', 'Friends media screen sub nav', 'bp-media' ),
@@ -189,7 +190,7 @@ class BP_Media_Component extends BP_Component {
 				'user_has_access' => bp_is_friend_boolean() || bp_is_my_profile()
 			);
 		}
-		
+
 		$sub_nav[] = array(
 			'name'            => _x( 'Private', 'Private media screen sub nav', 'bp-media' ),
 			'slug'            => 'private',
@@ -199,7 +200,7 @@ class BP_Media_Component extends BP_Component {
 			'position'        => 30,
 			'user_has_access' => bp_is_my_profile()
 		);
-		
+
 		/*
 
 		// Additional menu if groups is active
@@ -230,7 +231,7 @@ class BP_Media_Component extends BP_Component {
 		*/
 
 		$main_nav = apply_filters( 'bp_media_filter_main_nav', $main_nav );
-		$sub_nav = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
+		$sub_nav  = apply_filters( 'bp_media_filter_sub_nav', $sub_nav );
 
 		parent::setup_nav( $main_nav, $sub_nav );
 	}
@@ -320,7 +321,7 @@ class BP_Media_Component extends BP_Component {
 				);
 
 			}
-			
+
 			*/
 
 		}
