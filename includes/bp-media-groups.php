@@ -1,7 +1,7 @@
 <?php
 
 if ( class_exists( 'BP_Group_Extension' ) ) :
- 
+
 	class Group_Extension_BP_MEDIA extends BP_Group_Extension {
 	    /**
 	     * Fire it up.
@@ -13,7 +13,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
 	        );
 	        parent::init( $args );
 	    }
-	 
+
 	    /**
 	     * The display() contains the markup that will be displayed on the main plugin tab.
 	     *
@@ -37,14 +37,12 @@ endif; // if ( class_exists( 'BP_Group_Extension' ) )
 function bp_media_group_settings() {
         ?>
        <h4><?php _e( 'Media Settings', 'bp-media' ); ?></h4>
-                
+
 		<label><input type="checkbox" name="group-enable-media" id="group-enable-media" value="1"<?php bp_media_show_media_setting(); ?> /> <?php _e( 'Allow Group Attachments:', 'bp-media' ); ?></label>
-        
+
         <?php
 }
 add_action( 'bp_after_group_settings_admin', 'bp_media_group_settings' );
-
-
 
 /**
  * The bp_media_show_media_setting function.
@@ -52,7 +50,7 @@ add_action( 'bp_after_group_settings_admin', 'bp_media_group_settings' );
  * @access public
  */
 function bp_media_show_media_setting() {
-		
+
 	$meta = groups_get_groupmeta( bp_get_group_id() );
 		
 	if ( isset( $meta['enable_media'] ) && '1' === $meta['enable_media'][0] )
