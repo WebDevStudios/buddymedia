@@ -34,9 +34,9 @@
 				<?php if ( bp_is_group() ) : ?>data-suggestions-group-id="<?php echo esc_attr( (int) bp_get_current_group_id() ); ?>" <?php endif; ?>
 			><?php if ( isset( $_GET['r'] ) ) : ?>@<?php echo esc_textarea( $_GET['r'] ); ?> <?php endif; ?></textarea>
 		</div>
-		
+
 		<?php do_action( 'bp_activity_post_form_content' ); ?>
-		
+
 	</div><!-- #whats-new-content -->
 		<div id="whats-new-options">
 			<div id="whats-new-submit">
@@ -71,7 +71,7 @@
 				<input type="hidden" id="whats-new-post-in" name="whats-new-post-in" value="<?php bp_group_id(); ?>" />
 
 			<?php endif; ?>
-				
+
 			<?php
 
 			/**
@@ -82,7 +82,7 @@
 			do_action( 'bp_activity_post_form_options' ); ?>
 
 		</div><!-- #whats-new-options -->
-	
+
 
 	<?php wp_nonce_field( 'post_update', '_wpnonce_post_update' ); ?>
 	<?php
