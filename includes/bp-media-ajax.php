@@ -168,9 +168,6 @@ function bp_media_add_album(){
 	die();
 }
 add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
-//add_action('wp_ajax_nopriv_bp_media_add_album', 'bp_media_add_album');
-
-
 
 /**
  * The bp_media_ajax_create_album function.
@@ -215,9 +212,6 @@ function bp_media_ajax_create_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
-//add_action('wp_ajax_nopriv_bp_media_ajax_create_album', 'bp_media_ajax_create_album');
-
-
 
 /**
  * The bp_media_ajax_edit_album function.
@@ -255,8 +249,6 @@ function bp_media_ajax_edit_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
-//add_action('wp_ajax_nopriv_bp_media_ajax_edit_album', 'bp_media_ajax_edit_album');
-
 
 /**
  * The bp_media_ajax_delete_album function.
@@ -280,8 +272,6 @@ function bp_media_ajax_delete_album(){
 
 }
 add_action('wp_ajax_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
-//add_action('wp_ajax_nopriv_bp_media_ajax_delete_album', 'bp_media_ajax_delete_album');
-
 
 /**
  * The bp_media_ajax_delete_image function.
@@ -311,8 +301,6 @@ function bp_media_ajax_delete_image(){
 
 }
 add_action('wp_ajax_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
-//add_action('wp_ajax_nopriv_bp_media_ajax_delete_image', 'bp_media_ajax_delete_image');
-
 
 /**
  * The bp_media_ajax_edit_image function.
@@ -337,8 +325,6 @@ function bp_media_ajax_edit_image(){
 
 }
 add_action('wp_ajax_bp_media_ajax_edit_image', 'bp_media_ajax_edit_image');
-//add_action('wp_ajax_nopriv_bp_media_ajax_edit_image', 'bp_media_ajax_edit_image');
-
 
 /**
  * The bp_media_ajax_add_comment function.
@@ -388,9 +374,6 @@ function bp_media_ajax_add_comment(){
 
 }
 add_action('wp_ajax_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
-//add_action('wp_ajax_nopriv_bp_media_ajax_add_comment', 'bp_media_ajax_add_comment');
-
-
 
 /**
  * The bp_media_ajax_delete_comment function.
@@ -412,4 +395,3 @@ function bp_media_ajax_delete_comment(){
 
 }
 add_action('wp_ajax_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');
-//add_action('wp_ajax_nopriv_bp_media_ajax_delete_comment', 'bp_media_ajax_delete_comment');
