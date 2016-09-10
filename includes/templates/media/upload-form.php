@@ -1,10 +1,8 @@
 <?php
-
 /**
  * BuddyPress - Media  Upload Form
  *
  * This template has AJAX functions to attach images to albums
- *
  */
 
 ?>
@@ -31,7 +29,7 @@ $plupload_init = array(
 'browse_button'       => 'plupload-browse-button',
 'container'           => 'plupload-upload-ui',
 'drop_element'        => 'drag-drop-area',
-'file_data_name'      => 'async-upload',            
+'file_data_name'      => 'async-upload',
 'multiple_queues'     => true,
 'max_file_size'       => wp_max_upload_size().'b',
 'url'                 => admin_url('admin-ajax.php'),
@@ -41,15 +39,15 @@ $plupload_init = array(
 'multipart'           => true,
 'urlstream_upload'    => true,
 
-// additional post data to send to our ajax hook
+// Additional post data to send to our ajax hook.
 'multipart_params'    => array(
   '_ajax_nonce' => wp_create_nonce('photo-upload'),
-  'action'      => 'photo_gallery_upload',            // the ajax action name
+  'action'      => 'photo_gallery_upload', // The ajax action name.
   'gallery_id' => $variables[0],
 ),
 );
 
-// we should probably not apply this filter, plugins may expect wp's media uploader...
+// We should probably not apply this filter, plugins may expect wp's media uploader.
 $plupload_init = apply_filters('plupload_init', $plupload_init); ?>
 
 <script type="text/javascript">
@@ -108,16 +106,16 @@ jQuery(document).ready(function($){
 		up.refresh();
 		up.start();
 	});
-	
-	uploader.bind('UploadProgress', function(up, file) {	
-		$('#percentage').show();        
+
+	uploader.bind('UploadProgress', function(up, file) {
+		$('#percentage').show();
 	    $('#percentage').html('<progress max="100" value="0"></progress>');
 	    $('#percentage progress').val(file.percent);
 	});
 	
 	var added_data = Array();
-	
-	// a file was uploaded 
+
+	// a file was uploaded
 	uploader.bind('FileUploaded', function(up, file, data) {
 	
 		var imageData = JSON.parse(data.response);
