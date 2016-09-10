@@ -1,4 +1,6 @@
-<?php if( !is_user_logged_in() ) return; ?>
+<?php if ( ! is_user_logged_in() ) {
+	return;
+} ?>
 
 <div class="standard-form base">
 	<div class="bp-media-admin-album">
