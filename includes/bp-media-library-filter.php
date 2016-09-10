@@ -48,7 +48,9 @@ class BP_MEDIA_LIBRARY_FILTER {
 	public function bp_media_pre_get_posts( $query ) {
 		global $pagenow;
 
-		if( ( 'edit.php' != $pagenow && 'upload.php' != $pagenow   ) || !$query->is_admin && $query->is_main_query() ) return $query;
+		if ( ( 'edit.php' != $pagenow && 'upload.php' != $pagenow   ) || !$query->is_admin && $query->is_main_query() ) {
+			return $query;
+		}
 
 		// Filter out user media by default.
 		$query->set( 'meta_query', array(
@@ -58,13 +60,10 @@ class BP_MEDIA_LIBRARY_FILTER {
 				)
 			)
 		);
-		
+
 		return $query;
-
 	}
-	
 
-	
 	/**
 	 * The bp_media_ajax_pre_get_posts function.
 	 *
