@@ -12,34 +12,32 @@ class BP_Media_CPT {
 
 	/**
 	 * __construct function.
-	 * 
+	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {}
 
 	public static function instance() {
 
-		// Store the instance locally to avoid private static replication
+		// Store the instance locally to avoid private static replication.
 		static $instance = null;
 
-		// Only run these methods if they haven't been run previously
+		// Only run these methods if they haven't been run previously.
 		if ( null === $instance ) {
 			$instance = new BP_Media_CPT;
 			$instance->setup_actions();
 		}
 
-		// Always return the instance
+		// Always return the instance.
 		return $instance;
 
 	}
 
 
 	/**
-	 * setup_actions function.
-	 * 
+	 * Setup_actions function.
+	 *
 	 * @access private
-	 * @return void
 	 */
 	private function setup_actions() {
 
@@ -58,10 +56,9 @@ class BP_Media_CPT {
 
 
 	/**
-	 * checkin_post_type function.
-	 * 
+	 * Checkin_post_type function.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	public function bp_media_post_type() {
 
@@ -113,10 +110,9 @@ class BP_Media_CPT {
 	}
 
 	/**
-	 * add_columns function.
-	 * 
+	 * The add_columns function.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	public function add_columns() {
 		add_filter( 'manage_edit-bp_media_columns', array( $this, 'add_new_gallery_columns' ) );
@@ -124,11 +120,12 @@ class BP_Media_CPT {
 
 
 	/**
-	 * add_new_gallery_columns function.
-	 * 
+	 * The add_new_gallery_columns function.
+	 *
 	 * @access public
-	 * @param mixed $gallery_columns
-	 * @return void
+	 *
+	 * @param mixed $gallery_columns Array of columns.
+	 * @return array
 	 */
 	public function add_new_gallery_columns( $gallery_columns ) {
 
@@ -142,8 +139,8 @@ class BP_Media_CPT {
 
 
 	/**
-	 * customize_media_tracking_args function.
-	 * 
+	 * The customize_media_tracking_args function.
+	 *
 	 * @access public
 	 * @return void
 	 */
@@ -168,13 +165,14 @@ class BP_Media_CPT {
 
 
 	/**
-	 * bp_media_filter_activity_action function.
+	 * The bp_media_filter_activity_action function.
 	 *
-	 * this filters the CPT post link to link to the album on users profile 
-	 * 
+	 * This filters the CPT post link to link to the album on users profile.
+	 *
 	 * @access public
-	 * @param mixed $action
-	 * @param mixed $activity
+	 *
+	 * @param mixed  $action   Action string.
+	 * @param object $activity Activty object.
 	 * @return string
 	 */
 	public function bp_media_filter_activity_action( $action, $activity ) {
@@ -194,12 +192,11 @@ class BP_Media_CPT {
 
 
 	/**
-	 * bp_media_redirect_cpt_to_album function.
+	 * The bp_media_redirect_cpt_to_album function.
 	 *
-	 * redirect cpt page to user album
-	 * 
+	 * Redirect cpt page to user album.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	function bp_media_redirect_cpt_to_album() {
 		global $post;
@@ -218,13 +215,13 @@ class BP_Media_CPT {
 
 
 	/**
-	 * bp_media_filter_activity_action_permalink function.
+	 * The bp_media_filter_activity_action_permalink function.
 	 *
-	 * this filter remove the link on the time stamp
-	 * 
+	 * This filter remove the link on the time stamp.
+	 *
 	 * @access public
-	 * @param mixed $activity_meta
-	 * @param mixed $activity
+	 * @param mixed  $activity_meta Activity meta.
+	 * @param object $activity      Activity object.
 	 * @return string
 	 */
 	public function bp_media_filter_activity_action_permalink( $activity_meta, $activity ) {
@@ -243,10 +240,9 @@ class BP_Media_CPT {
 
 
 	/**
-	 * add_checkin_metaboxes function.
-	 * 
+	 * The add_checkin_metaboxes function.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	public function add_bp_media_metaboxes() {
 		add_meta_box( 'user_media', 'Media', array( $this, 'user_media' ), 'bp_media', 'normal', 'default' );
@@ -254,11 +250,10 @@ class BP_Media_CPT {
 
 
 	/**
-	 * user_media function.
-	 * 
+	 * The user_media function.
+	 *
 	 * @access public
-	 * @param mixed $post
-	 * @return void
+	 * @param mixed $post Post object.
 	 */
 	public function user_media( $post ) {
 
@@ -353,10 +348,9 @@ class BP_Media_CPT {
 	}
 
 	/**
-	 * remove_submenus function.
-	 * 
+	 * The remove_submenus function.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	function remove_submenus() {
 		global $submenu;
@@ -365,10 +359,9 @@ class BP_Media_CPT {
 
 
 	/**
-	 * hide_add_new_button function.
-	 * 
+	 * The hide_add_new_button function.
+	 *
 	 * @access public
-	 * @return void
 	 */
 	function hide_add_new_button() {
 
