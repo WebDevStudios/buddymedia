@@ -548,7 +548,7 @@ function bp_media_album_permission( $permission ) {
 	$meta = get_post_meta( $action_var[0], '_permission', true );
 
 	if( $meta === $permission) {
-		echo 'checked="checkd"';
+		echo 'checked="checked"';
 	}
 
 }
