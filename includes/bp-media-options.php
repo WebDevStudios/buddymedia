@@ -57,10 +57,10 @@ add_action( 'admin_init', 'bp_media_settings_init' );
  *
  * Files types options.
  */
-function bp_media_media_types_section_callback(  ) {
+function bp_media_media_types_section_callback() {
 	echo __( 'Allowed media types.', 'buddymedia' );
 }
-		function bp_media_image_types_render(  ) {
+		function bp_media_image_types_render() {
 
 			$options = get_option( 'bp_media_settings' );
 			?>
@@ -68,7 +68,7 @@ function bp_media_media_types_section_callback(  ) {
 			<?php
 
 		}
-		function bp_media_doc_types_render(  ) {
+		function bp_media_doc_types_render() {
 
 			$options = get_option( 'bp_media_settings' );
 			?>
@@ -85,7 +85,7 @@ function bp_media_media_types_section_callback(  ) {
 function bp_media_storage_options_section_callback(  ) {
 	echo __( 'Allowed storage quotas.', 'buddymedia' );
 }
-	function bp_media_file_size_render(  ) {
+	function bp_media_file_size_render() {
 
 		$options = get_option( 'bp_media_settings' );
 		?>
@@ -120,8 +120,7 @@ function bp_media_sanitize_callback( $fields ) {
  *
  * BuddyMedia options page markup.
  */
-function bp_media_options_page(  ) {
-
+function bp_media_options_page() {
 	?>
 	<form action='options.php' method='post'>
 
@@ -137,5 +136,4 @@ function bp_media_options_page(  ) {
 
 	</form>
 	<?php
-
 }
