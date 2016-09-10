@@ -17,7 +17,7 @@ Text Domain: bp-media
 defined( 'ABSPATH' ) || exit;
 
 
-if ( !class_exists( 'BP_Media' ) ) :
+if ( ! class_exists( 'BP_Media' ) ) :
 
 	/**
 	 * Main BP_Media Class
