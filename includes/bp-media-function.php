@@ -41,8 +41,8 @@ function bp_media_is_action_edit() {
  * @access public
  */
 function bp_media_loop_filter() {
-	global $bp;
-	
+	$bp = buddypress();
+
 	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
 
 	$query = array(
