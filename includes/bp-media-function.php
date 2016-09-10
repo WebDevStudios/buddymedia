@@ -12,14 +12,13 @@ function bp_media_is_option( $option ) {
 	$option = 'bp-media-' . $option;
 
 	$option = bp_get_option( $option );
-	
-	if( $option ) 
-		return true;
-	
-	
-	return;
-}
 
+	if ( $option ) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * The bp_media_is_action_edit function.
@@ -27,12 +26,12 @@ function bp_media_is_option( $option ) {
 function bp_media_is_action_edit() {
 
 	$variables = bp_action_variables();
-	
-	if( isset( $variables[1] ) && 'edit' ===  $variables[1] ) {
+
+	if ( isset( $variables[1] ) && 'edit' ===  $variables[1] ) {
 		return true;
 	}
-	
-	return;
+
+	return false;
 }
 
 
@@ -47,10 +46,10 @@ function bp_media_loop_filter() {
 	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
 
 	$query = array(
-		'post_type' => 'bp_media',
+		'post_type'      => 'bp_media',
 		'posts_per_page' => 12,
-		'orderby' => 'modified',
-		'paged' => $paged
+		'orderby'        => 'modified',
+		'paged'          => $paged
 	);
 	
 	$query = apply_filters( 'bp_media_loop_filter', $query );
@@ -70,32 +69,32 @@ function bp_media_loop_profile_filter( $query ) {
 
 	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
 
-	if( bp_is_user() ) { 
+	if ( bp_is_user() ) {
 
-		$author = bp_displayed_user_id();
-		$action = bp_current_action();
+		$author     = bp_displayed_user_id();
+		$action     = bp_current_action();
 		$action_var = bp_action_variables();
 
 		$value = ( 'media' === $action ) ? 'public' : $action ;
 
 		$query = array(
-			'post_type' => 'bp_media',
-			'author' => $author,
+			'post_type'      => 'bp_media',
+			'author'         => $author,
 			'posts_per_page' => 11,
-			'orderby' => 'modified',
-			'paged' => $paged,
-			'meta_query' => array(
-			   array(
-			       'key'     => '_permission',
-			       'value'   => $value,
-			       'compare' => '='
-			   )
+			'orderby'        => 'modified',
+			'paged'          => $paged,
+			'meta_query'     => array(
+				array(
+					'key'     => '_permission',
+					'value'   => $value,
+					'compare' => '='
+				)
 			)
 		);
-		
-		
-		if( 'album' === $action ) {
-				
+
+
+		if ( 'album' === $action ) {
+
 			$query = array(
 				'post_type' => 'attachment',
 				'post_parent' => $action_var[0],
@@ -123,46 +122,46 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 function bp_media_loop_permissions_filter( $query ) {
 
 	$action = bp_current_action();
-	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
-	
-	if( !bp_is_user() ) { 
-	
-		$value = ( !empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
-	
+	$paged  = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+
+	if ( ! bp_is_user() ) {
+
+		$value = ( ! empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
+
 		$query = array(
-			'post_type' => 'bp_media',
+			'post_type'      => 'bp_media',
 			'posts_per_page' => 12,
-			'orderby' => 'modified',
-			'paged' => $paged,
-			'meta_query' => array(
-			   array(
-			       'key'     => '_permission',
-			       'value'   => $value,
-			       'compare' => '='
-			   )
+			'orderby'        => 'modified',
+			'paged'          => $paged,
+			'meta_query'     => array(
+				array(
+					'key'     => '_permission',
+					'value'   => $value,
+					'compare' => '='
+				)
 			)
 		);
-		
+
 	}
-	
-	
-	if( bp_is_group() ) {
-	
-		if( 'media' === $action ) {
-				
+
+
+	if ( bp_is_group() ) {
+
+		if ( 'media' === $action ) {
+
 			$query = array(
-				'post_type' => 'attachment',
-				'post_parent' => false,
-				'post_status' => 'inherit',
+				'post_type'      => 'attachment',
+				'post_parent'    => false,
+				'post_status'    => 'inherit',
 				'posts_per_page' => 12,
-				'orderby' => 'modified',
-				'paged' => $paged,
-				'meta_query' => array(
-				   array(
-				       'key'     => 'secondary_item_id',
-				       'value'   => bp_get_group_id(),
-				       'compare' => '='
-				   )
+				'orderby'        => 'modified',
+				'paged'          => $paged,
+				'meta_query'     => array(
+					array(
+						'key'     => 'secondary_item_id',
+						'value'   => bp_get_group_id(),
+						'compare' => '='
+					)
 				)
 			);
 
@@ -222,11 +221,12 @@ function bp_media_userlink() {
 	 */
 	function bp_media_get_userlink() {
 		global  $post;
-		
-		if( $post->post_author )
+
+		if ( $post->post_author ) {
 			return bp_core_get_user_domain( $post->post_author ) . BP_MEDIA_SLUG;
-	
-		return; 
+		}
+
+		return;
 	}
 
 
@@ -271,26 +271,24 @@ function bp_media_edit_album_link() {
  */
 function bp_media_edit_image_link( $id = null ) {
 
-	if( !$id ) {
+	if ( ! $id ) {
 		$action_var = bp_action_variables();
 		$id = $action_var[0];
 	}
 	echo bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/image/' . $id . '/edit';
 }
-	
-	
-	
+
 /**
  * The bp_media_create_album_link_ajax function.
  */
 function bp_media_create_album_link_ajax() {
 
-	$ajax_url = add_query_arg( 
-	    array( 
-	        'action' => 'bp_media_add_album' 
-	    ), 
+	$ajax_url = add_query_arg(
+	    array(
+	        'action' => 'bp_media_add_album'
+	    ),
 	    '/wp-admin/admin-ajax.php'
-	); 
+	);
 
 	return $ajax_url;
 }
@@ -311,10 +309,11 @@ function bp_media_album_link() {
 	 */
 	function bp_get_media_album_link() {
 		global $post;
-		
-		if( $post->ID )
+
+		if ( $post->ID ) {
 			return bp_media_userlink( $post->post_author ) . '/album/' . $post->ID;
-			
+		}
+
 		return;
 
 	}
@@ -406,8 +405,8 @@ function bp_get_media_image_id() {
 
 	if ( FALSE === get_post_status( $photo_id ) ) {
 	  $photo_id = FALSE;
-	} 
-	
+	}
+
 	return $photo_id;
 }
 
@@ -424,8 +423,8 @@ function bp_get_media_album_id() {
 
 	if ( FALSE === get_post_status( $album_id ) ) {
 	  $album_id = FALSE;
-	} 
-		
+	}
+
 	return $album_id;
 }
 
@@ -566,9 +565,9 @@ function bp_media_album_back_url( $album_id = null ) {
 	if( !$album_id ) {
 		$album_id = $action_var[0];
 	}
-	
-	echo  bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $album_id;
-	
+
+	echo bp_core_get_user_domain( bp_displayed_user_id() ) . BP_MEDIA_SLUG . '/album/' . $album_id;
+
 }
 
 
@@ -653,7 +652,10 @@ function bp_media_comments( $comment ) {
  * The bp_media_can_edit function.
  */
 function bp_media_can_edit() {
-	if( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() || is_super_admin() || is_admin() ) return true;
+	if ( is_user_logged_in() && bp_loggedin_user_id() === bp_displayed_user_id() || is_super_admin() || is_admin() ) {
+		return true;
+	}
+	return false;
 }
 
 
@@ -669,7 +671,7 @@ function bp_media_add_activity_meta( $activity ) {
           bp_activity_update_meta( $activity->id, 'bp_media_attachment_id', $_POST['attachment_id'] );
           update_post_meta( $_POST['attachment_id'], 'description', $_POST['content'] );
           update_post_meta( $_POST['attachment_id'], 'activity_id', $activity->id );
-     }	
+     }
 }
 add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
 
@@ -679,9 +681,9 @@ add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
  * The bp_media_display_attachment_image function.
  */
 function bp_media_display_attachment_image() {
-	
-	if( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
-	
+
+	if ( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
+
 		/**
 		 * Filter activity attachment media size.
 		 *
