@@ -17,24 +17,24 @@ if ( ! $photo_id ) {
 			<div class="upload-author-username"><?php echo bp_core_get_username( $user_id ) ; ?></div>
 			<div class="upload-time-since"><?php echo bp_media_time_since( $photo_id ) ; ?></div>
 			<div id="cleared"></div>
-			<div class="upload-description"><p><?php echo bp_media_image_description( $photo_id ) ; ?></p></div>	
+			<div class="upload-description"><p><?php bp_media_image_description() ; ?></p></div>
 		</div>
 		<ul class="commentlist">
-		    <?php    
-		        //Gather comments for a photo 
+		    <?php
+		        // Gather comments for a photo.
 		        $comments = get_comments(array(
 		            'post_id' => $photo_id,
-		            'status' => 'approve' //Change this to the type of comments to be displayed
+		            'status' => 'approve' // Change this to the type of comments to be displayed.
 		        ));
-		               	        
-		        //Display the list of comments
+
+		        // Display the list of comments.
 		        wp_list_comments(array(
 		        	'type' => 'comment',
 		        	'callback' => 'bp_media_comments',
-		            'per_page' => 10, //Allow comment pagination
-		            'reverse_top_level' => false //Show the latest comments at the top of the list
+		            'per_page' => 10, // Allow comment pagination.
+		            'reverse_top_level' => false // Show the latest comments at the top of the list.
 		        ), $comments );
-		
+
 		    ?>
 		</ul>
 		<div class="image-reply-form">
