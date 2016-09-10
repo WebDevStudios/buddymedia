@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * AppBuddy_Ajax class.
  */
 class BP_Media_CPT {
-	
+
 	/**
 	 * __construct function.
 	 * 
@@ -17,8 +17,7 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function __construct() {}
-	
-	
+
 	public static function instance() {
 
 		// Store the instance locally to avoid private static replication
@@ -43,7 +42,7 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	private function setup_actions() {
-	
+
 		add_action( 'init', array( $this, 'bp_media_post_type'), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'add_bp_media_metaboxes' ) );
 		add_action(	'admin_menu', array( $this, 'remove_submenus' ) );
@@ -51,13 +50,13 @@ class BP_Media_CPT {
 		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
 		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
 		add_action( 'template_redirect', array( $this, 'bp_media_redirect_cpt_to_album' ) );
-		
+
 		add_filter( 'bp_activity_custom_post_type_post_action', array( $this, 'bp_media_filter_activity_action' ), 10, 2 );
 		add_filter( 'bp_activity_permalink', array( $this, 'bp_media_filter_activity_action_permalink' ), 10, 2 );
-		
+
 	}
-	
-	
+
+
 	/**
 	 * checkin_post_type function.
 	 * 
@@ -65,7 +64,7 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function bp_media_post_type() {
-	
+
 		$labels = array(
 			'name'                => _x( 'Media', 'Media', 'bp-media' ),
 			'singular_name'       => _x( 'Media', 'Media', 'bp-media' ),
@@ -110,9 +109,9 @@ class BP_Media_CPT {
 	        ),
 		);
 		register_post_type( 'bp_media', $args );
-		
+
 	}
-	
+
 	/**
 	 * add_columns function.
 	 * 
@@ -122,8 +121,8 @@ class BP_Media_CPT {
 	public function add_columns() {
 		add_filter( 'manage_edit-bp_media_columns', array( $this, 'add_new_gallery_columns' ) );
 	}
-	
-	
+
+
 	/**
 	 * add_new_gallery_columns function.
 	 * 
@@ -140,8 +139,8 @@ class BP_Media_CPT {
 
 	    return $new_columns;
 	}
-	
-	
+
+
 	/**
 	 * customize_media_tracking_args function.
 	 * 
@@ -153,7 +152,7 @@ class BP_Media_CPT {
 	    if ( ! bp_is_active( 'activity' ) ) {
 	        return;
 	    }
-	 
+
 	    bp_activity_set_post_type_tracking_args( 'bp_media', array(
 	        'component_id'             => buddypress()->media->id,
 	        'action_id'                => 'new_album',
@@ -166,8 +165,8 @@ class BP_Media_CPT {
 	        'position'                 => 100,
 	    ) );
 	}
-	
-	
+
+
 	/**
 	 * bp_media_filter_activity_action function.
 	 *
@@ -184,14 +183,14 @@ class BP_Media_CPT {
 
 			$user_link = '<a href="'.bp_core_get_user_domain( $activity->user_id ).'">'. bp_core_get_username( $activity->user_id ).'</a>';
 			$album_link = bp_core_get_user_domain( $activity->user_id ) . BP_MEDIA_SLUG . '/album/' . $activity->secondary_item_id;
-			
+
 			return sprintf( __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ), $user_link, $album_link  );
-			
+
 		}
-	
+
 		return $action;
 	}
-	
+
 
 
 	/**
@@ -213,11 +212,11 @@ class BP_Media_CPT {
 			$redirect_url = bp_core_get_user_domain( $post->post_author ) . BP_MEDIA_SLUG . '/album/' . $post->ID;
 			wp_safe_redirect( $redirect_url );
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * bp_media_filter_activity_action_permalink function.
 	 *
@@ -234,14 +233,14 @@ class BP_Media_CPT {
 
 			$date_recorded  = bp_core_time_since( $activity->date_recorded );
 			return $activity->action . ' ' . $date_recorded;
-			
+
 		}
-			
+
 		return $activity_meta;
-		
+
 	}
 
-	
+
 
 	/**
 	 * add_checkin_metaboxes function.
@@ -252,8 +251,8 @@ class BP_Media_CPT {
 	public function add_bp_media_metaboxes() {
 		add_meta_box( 'user_media', 'Media', array( $this, 'user_media' ), 'bp_media', 'normal', 'default' );
 	}
-	
-	
+
+
 	/**
 	 * user_media function.
 	 * 
@@ -306,15 +305,15 @@ class BP_Media_CPT {
 				}
 			</style> 
 			<?php
-		
+
 		echo '<ul class="user-media">';
-		
+
 			foreach( $attachments as $attachment ) {
-			
+
 				$user = get_user_by( 'id', (int) $attachments[$attachment->ID]->post_author );
-								
+
 				?>
-				
+
 				<li>
 					<div class="media-thumbnail">
 						<a href="<?php echo bp_core_get_userlink( $user->ID, false, true )  . BP_MEDIA_SLUG . '/image/' . $attachment->ID; ?>">
@@ -327,13 +326,13 @@ class BP_Media_CPT {
 							<?php _e( 'Description: ', 'bp_media' ); ?>
 							<?php echo $attachments[$attachment->ID]->post_content; ?>
 						</div>
-						
+
 						<div class="media-author">
 							<?php _e( 'Uploaded By: ', 'bp_media' ); ?>
 							<a href="<?php echo bp_core_get_userlink( $user->ID, false, true ); ?>"><?php echo $user->user_login; ?></a>
 						</div>
 					</div>
-					
+
 					<?php if( bp_media_can_edit() ) : ?>
 						<div class="image-action-links" data-id="<?php echo $attachment->ID; ?>">
 							<a class="image-action-delete error"><?php _e( 'delete', 'bp_media' ) ;?></a>
@@ -341,18 +340,18 @@ class BP_Media_CPT {
 							<input id="nonce" type="hidden" value="<?php echo wp_create_nonce( "edit-album" ); ?>">
 						</div>
 					<?php endif ; ?>
-				
+
 				</li>
-				
+
 				<?php
-				
+
 			}
-		
+
 		echo '</ul>';
-		
-		
+
+
 	}
-		
+
 	/**
 	 * remove_submenus function.
 	 * 
@@ -363,8 +362,8 @@ class BP_Media_CPT {
 		global $submenu;
 		unset( $submenu['edit.php?post_type=bp_media'][10] ); // Removes 'Add New'.
 	}
-	
-	
+
+
 	/**
 	 * hide_add_new_button function.
 	 * 
@@ -381,23 +380,15 @@ class BP_Media_CPT {
 		    </style>';
 		 }
 	}
-	
-
-
-	
 }
 BP_Media_CPT::instance();
-
-
-
-
 
 function record_cpt_activity_content( $cpt ) {
 
 	if ( 'new_album' === $cpt['type'] ) {
 		$cpt['content'] = 'what you need';
 	}
-	
+
 	return $cpt;
 }
 //add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');
