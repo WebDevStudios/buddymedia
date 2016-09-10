@@ -4,8 +4,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
  
 	class Group_Extension_BP_MEDIA extends BP_Group_Extension {
 	    /**
-	     * Your __construct() method will contain configuration options for 
-	     * your extension, and will pass them to parent::init()
+	     * Fire it up.
 	     */
 	    function __construct() {
 	        $args = array(
@@ -16,8 +15,9 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
 	    }
 	 
 	    /**
-	     * display() contains the markup that will be displayed on the main 
-	     * plugin tab
+	     * The display() contains the markup that will be displayed on the main plugin tab.
+	     *
+	     * @param int|null $group_id Group ID.
 	     */
 	    function display( $group_id = NULL ) {
 	        $group_id = bp_get_group_id();
@@ -30,10 +30,9 @@ endif; // if ( class_exists( 'BP_Group_Extension' ) )
 
 
 /**
- * bp_media_group_settings function.
- * 
+ * The bp_media_group_settings function.
+ *
  * @access public
- * @return void
  */
 function bp_media_group_settings() {
         ?>
@@ -48,10 +47,9 @@ add_action( 'bp_after_group_settings_admin', 'bp_media_group_settings' );
 
 
 /**
- * bp_media_show_media_setting function.
- * 
+ * The bp_media_show_media_setting function.
+ *
  * @access public
- * @return void
  */
 function bp_media_show_media_setting() {
 		
@@ -63,11 +61,9 @@ function bp_media_show_media_setting() {
 
 
 /**
- * bp_media_save_enable_media function.
- * 
- * @access public
- * @param int $group_id (default: 0)
- * @return void
+ * The bp_media_save_enable_media function.
+ *
+ * @param int $group_id Default: integer 0.
  */
 function bp_media_save_enable_media( $group_id = 0 ) {
 
@@ -79,10 +75,7 @@ add_action( 'groups_group_settings_edited', 'bp_media_save_enable_media' );
 
 
 /**
- * bp_media_group_is_enabled function.
- * 
- * @access public
- * @return void
+ * The bp_media_group_is_enabled function.
  */
 function bp_media_group_is_enabled() {
 	global $bp;
