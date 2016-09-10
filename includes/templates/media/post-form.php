@@ -1,7 +1,6 @@
 <?php
-
 /**
- * BuddyPress - Activity Post Form
+ * BuddyPress - Activity Post Form.
  *
  * @package BuddyPress
  * @subpackage bp-legacy
@@ -16,7 +15,7 @@
 	/**
 	 * Fires before the activity post form.
 	 *
-	 * @since BuddyPress (1.2.0)
+	 * @since 1.2.0
 	 */
 	do_action( 'bp_before_activity_post_form' ); ?>
 
@@ -78,7 +77,7 @@
 			/**
 			 * Fires at the end of the activity post form markup.
 			 *
-			 * @since BuddyPress (1.2.0)
+			 * @since 1.2.0
 			 */
 			do_action( 'bp_activity_post_form_options' ); ?>
 
@@ -91,7 +90,7 @@
 	/**
 	 * Fires after the activity post form.
 	 *
-	 * @since BuddyPress (1.2.0)
+	 * @since 1.2.0
 	 */
 	do_action( 'bp_after_activity_post_form' ); ?>
 
