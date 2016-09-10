@@ -1,10 +1,7 @@
 <?php
 
 /**
- * bp_media_activity_button function.
- * 
- * @access public
- * @return void
+ * The bp_media_activity_button function.
  */
 function bp_media_activity_button() {
 
@@ -20,10 +17,7 @@ add_action( 'bp_activity_post_form_whats-new-options', 'bp_media_activity_button
 
 
 /**
- * bp_media_activity_image_upload_form function.
- * 
- * @access public
- * @return void
+ * The bp_media_activity_image_upload_form function.
  */
 function bp_media_activity_image_upload_form() {
 	bp_media_get_template_part( 'activity-upload-form');
@@ -33,10 +27,7 @@ add_action( 'bp_activity_post_form_content', 'bp_media_activity_image_upload_for
 
 
 /**
- * bp_media_register_template_location function.
- * 
- * @access public
- * @return void
+ * The bp_media_register_template_location function.
  */
 function bp_media_register_template_location() {
     return BP_MEDIA_DIR . '/includes/templates/';
@@ -44,13 +35,12 @@ function bp_media_register_template_location() {
 
 
 /**
- * bp_media_replace_get_post_form_template function.
- * 
- * @access public
- * @param mixed $templates
- * @param mixed $slug
- * @param mixed $name
- * @return void
+ * The bp_media_replace_get_post_form_template function.
+ *
+ * @param mixed $templates Templates.
+ * @param mixed $slug      Template slug.
+ * @param mixed $name      Name.
+ * @return array
  */
 function bp_media_replace_get_post_form_template( $templates, $slug, $name ) {
 
@@ -62,10 +52,7 @@ function bp_media_replace_get_post_form_template( $templates, $slug, $name ) {
 
 
 /**
- * bp_media_replace_post_form function.
- * 
- * @access public
- * @return void
+ * The bp_media_replace_post_form function.
  */
 function bp_media_replace_post_form() {
      
