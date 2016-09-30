@@ -14,12 +14,12 @@ function bp_media_iframe_loaded() {
 		setTimeout(function() {
 			//bp_media_resize_thickbox();
 		}, 500);
-	}	 
+	}
 }
 
 /**
  * Checks how to resize the TB window. Called on window.resize.
- */	
+ */
 function bp_media_window_resize() {
 	if( jQuery('#TB_window') ) {
 		if( jQuery('#TB_window').hasClass('bp_media') ) {
@@ -36,7 +36,7 @@ function bp_media_window_resize() {
 function bp_media_resize_thickbox() {
 
 	//delete jQuery(window).data('events')['resize'];
-	
+
 	var bp_mediaWidth		= 1000;
 	var TB_newWidth			= jQuery(window).width() < ( bp_mediaWidth + 40 ) ? jQuery(window).width() - 40 : bp_mediaWidth;
 	var TB_newHeight		= jQuery(window).height() - 40;
@@ -68,23 +68,23 @@ jQuery(document).ready(function() {
 			delete jQuery(window).data('events')['resize'];
 			jQuery(window).bind('resize', bp_media_window_resize);
 	});
-	
-	jQuery( "#bp-media-add-photo" ).click(function() {   
-    	jQuery('#plupload-upload-ui').slideToggle();        
+
+	jQuery( "#bp-media-add-photo" ).click(function() {
+    	jQuery('#plupload-upload-ui').slideToggle();
 	});
-	
-	jQuery( "#bp-media-activity-upload-button" ).click(function(e) { 
-		e.preventDefault();    
-    	jQuery('#plupload-upload-ui').slideToggle();        
+
+	jQuery( "#bp-media-activity-upload-button" ).click(function(e) {
+		e.preventDefault();
+    	jQuery('#plupload-upload-ui').slideToggle();
 	});
-	
+
 	jQuery('#create-album').on( 'click', function( event ) {
-	
+
 		if( jQuery.trim( jQuery("#album-title").val() ) === '' ) {
 			alert('Title required');
 			return false;
 		}
-						
+
 		jQuery.ajax({
 		   url: ajaxurl,
 		   data: {
@@ -103,11 +103,11 @@ jQuery(document).ready(function() {
 		   	if(data.url) window.location = data.url;
 		   }
 		});
-		
+
 	});
-	
+
 	jQuery('#edit-album').on( 'click', function( event ) {
-					
+
 		jQuery.ajax({
 		   url: ajaxurl,
 		   data: {
@@ -127,15 +127,15 @@ jQuery(document).ready(function() {
 		   	if(data.url) window.location = data.url;
 		   }
 		});
-		
+
 	});
-	
+
 
 
 	jQuery('#delete-album').on( 'click', function( event ) {
-	
-		if( confirm('Are you sure you want to delete this album?') ) { 
-						
+
+		if( confirm('Are you sure you want to delete this album?') ) {
+
 			jQuery.ajax({
 			   url: ajaxurl,
 			   data: {
@@ -152,19 +152,19 @@ jQuery(document).ready(function() {
 			   	if(data.url) window.location = data.url;
 			   }
 			});
-			
+
 		}
-		
+
 	});
-	
+
 
 	jQuery('.image-action-delete').on( 'click', function( event ) {
-	
-		var id = jQuery( event.target ).parent().data('id');		
+
+		var id = jQuery( event.target ).parent().data('id');
 		var that = this;
-	
-		if( confirm('Are you sure you want to delete this image?') ) { 
-						
+
+		if( confirm('Are you sure you want to delete this image?') ) {
+
 			jQuery.ajax({
 			   url: ajaxurl,
 			   data: {
@@ -178,28 +178,28 @@ jQuery(document).ready(function() {
 			   },
 			   success: function(data) {
 			   	console.log(data);
-			   	
+
 			   	if( jQuery(that).parent().hasClass('submit') ) {
 				   	if(data.url) window.location = data.url;
 			   	} else {
 				   	jQuery(that).parent().parent().slideUp(300);
 			   	}
-			   	
-			   
+
+
 			   }
 			});
-			
+
 		}
-		
+
 	});
-	
+
 	jQuery('body').on( 'click', '.activity-remove-attachment', function( event ) {
-	
-		var id = jQuery( '#bp-media-attachment-id' ).val();		
+
+		var id = jQuery( '#bp-media-attachment-id' ).val();
 		var that = this;
-	
-		if( confirm('Are you sure you want to remove this image?') ) { 
-						
+
+		if( confirm('Are you sure you want to remove this image?') ) {
+
 			jQuery.ajax({
 			   url: ajaxurl,
 			   data: {
@@ -217,13 +217,13 @@ jQuery(document).ready(function() {
 				jQuery( '#bp-media-attachment-id' ).val('');
 			   }
 			});
-			
+
 		}
-		
+
 	});
-	
+
 	jQuery('.image-action-edit').on( 'click', function( event ) {
-		
+
 		jQuery.ajax({
 		   url: ajaxurl,
 		   data: {
@@ -241,19 +241,19 @@ jQuery(document).ready(function() {
 		   	if(data.url) window.location = data.url;
 		   }
 		});
-		
+
 	});
-	
-	
-	
+
+
+
 	jQuery('body').on( 'click', 'button#upload-comment-reply', function( event ) {
-	
+
 		var comment = jQuery('#upload-comment').val();
-		
+
 		console.log(comment);
-	
-		if( comment !== '' ) { 
-						
+
+		if( comment !== '' ) {
+
 			jQuery.ajax({
 			   url: ajaxurl,
 			   data: {
@@ -272,23 +272,23 @@ jQuery(document).ready(function() {
 			   	jQuery('ul.commentlist').prepend(data);
 			   }
 			});
-			
+
 		}
-		
+
 	});
-	
+
 	jQuery('body').on( 'click', '.comment-options a.delete', function( event ) {
-	
+
 		event.preventDefault();
-	
+
 		var comment_id = jQuery(event.target).parent().parent().data('id');
 		var user_id = jQuery('#upload-user-id').val();
 		var that = this;
-		
+
 		console.log(comment_id);
-		
-		if( confirm('Are you sure you want to remove this comment?') ) { 
-			
+
+		if( confirm('Are you sure you want to remove this comment?') ) {
+
 			jQuery.ajax({
 			   url: ajaxurl,
 			   data: {
@@ -306,59 +306,85 @@ jQuery(document).ready(function() {
 			   }
 			});
 		}
-			
-		
+
+
 	});
-	
+
 	if( getURLParameter('new') ) {
-		jQuery('#plupload-upload-ui').slideToggle(); 
+		jQuery('#plupload-upload-ui').slideToggle();
 	}
-	
-	
-	
-	var extraParam = function(e, data) { 
-	
+
+
+
+	var extraParam = function(e, data) {
+
 		var action = get_var_in_query( 'action', data.data ) ;
-		
+
 		if( 'post_update' === action ) {
-		
+
 			var id = jQuery('#bp-media-attachment-id').val();
 
 			if(id) {
 				data.data += '&attachment_id=' + encodeURIComponent( id );
 			}
-			 
+
 	    }
 	    return true;
 	};
 	jQuery.ajaxSetup( {beforeSend: extraParam} );
-	
-	
+
+
 	jQuery(document).ajaxComplete( function( event, xhr, data ) {
 
 		var action = get_var_in_query( 'action', data.data ) ;
-		
+
 		if( 'post_update' === action ) {
 			jQuery( '.media-activity' ).slideUp(300);
 			jQuery( '#bp-media-attachment-id' ).val('');
 		}
 	});
-    
-    
-    
+
+	jQuery('body').on( 'click', '.bp-report-item', function( event ) {
+
+		event.preventDefault();
+
+		//current selector object
+		var obj = jQuery(this);
+
+		//get image/comment id
+		var item_id = jQuery(this).data('item_id');
+
+		jQuery.ajax({
+		   url: ajaxurl,
+		   method: 'POST',
+		   data: {
+			  'action':'bp_media_make_report',
+			  'item_id': item_id,
+			  'nonce': obj.data('nonce')
+		   },
+		   error: function() {
+			   alert(bp_media.bp_media_ajax_reporting_error);
+		   },
+		   success: function(data) {
+
+		   }
+		});
+
+	});
+
 	function get_var_in_query( item,  str ){
 	   var items;
 	   if( !str )
 	       return false;
 	   var data_fields = str.split('&');
 	   for( var i=0; i< data_fields.length; i++ ){
-	       
+
 	       items = data_fields[i].split('=');
 	       if( items[0] == item )
 	           return items[1];
 		}
-	       
+
 	       return false;
 	}
-	
+
 });

@@ -136,7 +136,8 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		$translation_array = array(
 			'bp_media_ajax_create_album_error' => __( 'Error creating album', 'bp-media' ),
 			'bp_media_ajax_delete_album_error' => __( 'Error deleteing album', 'bp-media' ),
-			'bp_media_ajax_edit_album_error' => __( 'Error editing album', 'bp-media' )
+			'bp_media_ajax_edit_album_error' => __( 'Error editing album', 'bp-media' ),
+			'bp_media_ajax_reporting_error' => __( 'Error reporting this item', 'bp-media' )
 		);
 		wp_localize_script( 'bp-media-js', 'bp_media', $translation_array );
 
