@@ -106,6 +106,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		require( dirname( __FILE__ ) . '/includes/bp-media-library-filter.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
 		require( dirname( __FILE__ ) . '/includes/bp-media-options.php' );
+		require( dirname( __FILE__ ) . '/includes/bp-media-reporting.php' );
 
 	}
 
