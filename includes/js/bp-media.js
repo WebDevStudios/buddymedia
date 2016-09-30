@@ -389,9 +389,9 @@ jQuery(document).ready(function() {
 		var reasons = jQuery.parseJSON( bp_media.bp_media_reporting_reasons );
 		var modal_content = ''
 		modal_content += '<div id="bp_report_modal">'
-			modal_content += '<div class="bp_report_modal_header">Help Us Understand What\'s Happening</div>'
+			modal_content += '<div class="bp_report_modal_header">'+ bp_media.bp_media_reporting_header +'</div>'
 			modal_content += '<div class="bp_report_modal_body">'
-				modal_content += '<div class="">Why don\'t you want to see this?</div>'
+				modal_content += '<div class="">'+ bp_media.bp_media_reporting_body 
 				if( reasons ){
 					jQuery.each(reasons, function(index, reason) {
 						modal_content += '<div><label><input type="radio" name="bp_report_reason" value="'+ reason +'" '+ ( index == 0 ? ' checked="checked" ' : '') +'  />'+ reason +'</label></div>';

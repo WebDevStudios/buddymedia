@@ -20,21 +20,20 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
          * @since 1.0.1
          */
         public function __construct() {
-
             $this->comment_type = "bp_media_flag";
             $this->hooks();
         }
         /**
          *  Initiate WordPress Hooks
          *
-         *
+         * @since 1.0.1
          */
         public function hooks() {
             add_action('admin_comment_types_dropdown', array($this, 'add_custom_comment_type_dropdown') );
             add_action('bp_media_photo_options', array($this, 'add_flag') );
             //ajax command
             add_action('wp_ajax_bp_media_make_report', array($this, 'bp_media_make_report') );
-            add_action('wp_ajax_nopriv_bp_media_make_report', array($this, 'bp_media_make_report') );
+            //add_action('wp_ajax_nopriv_bp_media_make_report', array($this, 'bp_media_make_report') );
         }
         /**
          * Add custom comment type to comment type dropdown
@@ -49,16 +48,24 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
         }
         /**
          * Add flag for reporting item
+         *
+         * @since 1.0.1
          */
         public function add_flag() {
+            if( ! is_user_logged_in() ){
+                return;
+            }
             global $post;
             ?>
             <a href="#bp_media_report" class="right bp-report-item" data-item_id="<?php echo $post->ID; ?>" data-nonce="<?php echo wp_create_nonce( 'report-item-' . (int)$post->ID ); ?>"><?php _e( 'report', 'bp_media' ) ;?></a>
             <?php
         }
         /**
-         * [bp_media_make_report description]
-         * @return [type] [description]
+         * AJAX function for flagging image as comment
+         *
+         * @return json
+         *
+         * @since 1.0.1
          */
         public function bp_media_make_report(){
             $item_id =  $_POST['item_id'];
@@ -80,9 +87,13 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
             	'comment_type'     => $this->comment_type, //use a custom comment type
             	'user_id'          => $user_id, //passing current user ID or any predefined as per the demand
             );
-
+            //allow duplicate comment
+            add_filter('duplicate_comment_id', '__return_false');
             //Insert new comment and get the comment ID
             $comment_id = wp_new_comment( $commentdata );
+            //disable previous filter
+            add_filter('duplicate_comment_id', '__return_true');
+            //if comment was saved then return success
             if( $comment_id ) {
                 $results['success'] = true;
                 $results['comment_id'] = $comment_id;
