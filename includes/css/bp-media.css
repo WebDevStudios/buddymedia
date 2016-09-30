@@ -23,13 +23,13 @@ html, body {
 #buddypress .right {
 	float: right;
 }
-  
+
 
 #buddypress ul#media-stream.grid-list a,  #buddypress ul#media-stream.grid-list u {
     text-decoration: none;
     position: relative;
 }
- 
+
 #buddypress ul#media-stream.grid-list {
 	border-top: 1px solid #eaeaea;
 	width: 100%;
@@ -37,8 +37,8 @@ html, body {
 	clear: both;
 	margin: 0;
 	padding: 0;
-	
-	
+
+
 }
 
 #buddypress ul#media-stream.grid-list li {
@@ -57,7 +57,7 @@ html, body {
 	border-radius: 0;
 	box-shadow: none;
 	float: left;
-	
+
 
 }
 
@@ -112,13 +112,13 @@ html, body {
 	padding: 0 0 10px 0;
 }
 
-#buddypress .media-pop-wrapper .upload-author, 
+#buddypress .media-pop-wrapper .upload-author,
 #buddypress .media-pop-wrapper .comment-author {
 	overflow: hidden;
 	position: relative;
 }
 
-#buddypress .media-pop-wrapper .upload-author-avatar, 
+#buddypress .media-pop-wrapper .upload-author-avatar,
 #buddypress .media-pop-wrapper .comment-author img {
 	float: left;
 	margin-right: 10px;
@@ -179,7 +179,7 @@ html, body {
 
 #buddypress .media-pop-wrapper .image-reply-form input {
 	border: 1px solid #eeeeee;
-	
+
 }
 
 #buddypress .media-pop-wrapper li {
@@ -199,7 +199,7 @@ html, body {
 
 #buddypress .media-activity {
 	margin: 20px 10px 0 10px;
-	float: left;	
+	float: left;
 }
 
 body.bp-user #buddypress .media-activity,
@@ -290,7 +290,7 @@ body.album #plupload-upload-ui {
 #whats-new-textarea {
 	float: left;
 	width: 90%;
-	
+
 }
 
 #buddypress form#whats-new-form textarea {
@@ -389,7 +389,7 @@ body.media #buddypress a {
 }
 
 #buddypress #image-description {
-	margin: 0 0 10px 0; 
+	margin: 0 0 10px 0;
 }
 
 
@@ -398,8 +398,43 @@ body.media #buddypress a {
 	margin-right: 10px;
 }
 
-#buddypress div.pagination .pag-links a, 
+#buddypress div.pagination .pag-links a,
 #buddypress div.pagination .pag-links span {
 	font-size: 90%;
 	padding: 0 5px;
+}
+
+#bp_report_modal_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+#bp_report_modal {
+	width: 404px;
+	padding-bottom: 2px;
+	display:none;
+	background: #FFF;
+	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+	/*box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);*/
+}
+.bp_report_modal_header { padding: 18px 18px 14px 18px; border-bottom: 1px solid #efefef; border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; border-top-right-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; background: #efefef; }
+.bp_report_modal_body {
+    padding: 10px 10px 20px 12px;
+}
+.bp-media-report-message{
+	margin: 10px 0px;
+}
+#bp_media_cancel_report{
+	float: right;
+}
+#bp_media_submit_report{
+	float: left;
+}
+.bp_media_clear{
+	clear: both;
 }
