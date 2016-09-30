@@ -424,5 +424,17 @@ body.media #buddypress a {
 }
 .bp_report_modal_header { padding: 18px 18px 14px 18px; border-bottom: 1px solid #efefef; border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; border-top-right-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; background: #efefef; }
 .bp_report_modal_body {
-    padding: 10px;
+    padding: 10px 10px 20px 12px;
+}
+.bp-media-report-message{
+	margin: 10px 0px;
+}
+#bp_media_cancel_report{
+	float: right;
+}
+#bp_media_submit_report{
+	float: left;
+}
+.bp_media_clear{
+	clear: both;
 }

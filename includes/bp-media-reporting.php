@@ -71,12 +71,14 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
         		return;
         	}
 
+            $comment_content    = ( ! empty( $_POST['reason'] ) ? sanitize_text_field( $_POST['reason'] ) : '' );
+            $comment_content    = $comment_content . '<br />' . ( ! empty( $_POST['message'] ) ? wp_kses_post( $_POST['message'] ) : '' );
         	$results = array();
             $commentdata = array(
-            	'comment_post_ID' => $item_id, // to which post the comment will show up
-            	'comment_content' => __('Flagged',''),
-            	'comment_type' => $this->comment_type, //use a custom comment type
-            	'user_id' => $user_id, //passing current user ID or any predefined as per the demand
+            	'comment_post_ID'  => $item_id, // to which post the comment will show up
+            	'comment_content'  => $comment_content,
+            	'comment_type'     => $this->comment_type, //use a custom comment type
+            	'user_id'          => $user_id, //passing current user ID or any predefined as per the demand
             );
 
             //Insert new comment and get the comment ID

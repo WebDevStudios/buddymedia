@@ -343,23 +343,70 @@ jQuery(document).ready(function() {
 			jQuery( '#bp-media-attachment-id' ).val('');
 		}
 	});
+	jQuery('body').on( 'click', '#bp_media_cancel_report', function( event ) {
+		event.preventDefault();
+		jQuery("#bp_report_modal_overlay,#bp_report_modal").fadeOut(200).remove();
+	});
+	jQuery('body').on( 'click', '#bp_media_submit_report', function( event ) {
 
+		event.preventDefault();
+		var message		= jQuery('#bp_media_report_comment').val();
+		var item_id		= jQuery('#bp_media_report_media_id').val();
+		var reason		= jQuery('input[name="bp_report_reason"]').val();
+		var nonce		= jQuery('#bp_media_report_nonce').val();
+		jQuery.ajax({
+		   url: ajaxurl,
+		   method: 'POST',
+		   data: {
+			  'action'	:	'bp_media_make_report',
+			  'item_id'	: 	item_id,
+			  'message'	:	message,
+			  'reason'	:	reason,
+			  'nonce'	:	nonce
+		   },
+		   error: function() {
+			   alert(bp_media.bp_media_ajax_reporting_error);
+		   },
+		   success: function( response ) {
+			   if( response.success && response.success == true ){
+				   jQuery('.bp_report_modal_body').html( bp_media.report_success_message );
+				   setTimeout(function() {
+				        jQuery("#bp_report_modal_overlay,#bp_report_modal").fadeOut(200).remove();
+				    }, 3000);
+			   }
+		   }
+		});
+	});
 	jQuery('body').on( 'click', '.bp-report-item', function( event ) {
 
 		event.preventDefault();
 		jQuery("body").append("<div id='bp_report_modal_overlay'></div>");
+		//get image/comment id
+		var item_id = jQuery(this).data('item_id');
+		//current selector object
+		var obj = jQuery(this);
+		//get JSON list of reasons
+		var reasons = jQuery.parseJSON( bp_media.bp_media_reporting_reasons );
 		var modal_content = ''
 		modal_content += '<div id="bp_report_modal">'
 			modal_content += '<div class="bp_report_modal_header">Help Us Understand What\'s Happening</div>'
 			modal_content += '<div class="bp_report_modal_body">'
 				modal_content += '<div class="">Why don\'t you want to see this?</div>'
-				modal_content += '<div class=""><texarea id="report_comments" placeholder="Comments"></texarea></div>'
-			modal_content += '</div>'
+				if( reasons ){
+					jQuery.each(reasons, function(index, reason) {
+						modal_content += '<div><label><input type="radio" name="bp_report_reason" value="'+ reason +'" '+ ( index == 0 ? ' checked="checked" ' : '') +'  />'+ reason +'</label></div>';
+					});
+				}
+				modal_content += '<div class="bp-media-report-message"><textarea id="bp_media_report_comment" placeholder="Comments"></textarea></div>'
+				modal_content += '<input type="hidden" id="bp_media_report_media_id" value="'+ item_id +'" />'
+				modal_content += '<input type="hidden" id="bp_media_report_nonce" value="'+  obj.data('nonce') +'" />'
+				modal_content += '<input type="submit" id="bp_media_submit_report" value="'+ bp_media.submit_text +'" />';
+				modal_content += '<input type="button" id="bp_media_cancel_report" value="'+ bp_media.cancel_text +'" />';
+			modal_content += '<div class="bp_media_clear"></div></div>'
 		modal_content += '</div>'
 		jQuery("body").append( modal_content );
 		var report_window = jQuery('.bp-media-report-window');
-		//current selector object
-		var obj = jQuery(this);
+
 
 		var modal_params = {
 			modal_id : '#bp_report_modal',
@@ -367,28 +414,6 @@ jQuery(document).ready(function() {
             overlay: 0.5,
 		}
 		open_report_modal( modal_params );
-
-		//get image/comment id
-		var item_id = jQuery(this).data('item_id');
-
-		/*
-		jQuery.ajax({
-		   url: ajaxurl,
-		   method: 'POST',
-		   data: {
-			  'action':'bp_media_make_report',
-			  'item_id': item_id,
-			  'nonce': obj.data('nonce')
-		   },
-		   error: function() {
-			   alert(bp_media.bp_media_ajax_reporting_error);
-		   },
-		   success: function(data) {
-
-		   }
-		});
-		*/
-
 	});
 
 	function get_var_in_query( item,  str ){

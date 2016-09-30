@@ -133,14 +133,21 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		wp_register_script( 'bp-media-js', plugins_url( 'includes/js/bp-media.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media.js' ) );
 
 		$options = get_option( 'bp_media_settings' );
-
+		$reasons = array();
+		if( ! empty( $options['bp_media_reporting_reasons'] ) ) {
+			$reasons = explode("\n", $options['bp_media_reporting_reasons'] );
+		}
+		var_dump($reasons);
 		// Localize the script with new data.
 		$translation_array = array(
-			'bp_media_ajax_create_album_error' => __( 'Error creating album', 'bp-media' ),
-			'bp_media_ajax_delete_album_error' => __( 'Error deleteing album', 'bp-media' ),
-			'bp_media_ajax_edit_album_error' => __( 'Error editing album', 'bp-media' ),
-			'bp_media_ajax_reporting_error' => __( 'Error reporting this item', 'bp-media' ),
-			'bp_media_reporting_reasons' => ( ! empty( $options['bp_media_reporting_reasons'] ) ? json_encode() : '' )
+			'bp_media_ajax_create_album_error' 	=> __( 'Error creating album', 'bp-media' ),
+			'bp_media_ajax_delete_album_error' 	=> __( 'Error deleteing album', 'bp-media' ),
+			'bp_media_ajax_edit_album_error' 	=> __( 'Error editing album', 'bp-media' ),
+			'bp_media_ajax_reporting_error' 	=> __( 'Error reporting this item', 'bp-media' ),
+			'bp_media_reporting_reasons' 		=> json_encode( $reasons ),
+			'submit_text'						=> __('Report this media', 'bp-media'),
+			'cancel_text'						=> __('Cancel', 'bp-media'),
+			'report_success_message'			=> __('Your report has been sent for consideration', 'bp-media')
 		);
 		wp_localize_script( 'bp-media-js', 'bp_media', $translation_array );
 
