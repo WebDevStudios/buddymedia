@@ -347,13 +347,31 @@ jQuery(document).ready(function() {
 	jQuery('body').on( 'click', '.bp-report-item', function( event ) {
 
 		event.preventDefault();
-
+		jQuery("body").append("<div id='bp_report_modal_overlay'></div>");
+		var modal_content = ''
+		modal_content += '<div id="bp_report_modal">'
+			modal_content += '<div class="bp_report_modal_header">Help Us Understand What\'s Happening</div>'
+			modal_content += '<div class="bp_report_modal_body">'
+				modal_content += '<div class="">Why don\'t you want to see this?</div>'
+				modal_content += '<div class=""><texarea id="report_comments" placeholder="Comments"></texarea></div>'
+			modal_content += '</div>'
+		modal_content += '</div>'
+		jQuery("body").append( modal_content );
+		var report_window = jQuery('.bp-media-report-window');
 		//current selector object
 		var obj = jQuery(this);
+
+		var modal_params = {
+			modal_id : '#bp_report_modal',
+			top: 100,
+            overlay: 0.5,
+		}
+		open_report_modal( modal_params );
 
 		//get image/comment id
 		var item_id = jQuery(this).data('item_id');
 
+		/*
 		jQuery.ajax({
 		   url: ajaxurl,
 		   method: 'POST',
@@ -369,6 +387,7 @@ jQuery(document).ready(function() {
 
 		   }
 		});
+		*/
 
 	});
 
@@ -385,6 +404,28 @@ jQuery(document).ready(function() {
 		}
 
 	       return false;
+	}
+
+	function open_report_modal( params ) {
+		var modal_id = params.modal_id;
+		var modal_height = jQuery(modal_id).outerHeight();
+	  	var modal_width = jQuery(modal_id).outerWidth();
+
+		jQuery('#bp_report_modal_overlay').css({ 'display' : 'block', opacity : 0 });
+
+		jQuery('#bp_report_modal_overlay').fadeTo(200, params.overlay);
+
+		jQuery(modal_id).css({
+			'display' : 'block',
+			'position' : 'fixed',
+			'opacity' : 0,
+			'z-index': 11000,
+			'left' : 50 + '%',
+			'margin-left' : -(modal_width/2) + "px",
+			'top' : params.top + "px"
+		});
+
+		jQuery(modal_id).fadeTo(200,1);
 	}
 
 });

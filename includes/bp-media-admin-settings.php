@@ -38,6 +38,8 @@ function bp_media_admin_settings() {
         'bp_media_section'
     );
 
+
+
     /*
        This is where you add your setting to BuddyPress ones
        Here you are directly using intval as your validation function
@@ -65,7 +67,6 @@ function bp_plugin_setting_callback_section() {
     <p class="description"><?php _e( 'Media Component Settings', 'bp-media' );?></p>
     <?php
 }
-
 
 /**
  * The bp_media_setting_field_callback function.

@@ -8,8 +8,10 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
 
     class BP_Media_Reporting{
         /**
-         * [$comment_type description]
-         * @var [type]
+         * Custom Comment type
+         * @var string
+         *
+         * @since 1.0.1
          */
         public $comment_type;
         /**
@@ -23,8 +25,9 @@ if( ! class_exists( 'BP_Media_Reporting' ) ) {
             $this->hooks();
         }
         /**
-         * [hooks description]
-         * @return [type] [description]
+         *  Initiate WordPress Hooks
+         *
+         *
          */
         public function hooks() {
             add_action('admin_comment_types_dropdown', array($this, 'add_custom_comment_type_dropdown') );
