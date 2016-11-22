@@ -48,6 +48,7 @@ class BP_Media_CPT {
 		add_action(	'admin_head', array( $this, 'hide_add_new_button' ) );
 		add_action( 'bp_init', array( $this, 'customize_media_tracking_args' ) );
 		add_action( 'template_redirect', array( $this, 'bp_media_redirect_cpt_to_album' ) );
+		add_action( 'cmb2_admin_init', array( $this, 'cmb2_metaboxes' ) );
 
 		add_filter( 'bp_activity_custom_post_type_post_action', array( $this, 'bp_media_filter_activity_action' ), 10, 2 );
 		add_filter( 'bp_activity_permalink', array( $this, 'bp_media_filter_activity_action_permalink' ), 10, 2 );
@@ -348,11 +349,45 @@ class BP_Media_CPT {
 	}
 
 	/**
+	 * The cmb metabox function.
+	 *
+	 * @access public
+	 */
+	public function cmb2_metaboxes() {
+
+		/**
+		 * Initiate the metabox
+		 */
+		$cmb = new_cmb2_box( array(
+			'id'            => 'permissions_metabox',
+			'title'         => __( 'Permissions', 'bpmedia' ),
+			'object_types'  => array( 'bp_media' ),
+			'context'       => 'side',
+			'priority'      => 'low',
+			'show_names'    => false,
+		) );
+
+		$cmb->add_field( array(
+			'name'       => __( 'Permission', 'bpmedia' ),
+			'desc'       => __( 'Choose who can see this album.', 'bpmedia' ),
+			'id'         => '_permission',
+			'type'       => 'radio',
+			'default'          => 'public',
+			'options'          => array(
+				'public'  => __( 'Public', 'bpmedia' ),
+				'friend'  => __( 'Friends', 'bpmedia' ),
+				'private' => __( 'Private', 'bpmedia' ),
+			),
+		) );
+
+	}
+
+	/**
 	 * The remove_submenus function.
 	 *
 	 * @access public
 	 */
-	function remove_submenus() {
+	public function remove_submenus() {
 		global $submenu;
 		unset( $submenu['edit.php?post_type=bp_media'][10] ); // Removes 'Add New'.
 	}
@@ -363,25 +398,14 @@ class BP_Media_CPT {
 	 *
 	 * @access public
 	 */
-	function hide_add_new_button() {
+	public function hide_add_new_button() {
 
-    	if ( 'bp_media' == get_post_type() ) {
-		  echo '<style type="text/css">
-		    	#favorite-actions {display:none;}
-				.add-new-h2{display:none;}
-				
-		    </style>';
-		 }
+		if ( 'bp_media' === get_post_type() ) {
+			echo '<style type="text/css">
+			#favorite-actions {display:none;}
+			.add-new-h2{display:none;}
+			</style>';
+		}
 	}
 }
 BP_Media_CPT::instance();
-
-function record_cpt_activity_content( $cpt ) {
-
-	if ( 'new_album' === $cpt['type'] ) {
-		$cpt['content'] = 'what you need';
-	}
-
-	return $cpt;
-}
-//add_filter('bp_before_activity_add_parse_args', 'record_cpt_activity_content');
