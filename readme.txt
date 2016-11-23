@@ -46,6 +46,10 @@ Private - only viewable but the user who created the album (loggedin user)
 
 This plugin is a bit different that other media plugins for BuddyPress. Each album created is a custom post type. You can view and manage the albums in the admin just as you would a post or a page. The albums are listed under the menu item \"User Media\". Each image in the album is a post attachment.
 
+== Changelog ==
+* fix albums not showing when albums created in admin
+* added UI to add images to album from admin
+
 == Screenshots ==
 1. Activity Attachment
 2. User Album grid
