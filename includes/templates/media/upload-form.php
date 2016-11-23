@@ -22,7 +22,11 @@
 
 <?php
 
-$variables = bp_action_variables();
+if ( is_admin() ) {
+	$variables = array( $post->ID );
+} else {
+	$variables = bp_action_variables();
+}
 
 $plupload_init = array(
 'runtimes'            => 'html5,silverlight,flash,html4',
@@ -129,7 +133,7 @@ jQuery(document).ready(function($){
 		added_data.push(imageData );
 
 		$('#bp-media-images').val( added_data );
-		
+
 		console.log( added_data );
 	});
 
