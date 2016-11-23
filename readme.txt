@@ -1,5 +1,5 @@
 === BuddyMedia ===
-Contributors: modemlooper, WebDevStudios, jazzs3quence, tw2113
+Contributors: modemlooper, webdevstudios, jazzs3quence, tw2113
 Tags: buddypress, media, images
 Requires at least: 4.2
 Tested up to: 4.7
