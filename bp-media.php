@@ -3,7 +3,7 @@
 Plugin Name: BuddyMedia
 Plugin URI: https://github.com/WebDevStudios/WDS-BP-Media
 Description: Media component for BuddyPress from WebDevStudios.
-Version: 1.0
+Version: 1.0.1
 Tested up to: 4.2
 Requires at least: 3.9
 License: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
