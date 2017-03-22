@@ -1,8 +1,8 @@
 === BuddyMedia ===
-Contributors: modemlooper, WebDevStudios, jazzs3quence
+Contributors: modemlooper, webdevstudios, jazzs3quence, tw2113
 Tags: buddypress, media, images
 Requires at least: 4.2
-Tested up to: 4.3
+Tested up to: 4.7
 Stable tag: 1.0.1
 License: GPLv2
 
@@ -45,6 +45,10 @@ Private - only viewable but the user who created the album (loggedin user)
 =DEV Notes=
 
 This plugin is a bit different that other media plugins for BuddyPress. Each album created is a custom post type. You can view and manage the albums in the admin just as you would a post or a page. The albums are listed under the menu item \"User Media\". Each image in the album is a post attachment.
+
+== Changelog ==
+* fix albums not showing when albums created in admin
+* added UI to add images to album from admin
 
 == Screenshots ==
 1. Activity Attachment
