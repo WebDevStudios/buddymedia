@@ -12,7 +12,6 @@ Author URI: https://webdevstudios.com
 Text Domain: bp-media
 */
 
-
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +22,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 	 * Main BP_Media Class
 	 */
 	class BP_Media {
-
 
 		/**
 		 * The instance function.
@@ -46,7 +44,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 				$instance->setup_actions();
 
 				define( 'BP_MEDIA_DIR', dirname( __FILE__ ) );
-
 			}
 
 			// Always return the instance.
@@ -55,7 +52,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			// The last transport is away! Rebel scum.
 		}
 
-
 		/**
 		 * __construct function.
 		 *
@@ -63,7 +59,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		 */
 		private function __construct() {
 			/* Do nothing here */ }
-
 
 		/**
 		 * Magic method to prevent notices and errors from invalid method calls.
@@ -89,9 +84,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			if ( ! defined( 'BP_MEDIA_PLUGIN_URL' ) ) {
 				define( 'BP_MEDIA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			}
-
 		}
-
 
 		/**
 		 * The includes function.
@@ -128,7 +121,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			}
 		}
 
-
 		/**
 		 * The setup_actions function.
 		 *
@@ -139,10 +131,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
 		}
-
-
 
 		/**
 		 * The enqueue_scripts function.
@@ -197,59 +186,76 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			}
 		}
 
-
-
 		/**
 		 * The bp_media_install_buddypress_notice function.
 		 *
 		 * @access public
 		 */
 		public function bp_media_install_buddypress_notice() {
-			echo '<div id="message" class="error fade"><p style="line-height: 150%">';
-			_e( '<strong>BP Media</strong></a> requires the BuddyPress plugin to work. Please <a href="http://buddypress.org/download">install BuddyPress</a> first, or <a href="plugins.php">deactivate BP Media</a>.' );
-			echo '</p></div>';
+
+			// compile default message
+			$default_message = sprintf(
+				__( '<strong>BP Media</strong> requires the BuddyPress plugin to work. Please <a href="http://buddypress.org/download">install BuddyPress</a> first, or <a href="%s">deactivate BP Media</a>.', 'buddmedia' ),
+				admin_url( 'plugins.php' )
+			);
+
+			// default details to null
+			$details = null;
+
+			// add details if any exist
+			if ( ! empty( $this->activation_errors ) && is_array( $this->activation_errors ) ) {
+				$details = '<small>' . implode( '</small><br /><small>', $this->activation_errors ) . '</small>';
+			}
+
+			// output errors
+			?>
+			<div id="message" class="error fade">
+				<p><?php echo $default_message; ?></p>
+				<?php echo $details; ?>
+			</div>
+			<?php
 		}
 
 		/**
-	 * Include a file from the includes directory
-	 *
-	 * @since  1.0.0
-	 * @param  string $filename Name of the file to be included.
-	 * @return bool   Result of include call.
-	 */
-	public static function include_file( $filename ) {
-		$file = self::dir( $filename . '.php' );
-		if ( file_exists( $file ) ) {
-			return include_once( $file );
+		 * Include a file from the includes directory
+		 *
+		 * @since  1.0.2
+		 * @param  string $filename Name of the file to be included.
+		 * @return bool   Result of include call.
+		 */
+		public static function include_file( $filename ) {
+			$file = self::dir( $filename . '.php' );
+			if ( file_exists( $file ) ) {
+				return include_once( $file );
+			}
+			return false;
 		}
-		return false;
-	}
 
-	/**
-	 * This plugin's directory
-	 *
-	 * @since  1.0.0
-	 * @param  string $path (optional) appended path.
-	 * @return string       Directory and path
-	 */
-	public static function dir( $path = '' ) {
-		static $dir;
-		$dir = $dir ? $dir : trailingslashit( dirname( __FILE__ ) );
-		return $dir . $path;
-	}
+		/**
+		 * This plugin's directory.
+		 *
+		 * @since  1.0.2
+		 * @param  string $path (optional) appended path.
+		 * @return string       Directory and path
+		 */
+		public static function dir( $path = '' ) {
+			static $dir;
+			$dir = $dir ? $dir : trailingslashit( dirname( __FILE__ ) );
+			return $dir . $path;
+		}
 
-	/**
-	 * This plugin's url
-	 *
-	 * @since  1.0.0
-	 * @param  string $path (optional) appended path.
-	 * @return string       URL and path
-	 */
-	public static function url( $path = '' ) {
-		static $url;
-		$url = $url ? $url : trailingslashit( plugin_dir_url( __FILE__ ) );
-		return $url . $path;
-	}
+		/**
+		 * This plugin's url.
+		 *
+		 * @since  1.0.2
+		 * @param  string $path (optional) appended path.
+		 * @return string       URL and path
+		 */
+		public static function url( $path = '' ) {
+			static $url;
+			$url = $url ? $url : trailingslashit( plugin_dir_url( __FILE__ ) );
+			return $url . $path;
+		}
 
 	}
 endif; // End of line...
@@ -266,9 +272,6 @@ function buddymedia() {
 	return BP_Media::instance();
 }
 add_action( 'bp_include', 'buddymedia', 999 );
-
-
-
 
 /**
  * The enqueue_scripts function.
