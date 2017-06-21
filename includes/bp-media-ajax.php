@@ -2,6 +2,28 @@
 class BP_Media_AJAX {
 
 	/**
+	 * Holds a singleton instance of this class.
+	 *
+	 * @var null
+	 *
+	 * @since 1.0.2
+	 */
+	protected static $instance = null;
+
+	/**
+	 * Returns an instance of this class.
+	 *
+	 * @since 1.0.2
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @since 1.0.2
@@ -512,3 +534,4 @@ class BP_Media_AJAX {
 		wp_send_json( $comment_id );
 	}
 }
+BP_Media_AJAX::get_instance();

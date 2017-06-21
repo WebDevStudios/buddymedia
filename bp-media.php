@@ -111,7 +111,6 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-options.php' );
 
-			$this->ajax = new BP_Media_AJAX();
 		}
 
 		/**
