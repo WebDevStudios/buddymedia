@@ -208,6 +208,13 @@ function bp_media_ajax_create_album(){
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
 	);
 
+	/**
+	 * Runs after album is created.
+	 *
+	 * @param int|WP_Error $post The post ID on success. The value 0 or WP_Error on failure.
+	 */
+	do_action( 'bp_media_after_album_created', $post );
+
 	wp_send_json( $data );
 
 }
@@ -244,6 +251,13 @@ function bp_media_ajax_edit_album(){
 	$data = array(
 		'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '/edit'
 	);
+
+	/**
+	 * Runs after album is edited.
+	 *
+	 * @param int|false $post The post ID on success. The value 0 on failure.
+	 */
+	do_action( 'bp_media_after_album_edited', $post );
 
 	wp_send_json( $data );
 
