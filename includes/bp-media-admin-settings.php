@@ -6,7 +6,7 @@ class BP_Media_Settings {
 	 * @var    string
 	 * @since  1.0.2
 	 */
-	protected $key = 'buddymedia_settings';
+	protected $key = 'bp_media_settings';
 
 	/**
 	 * Options page metabox id
@@ -91,10 +91,26 @@ class BP_Media_Settings {
 	 * @return void
 	 */
 	public function admin_page_display() {
+        $active_tab = 'general';
+		if ( isset( $_GET['tab'] ) ) {
+			$active_tab = $_GET['tab'];
+		}
 		?>
 		<div class="wrap cmb2-options-page <?php echo esc_attr( $this->key ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
+			<h2 class="nav-tab-wrapper">
+				<a href="<?php echo admin_url( 'admin.php?page=' . $this->key . '&tab=general' ); ?>" class="nav-tab <?php echo 'general' == $active_tab  ? 'nav-tab-active' : ''; ?>"><?php _e( 'General', 'um-learndash' ); ?></a>
+				<a href="<?php echo admin_url( 'admin.php?page=' . $this->key . '&tab=reporting' ); ?>" class="nav-tab <?php echo 'reporting' == $active_tab  ? 'nav-tab-active' : ''; ?>"><?php _e( 'Reporting', 'um-learndash' ); ?></a>
+			</h2>
+			<?php
+            switch( $active_tab ) {
+                case 'reporting':
+                    cmb2_metabox_form( $this->metabox_id . '-reporting', $this->key );
+                break;
+                default:
+                cmb2_metabox_form( $this->metabox_id, $this->key );
+            }
+			?>
 		</div>
 		<?php
 	}
@@ -118,9 +134,60 @@ class BP_Media_Settings {
 			),
 		) );
 
+        $cmb->add_field( array(
+        	'name'    => __( 'Media Types', 'buddymedia' ),
+        	'desc'    => __( 'Allowed media types.', 'buddymedia' ),
+        	'default' => '',
+        	'id'      => 'media_types',
+        	'type'    => 'title',
+        ) );
+
+        $cmb->add_field( array(
+        	'name'    => __( 'Allowed extensions for images.', 'buddymedia' ),
+        	'desc'    => '',
+        	'default' => '',
+        	'id'      => 'bp_media_image_types',
+        	'type'    => 'text',
+        ) );
+
+        $cmb->add_field( array(
+        	'name'    => __( 'Allowed extensions for docs.', 'buddymedia' ),
+        	'desc'    => '',
+        	'default' => '',
+        	'id'      => 'bp_media_doc_types',
+        	'type'    => 'text',
+        ) );
+
+        $cmb->add_field( array(
+        	'name'    => __( 'Storage Types', 'buddymedia' ),
+        	'desc'    => __( 'Allowed storage quotas.', 'buddymedia' ),
+        	'default' => '',
+        	'id'      => 'storage_types',
+        	'type'    => 'title',
+        ) );
+
+        $cmb->add_field( array(
+        	'name'    => __( 'Maximum Upload size per file(MB)?', 'buddymedia' ),
+        	'desc'    => '',
+        	'default' => '',
+        	'id'      => 'bp_media_file_size',
+        	'type'    => 'text',
+        ) );
+
 		/*
 		Add your fields here
 		*/
+
+        $cmb = new_cmb2_box( array(
+			'id'         => $this->metabox_id . '-reporting',
+			'hookup'     => false,
+			'cmb_styles' => false,
+			'show_on'    => array(
+				// These are important, don't remove.
+				'key'   => 'options-page',
+				'value' => array( $this->key ),
+			),
+		) );
 
 	}
 
