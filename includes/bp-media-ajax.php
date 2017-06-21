@@ -78,6 +78,16 @@ class BP_Media_AJAX {
 			'url' => $image[0],
 		);
 
+		 /**
+		  * Fires after a photo is uploaded.
+		  *
+		  * @param array {
+		  *     @type int $id Attachment ID.
+		  *     @type string   $url Image URL.
+		  * }
+		  */
+		do_action( 'bp_media_after_media_photo_upload', $data );
+
 		wp_send_json( $data );
 	}
 
@@ -127,6 +137,17 @@ class BP_Media_AJAX {
 			'album_id' => $album_id,
 			'url'      => $image[0],
 		);
+
+		/**
+		 * Fires after Media is attached.
+		 *
+		 * @param array {
+		 *     @type array $id Attachment ID.
+		 *     @type int   $album_id Album ID.
+		 *     @type string   $url Image URL.
+		 * }
+		 */
+		do_action( 'bp_media_after_media_photo_activity_attach', $data );
 
 		wp_send_json( $data );
 
@@ -322,6 +343,14 @@ class BP_Media_AJAX {
 			'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG
 		);
 
+		/**
+		 * Fires after album is deleted.
+		 *
+		 * @param int $post_id Post ID.
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'bp_media_album_deleted', $post_id, $user_id );
+
 		wp_send_json( $data );
 	}
 
@@ -351,6 +380,15 @@ class BP_Media_AJAX {
 			'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $parent,
 		);
 
+		/**
+		 * Fires after photo is deleted.
+		 *
+		 * @param int $post_id Post ID.
+		 * @param int $parent Parent Album.
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'bp_media_photo_deleted', $image_id, $parent, $user_id );
+
 		wp_send_json( $data );
 	}
 
@@ -374,6 +412,15 @@ class BP_Media_AJAX {
 			'id'  => $image_id,
 			'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $image_id,
 		);
+
+		/**
+		 * Fires after photo is deleted.
+		 *
+		 * @param int $post_id Post ID.
+		 * @param int $parent Parent Album.
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'bp_media_photo_deleted', $image_id, $parent, $user_id );
 
 		wp_send_json( $data );
 	}
@@ -417,6 +464,15 @@ class BP_Media_AJAX {
 		$comment_id = wp_insert_comment( $data );
 		$comment    = array( get_comment( $comment_id ) );
 
+		/**
+		 * Fires after comment added.
+		 *
+		 * @param int $comment_id Comment ID.
+		 * @param int $post_id Current Post.
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'bp_media_comment_updated', $comment_id, $post_id, $user_id );
+
 		wp_list_comments( array(
 			'type'              => 'comment',
 			'callback'          => 'bp_media_comments',
@@ -444,6 +500,14 @@ class BP_Media_AJAX {
 		}
 
 		$comment_id = wp_delete_comment( $comment_id );
+
+		/**
+		 * Fires after comment deleted.
+		 *
+		 * @param int $comment_id Comment ID.
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'bp_media_comment_deleted', $comment_id, $user_id );
 
 		wp_send_json( $comment_id );
 	}
