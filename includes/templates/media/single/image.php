@@ -6,9 +6,11 @@ $post = get_post( $photo_id );
 if( $post ) : ?>
 
 <div class="media-pop-wrapper">
+	<?php do_action( 'bp_media_before_photo_view' ); ?>
 	<div class="photo-column">
 		<div class="image-options">
 			<a href="<?php bp_media_album_back_url( $post->post_parent ) ;?>" class="left"><?php _e( 'back to album', 'bp_media' ) ; ?></a>
+			<?php do_action( 'bp_media_photo_options' ); ?>
 			<?php if ( bp_media_user_can_access() ) : ?>
 			<a href="<?php bp_media_edit_image_link(); ?>" class="right"><?php _e( 'edit', 'bp_media' ) ;?></a>
 			<?php endif; ?>
@@ -16,6 +18,7 @@ if( $post ) : ?>
 		<div id="photo" class="media-image"><?php echo wp_get_attachment_image( $photo_id, 'large' ); ?></div>
 	</div>
 	<div class="comment-column">
+		<?php do_action( 'bp_media_after_photo_view' ); ?>
 		<div class="upload-author">
 			<div class="upload-author-avatar"><?php echo bp_core_fetch_avatar( 'item_id=' . $post->post_author ); ?></div>
 			<div class="upload-author-username">

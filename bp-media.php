@@ -110,7 +110,9 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/bp-media-library-filter.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-options.php' );
+			require( dirname( __FILE__ ) . '/includes/bp-media-reporting.php' );
 
+			$this->admin = new BP_Media_Settings();
 		}
 
 		/**
@@ -153,11 +155,26 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 			wp_register_script( 'bp-media-js', plugins_url( 'includes/js/bp-media.js' , __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'includes/js/bp-media.js' ) );
 
+			$options = get_option( 'bp_media_settings' );
+			$reasons = array();
+			if( ! empty( $options['bp_media_reporting_reasons'] ) ) {
+				$reasons = explode("\n", $options['bp_media_reporting_reasons'] );
+			}
 			// Localize the script with new data.
 			$translation_array = array(
-			'bp_media_ajax_create_album_error' => __( 'Error creating album', 'bp-media' ),
-			'bp_media_ajax_delete_album_error' => __( 'Error deleteing album', 'bp-media' ),
-			'bp_media_ajax_edit_album_error' => __( 'Error editing album', 'bp-media' ),
+				'bp_media_ajax_create_album_error'  => __( 'Error creating album', 'bp-media' ),
+				'bp_media_ajax_delete_album_error'  => __( 'Error deleteing album', 'bp-media' ),
+				'bp_media_ajax_edit_album_error'    => __( 'Error editing album', 'bp-media' ),
+				'bp_media_ajax_create_album_error'  => __( 'Error creating album', 'bp-media' ),
+				'bp_media_ajax_delete_album_error'  => __( 'Error deleteing album', 'bp-media' ),
+				'bp_media_ajax_edit_album_error'    => __( 'Error editing album', 'bp-media' ),
+				'bp_media_ajax_reporting_error'     => __( 'Error reporting this item', 'bp-media' ),
+				'bp_media_reporting_reasons'        => json_encode( $reasons ),
+				'bp_media_reporting_header'         => __('Help Us Understand What\'s Happening','bp-media'),
+				'bp_media_reporting_body'           => __('Why don\'t you want to see this?</div>','bp-media'),
+	 			'submit_text'                       => __('Report this media', 'bp-media'),
+				'cancel_text'                       => __('Cancel', 'bp-media'),
+				'report_success_message'            => __('Your report has been sent for consideration', 'bp-media'),
 			);
 			wp_localize_script( 'bp-media-js', 'bp_media', $translation_array );
 
@@ -192,6 +209,47 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			_e( '<strong>BP Media</strong></a> requires the BuddyPress plugin to work. Please <a href="http://buddypress.org/download">install BuddyPress</a> first, or <a href="plugins.php">deactivate BP Media</a>.' );
 			echo '</p></div>';
 		}
+
+		/**
+	 * Include a file from the includes directory
+	 *
+	 * @since  1.0.0
+	 * @param  string $filename Name of the file to be included.
+	 * @return bool   Result of include call.
+	 */
+	public static function include_file( $filename ) {
+		$file = self::dir( $filename . '.php' );
+		if ( file_exists( $file ) ) {
+			return include_once( $file );
+		}
+		return false;
+	}
+
+	/**
+	 * This plugin's directory
+	 *
+	 * @since  1.0.0
+	 * @param  string $path (optional) appended path.
+	 * @return string       Directory and path
+	 */
+	public static function dir( $path = '' ) {
+		static $dir;
+		$dir = $dir ? $dir : trailingslashit( dirname( __FILE__ ) );
+		return $dir . $path;
+	}
+
+	/**
+	 * This plugin's url
+	 *
+	 * @since  1.0.0
+	 * @param  string $path (optional) appended path.
+	 * @return string       URL and path
+	 */
+	public static function url( $path = '' ) {
+		static $url;
+		$url = $url ? $url : trailingslashit( plugin_dir_url( __FILE__ ) );
+		return $url . $path;
+	}
 
 	}
 endif; // End of line...
