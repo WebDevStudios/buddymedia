@@ -65,9 +65,17 @@ class BP_Media_Reporting {
 	}
 
 	public function reports_page() {
-		$wp_list_table = new BP_Media_Reports_List_Table();
-		$wp_list_table->prepare_items();
-		$wp_list_table->display( true );
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<?php
+			$wp_list_table = new BP_Media_Reports_List_Table();
+			$wp_list_table->prepare_items();
+			$wp_list_table->get_columns();
+			$wp_list_table->display( true );
+			?>
+		</div>
+		<?php
 	}
 
 	/**

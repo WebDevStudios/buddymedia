@@ -26,8 +26,9 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 	protected function get_column_info() {
 		return array(
 			array(
-				'author'   => __( 'Author' ),
-				'comment'  => _x( 'Comment', 'column name' ),
+				'author'   => __( 'Reporter', 'buddymedia' ),
+				'comment'  => _x( 'Report Message', 'column name', 'buddymedia' ),
+				'actions'   => __( 'Actions', 'buddymedia' ),
 			),
 			array(),
 			array(),
@@ -90,6 +91,7 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 			'all' => '',
 		);
 		$comment_type = 'bp_media_flag';
+		$post_type    = '';
 		$args = array(
 			'status' => isset( $status_map[ $comment_status ] ) ? $status_map[ $comment_status ] : $comment_status,
 			'search' => $search,
@@ -102,10 +104,9 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 			'order' => $order,
 			'post_type' => $post_type,
 		);
-		error_log( print_r( $args, true ) );
 
 		$_comments = get_comments( $args );
-		error_log( print_r( $_comments, true ) );
+
 		if ( is_array( $_comments ) ) {
 			update_comment_cache( $_comments );
 
@@ -128,6 +129,46 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 			'per_page' => $comments_per_page,
 		) );
 	}
+
+	/**
+	 *
+	 * @global int $post_id
+	 *
+	 * @return array
+	 */
+	public function get_columns() {
+		global $post_id;
+		$columns = array();
+		if ( $this->checkbox ) {
+			$columns['cb'] = '<input type="checkbox" />';
+		}
+		$columns['author'] = __( 'Reporter', 'buddymedia' );
+		$columns['comment'] = _x( 'Report Message', 'column name' );
+		if ( ! $post_id ) {
+			/* translators: column name or table row header */
+			$columns['response'] = __( 'In Response To' );
+		}
+		$columns['date'] = _x( 'Submitted On', 'column name' );
+		return $columns;
+	}
+
+	/**
+ 	 * Generate and display row actions links.
+ 	 *
+ 	 * @since 4.3.0
+ 	 * @access protected
+ 	 *
+ 	 * @global string $comment_status Status for the current listed comments.
+ 	 *
+ 	 * @param WP_Comment $comment     The comment object.
+ 	 * @param string     $column_name Current column name.
+ 	 * @param string     $primary     Primary column name.
+ 	 * @return string|void Comment row actions output.
+ 	 */
+ 	protected function handle_row_actions( $comment, $column_name, $primary ) {
+ 		return;
+	}
+
 	/**
 	 *
 	 * @return array
@@ -137,14 +178,5 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 		$classes[] = 'wp-list-table';
 		$classes[] = 'comments-box';
 		return $classes;
-	}
-
-	/**
-	 *
-	 * @param bool $comment_status
-	 * @return int
-	 */
-	public function get_per_page( $comment_status = false ) {
-		return 10;
 	}
 }
