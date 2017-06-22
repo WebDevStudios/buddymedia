@@ -244,42 +244,8 @@ function bp_media_admin_settings() {
         /* the validatation function you use before saving your option to the database */
         'intval'
     );
-    /*
-	 * storage options
-	 */
-	add_settings_section(
-		'bp_media_reporting_options_section',
-		__( 'Report Options', 'buddymedia' ),
-		'bp_media_reprting_options_section_callback',
-		'settings'
-	);
-
-    /* This is how you add a new field to your plugin's section */
-    add_settings_field(
-        /* the option name you want to use for your plugin */
-        'bp_media_reporting_reasons',
-        __( 'Reporting Reasons', 'bp-media' ),
-        'bp_media_reporting_setting_field_callback',
-        'settings',
-        'bp_media_reporting_options_section'
-    );
 }
-add_action( 'admin_init', 'bp_media_settings_init' );
-
-function bp_media_reprting_options_section_callback() {
-	echo __( 'Reporting.', 'buddymedia' );
-}
-/**
- * The bp_media_reporting_setting_field_callback function.
- */
-function bp_media_reporting_setting_field_callback() {
-	$options = get_option( 'bp_media_settings' );
-    ?>
-    <textarea id="bp-media-report-reason" name="bp_media_settings[bp_media_reporting_reasons]" placeholder="<?php _e('Copyright Infringement'); ?>"><?php echo esc_html( $options['bp_media_reporting_reasons'] ); ?></textarea>
-    <p class="description"><?php _e( 'Set reporting reasons checkbox. Separate each reason by line', 'bp-media' ); ?></p>
-    <?php
-}
-
+add_action( 'bp_register_admin_settings', 'bp_media_admin_settings', 999 );
 
 /**
  * The bp_plugin_setting_callback_section function.
