@@ -961,6 +961,6 @@ function bp_media_get_option( $key = '', $default = false ) {
  *
  * @return boolean.
  */
-function  bp_media_enabled() {
+function bp_media_enabled() {
 	return ( 'on' === bp_media_get_option( 'enable_reporting' ) );
 }

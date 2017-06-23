@@ -190,12 +190,22 @@ class BP_Media_Settings {
 			),
 		) );
 
-		 $cmb->add_field( array(
+		$cmb->add_field( array(
         	'name'    => __( 'Turn on reporting', 'buddymedia' ),
         	'id'      => 'enable_reporting',
         	'desc'    => __( 'Enable repoting on media items', 'buddymedia' ),
         	'type'    => 'checkbox',
         ) );
+
+        $cmb->add_field( array(
+        	'name'       => __( 'Reporting Reasons', 'buddymedia' ),
+        	'id'         => 'bp_media_reporting_reasons',
+        	'desc'       => __( 'Enable repoting on media items', 'buddymedia' ),
+        	'type'       => 'text',
+        	'repeatable' => true,
+        ) );
+
+		 
 
 	}
 
