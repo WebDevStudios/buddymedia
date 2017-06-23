@@ -26,9 +26,11 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 	protected function get_column_info() {
 		return array(
 			array(
-				'author'   => __( 'Reporter', 'buddymedia' ),
-				'comment'  => _x( 'Report Message', 'column name', 'buddymedia' ),
-				'actions'   => __( 'Actions', 'buddymedia' ),
+				'author'       => __( 'Reporter', 'buddymedia' ),
+				'media_item'   => __( 'Media', 'buddymedia' ),
+				'album'        => __( 'Album', 'buddymedia' ),
+				'comment'      => _x( 'Report Message', 'column name', 'buddymedia' ),
+				'actions'      => __( 'Actions', 'buddymedia' ),
 			),
 			array(),
 			array(),
@@ -153,20 +155,45 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 	}
 
 	/**
- 	 * Generate and display row actions links.
- 	 *
- 	 * @since 4.3.0
- 	 * @access protected
- 	 *
- 	 * @global string $comment_status Status for the current listed comments.
- 	 *
- 	 * @param WP_Comment $comment     The comment object.
- 	 * @param string     $column_name Current column name.
- 	 * @param string     $primary     Primary column name.
- 	 * @return string|void Comment row actions output.
- 	 */
- 	protected function handle_row_actions( $comment, $column_name, $primary ) {
- 		return;
+	 * Display the media comment album.
+	 *
+	 * @param WP_Comment $comment The comment object.
+	 * @author  Kailan W.
+	 *
+	 * @since  1.0.2
+	 */
+	public function column_album( $comment ) {
+		$parent_id  = wp_get_post_parent_id( $comment->comment_post_ID );
+		echo '<a href="' . get_edit_post_link( $parent_id ) . '">' . get_the_title( $parent_id ) . '</a>';
+	}
+
+	/**
+	 * Display the media comment album.
+	 *
+	 * @param WP_Comment $comment The comment object.
+	 * @author  Kailan W.
+	 *
+	 * @since  1.0.2
+	 */
+	public function column_media_item( $comment ) {
+		if ( wp_attachment_is_image( $comment->comment_post_ID ) ) {
+			echo '<a href="' . get_edit_post_link( $comment->comment_post_ID ) . '">' . wp_get_attachment_image( $comment->comment_post_ID, 'thumbnail' ) . '</a>';
+		}
+	}
+
+	/**
+	 * Display the media comment album.
+	 *
+	 * @param WP_Comment $comment The comment object.
+	 * @author  Kailan W.
+	 *
+	 * @since  1.0.2
+	 */
+	public function column_actions( $comment ) {
+		$parent_id  = wp_get_post_parent_id( $comment->comment_post_ID );
+		?>
+		<a href="<?php echo esc_url( get_edit_post_link( $parent_id ) ); ?>" class="button"><?php esc_html_e( 'Moderate', 'buddymedia' ); ?></a>
+		<?php
 	}
 
 	/**

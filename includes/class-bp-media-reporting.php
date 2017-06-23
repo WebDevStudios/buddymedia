@@ -44,6 +44,8 @@ class BP_Media_Reporting {
 		//ajax command
 		add_action( 'wp_ajax_bp_media_make_report', array( $this, 'bp_media_make_report' ) );
 		//add_action('wp_ajax_nopriv_bp_media_make_report', array($this, 'bp_media_make_report') );
+		//
+		add_action( 'pre_get_comments', array( $this, 'hide_comments' ) );
 	}
 
 	/**
@@ -152,6 +154,26 @@ class BP_Media_Reporting {
 			$results['comment_id'] = $comment_id;
 		}
 		wp_send_json( $results );
+	}
+
+	/**
+	 * Modify comment query.
+	 *
+	 * @param  WP_Comment_Query $comment_query The WP_Comment_Query object.
+	 * @author Kailan W.
+	 * @since  1.0.2
+	 */
+	public function hide_comments( $comment_query ) {
+		// Bail early if not in admin.
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		// Only show types on custom list table.
+		$screen = get_current_screen();
+		if ( ! empty( $screen->id ) && 'bp_media_page_bp_media_reports' !== $screen->id ) {
+			$comment_query->query_vars['type__not_in'] = array( $this->comment_type );
+		}
 	}
 }
 
