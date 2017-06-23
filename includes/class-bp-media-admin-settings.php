@@ -1,12 +1,13 @@
 <?php
 class BP_Media_Settings {
-    /**
+
+	/**
 	 * Option key, and option page slug
 	 *
 	 * @var    string
 	 * @since  1.0.2
 	 */
-	protected $key = 'bp_media_settings';
+	public $key = 'bp_media_settings';
 
 	/**
 	 * Options page metabox id
@@ -36,13 +37,13 @@ class BP_Media_Settings {
 	 * @since  1.0.2
 	 * @return void
 	 */
-	public function __construct( ) {
+	public function __construct() {
 		$this->hooks();
 
 		$this->title = __( 'Settings', 'buddymedia' );
-    }
+	}
 
-    /**
+	/**
 	 * Initiate our hooks
 	 *
 	 * @since  1.0.2
@@ -54,7 +55,7 @@ class BP_Media_Settings {
 		add_action( 'cmb2_init', array( $this, 'add_options_page_metabox' ) );
 	}
 
-    /**
+	/**
 	 * Register our setting to WP
 	 *
 	 * @since  1.0.2
@@ -72,7 +73,7 @@ class BP_Media_Settings {
 	 */
 	public function add_options_page() {
 		$this->options_page = add_submenu_page(
-            'edit.php?post_type=bp_media',
+			'edit.php?post_type=bp_media',
 			$this->title,
 			$this->title,
 			'manage_options',
@@ -91,7 +92,7 @@ class BP_Media_Settings {
 	 * @return void
 	 */
 	public function admin_page_display() {
-        $active_tab = 'general';
+		$active_tab = 'general';
 		if ( isset( $_GET['tab'] ) ) {
 			$active_tab = $_GET['tab'];
 		}
@@ -103,13 +104,13 @@ class BP_Media_Settings {
 				<a href="<?php echo admin_url( 'admin.php?page=' . $this->key . '&tab=reporting' ); ?>" class="nav-tab <?php echo 'reporting' == $active_tab  ? 'nav-tab-active' : ''; ?>"><?php _e( 'Reporting', 'um-learndash' ); ?></a>
 			</h2>
 			<?php
-            switch( $active_tab ) {
-                case 'reporting':
-                    cmb2_metabox_form( $this->metabox_id . '-reporting', $this->key );
-                break;
-                default:
-                cmb2_metabox_form( $this->metabox_id, $this->key );
-            }
+			switch( $active_tab ) {
+				case 'reporting':
+					cmb2_metabox_form( $this->metabox_id . '-reporting', $this->key );
+				break;
+				default:
+					cmb2_metabox_form( $this->metabox_id, $this->key );
+			}
 			?>
 		</div>
 		<?php
@@ -189,6 +190,13 @@ class BP_Media_Settings {
 			),
 		) );
 
+		 $cmb->add_field( array(
+        	'name'    => __( 'Turn on reporting', 'buddymedia' ),
+        	'id'      => 'enable_reporting',
+        	'desc'    => __( 'Enable repoting on media items', 'buddymedia' ),
+        	'type'    => 'checkbox',
+        ) );
+
 	}
 
 }
@@ -251,9 +259,9 @@ add_action( 'bp_register_admin_settings', 'bp_media_admin_settings', 999 );
  * The bp_plugin_setting_callback_section function.
  */
 function bp_plugin_setting_callback_section() {
-    ?>
-    <p class="description"><?php _e( 'Media Component Settings', 'bp-media' );?></p>
-    <?php
+	?>
+	<p class="description"><?php _e( 'Media Component Settings', 'bp-media' );?></p>
+	<?php
 }
 
 
@@ -262,10 +270,10 @@ function bp_plugin_setting_callback_section() {
  */
 function bp_media_setting_field_callback() {
 
-    $bp_media_shared_gallery = bp_get_option( 'bp-media-shared-gallery' );
-    ?>
-    <input id="bp-media-shared-gallery" name="bp-media-shared-gallery" type="checkbox" value="1" <?php checked( $bp_media_shared_gallery ); ?> />
-    <label for="bp-media-shared-gallery"><?php _e( 'Allow shared media galleries.', 'bp-media' ); ?></label>
-    <p class="description"><?php _e( 'Shared galleries allow users to contribute to the same gallery.', 'bp-media' ); ?></p>
-    <?php
+	$bp_media_shared_gallery = bp_get_option( 'bp-media-shared-gallery' );
+	?>
+	<input id="bp-media-shared-gallery" name="bp-media-shared-gallery" type="checkbox" value="1" <?php checked( $bp_media_shared_gallery ); ?> />
+	<label for="bp-media-shared-gallery"><?php _e( 'Allow shared media galleries.', 'bp-media' ); ?></label>
+	<p class="description"><?php _e( 'Shared galleries allow users to contribute to the same gallery.', 'bp-media' ); ?></p>
+	<?php
 }

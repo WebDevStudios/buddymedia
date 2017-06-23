@@ -547,7 +547,7 @@ function bp_media_album_permission( $permission ) {
 
 	$meta = get_post_meta( $action_var[0], '_permission', true );
 
-	if( $meta === $permission) {
+	if ( $meta === $permission) {
 		echo 'checked="checked"';
 	}
 
@@ -562,7 +562,7 @@ function bp_media_album_back_url( $album_id = null ) {
 
 	$action_var = bp_action_variables();
 
-	if( !$album_id ) {
+	if ( ! $album_id ) {
 		$album_id = $action_var[0];
 	}
 
@@ -602,10 +602,9 @@ function bp_media_group_image_link( $id, $user_id ) {
 	echo bp_media_get_group_image_link( $id, $user_id );
 }
 
-	function bp_media_get_group_image_link( $id, $user_id ) {
-		return  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $id;
-	}
-
+function bp_media_get_group_image_link( $id, $user_id ) {
+	return  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $id;
+}
 
 
 /**
@@ -616,27 +615,23 @@ function bp_media_album_id() {
 }
 
 
-	/**
-	 * The bp_media_get_album_id function.
-	 *
-	 * @return array|bool
-	 */
-	function bp_media_get_album_id() {
-		$action_var = bp_action_variables();
-		return $action_var[0];
-	}
-
-
+/**
+ * The bp_media_get_album_id function.
+ *
+ * @return array|bool
+ */
+function bp_media_get_album_id() {
+	$action_var = bp_action_variables();
+	return $action_var[0];
+}
 
 /**
  * The bp_media_enqueue_scripts function.
  */
 function bp_media_enqueue_scripts() {
-	 wp_enqueue_script('plupload-all');
+	wp_enqueue_script('plupload-all');
 }
 add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
-
-
 
 /**
  * The bp_media_comments function.
@@ -725,13 +720,15 @@ add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
 function bp_media_delete_attachments_before_delete_post( $id ){
 	global $post;
 
-	if( $post && 'bp_media' !== $post->post_type ) return;
+	if ( $post && 'bp_media' !== $post->post_type ) {
+		return;
+	}
 
 	$subposts = get_children(array(
-	    'post_parent' => $id,
-	    'post_type'   => 'any',
-	    'numberposts' => -1,
-	    'post_status' => 'any'
+		'post_parent' => $id,
+		'post_type'   => 'any',
+		'numberposts' => -1,
+		'post_status' => 'any'
 	));
 
 	if ( is_array( $subposts ) && count( $subposts ) > 0 ){
@@ -859,44 +856,44 @@ function bp_is_friend_boolean() {
 function bp_media_pagination_count( $query ) {
 	echo bp_media_get_pagination_count( $query );
 }
-	/**
-	 * Generate the "Viewing x-y of z albums" pagination message.
-	 *
-	 * @param object $query Query object.
-	 * @return string
-	 */
-	function bp_media_get_pagination_count( $query ) {
+/**
+ * Generate the "Viewing x-y of z albums" pagination message.
+ *
+ * @param object $query Query object.
+ * @return string
+ */
+function bp_media_get_pagination_count( $query ) {
 
-		$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
+	$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
 
-		if( bp_is_directory() && !bp_current_action() ) {
-			$action = __('album', 'bp-media');
-		}
-
-		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
-		$posts_per_page = $query->query['posts_per_page'];
-
-		$start_num = intval( ( $paged - 1 ) * $posts_per_page ) + 1;
-		$from_num  = bp_core_number_format( $start_num );
-		$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
-		$total     = bp_core_number_format( $query->found_posts );
-
-		if ( 1 == $query->found_posts ) {
-			$message = __( 'Viewing 1 ' . $action, 'bp-media' );
-		} else {
-			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s '.$action.'s', 'Viewing %1$s - %2$s of %3$s '.$action.'s', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
-		}
-
-		/**
-		 * Filters the "Viewing x-y of z albums" pagination message.
-		 *
-		 * @param string $message  "Viewing x-y of z album" text.
-		 * @param string $from_num Total amount for the low value in the range.
-		 * @param string $to_num   Total amount for the high value in the range.
-		 * @param string $total    Total amount of albums found.
-		 */
-		return apply_filters( 'bp_media_get_pagination_count', $message, $from_num, $to_num, $total );
+	if( bp_is_directory() && !bp_current_action() ) {
+		$action = __('album', 'bp-media');
 	}
+
+	$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+	$posts_per_page = $query->query['posts_per_page'];
+
+	$start_num = intval( ( $paged - 1 ) * $posts_per_page ) + 1;
+	$from_num  = bp_core_number_format( $start_num );
+	$to_num    = bp_core_number_format( ( $start_num + ( $posts_per_page - 1 ) > $query->found_posts ) ? $query->found_posts : $start_num + ( $posts_per_page - 1 ) );
+	$total     = bp_core_number_format( $query->found_posts );
+
+	if ( 1 == $query->found_posts ) {
+		$message = __( 'Viewing 1 ' . $action, 'bp-media' );
+	} else {
+		$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s '.$action.'s', 'Viewing %1$s - %2$s of %3$s '.$action.'s', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
+	}
+
+	/**
+	 * Filters the "Viewing x-y of z albums" pagination message.
+	 *
+	 * @param string $message  "Viewing x-y of z album" text.
+	 * @param string $from_num Total amount for the low value in the range.
+	 * @param string $to_num   Total amount for the high value in the range.
+	 * @param string $total    Total amount of albums found.
+	 */
+	return apply_filters( 'bp_media_get_pagination_count', $message, $from_num, $to_num, $total );
+}
 
 
 /**
@@ -908,26 +905,62 @@ function bp_media_pagination_links( $query ) {
 	echo bp_media_get_pagination_links( $query );
 }
 
-	function bp_media_get_pagination_links( $query ) {
+function bp_media_get_pagination_links( $query ) {
 
-			$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
 
-			$pag_args = array(
-				'mpage' => '%#%'
-			);
+	$pag_args = array(
+		'mpage' => '%#%',
+	);
 
-			if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
-				$base = remove_query_arg( 's', wp_get_referer() );
-			} else {
-				$base = '';
-			}
-
-			echo paginate_links( array(
-				'base'      => add_query_arg( $pag_args, $base ),
-				'format'    => '',
-				'total'     => ceil( (int) $query->found_posts / (int)  $query->query['posts_per_page'] ),
-				'current'   => $paged,
-				'prev_text' => _x( '&larr;', 'Media pagination previous text', 'bp-media' ),
-				'next_text' => _x( '&rarr;', 'Media pagination next text', 'bp-media' ),
-			) );
+	if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
+		$base = remove_query_arg( 's', wp_get_referer() );
+	} else {
+		$base = '';
 	}
+
+	echo paginate_links( array(
+		'base'      => add_query_arg( $pag_args, $base ),
+		'format'    => '',
+		'total'     => ceil( (int) $query->found_posts / (int) $query->query['posts_per_page'] ),
+		'current'   => $paged,
+		'prev_text' => _x( '&larr;', 'Media pagination previous text', 'bp-media' ),
+		'next_text' => _x( '&rarr;', 'Media pagination next text', 'bp-media' ),
+	) );
+}
+
+/**
+ * Wrapper function around cmb2_get_option.
+ * @since  0.1.0
+ * @param  string $key     Options array key
+ * @param  mixed  $default Optional default value
+ * @return mixed           Option value
+ */
+function bp_media_get_option( $key = '', $default = false ) {
+	if ( function_exists( 'cmb2_get_option' ) ) {
+		// Use cmb2_get_option as it passes through some key filters.
+		return cmb2_get_option( buddymedia()->admin->key, $key, $default );
+	}
+	// Fallback to get_option if CMB2 is not loaded yet.
+	$opts = get_option( buddymedia()->admin->key, $default );
+	$val = $default;
+	if ( 'all' == $key ) {
+		$val = $opts;
+	} elseif ( array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+		$val = $opts[ $key ];
+	}
+	return $val;
+}
+
+/**
+ * Helper function to check if Reporting is enabled.
+ *
+ * @since  1.0.2
+ *
+ * @author  Kailan W.
+ *
+ * @return boolean.
+ */
+function  bp_media_enabled() {
+	return ( 'on' === bp_media_get_option( 'enable_reporting' ) );
+}

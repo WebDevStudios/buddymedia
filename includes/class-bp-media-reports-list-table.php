@@ -206,4 +206,38 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 		$classes[] = 'comments-box';
 		return $classes;
 	}
+
+	/**
+	 * @since  1.0.2
+	 * @author  Kailan W.
+	 *
+	 * @global string $comment_status
+	 *
+	 * @return array
+	 */
+	protected function get_bulk_actions() {}
+
+	/**
+	 * @since  1.0.2
+	 * @author  Kailan W.
+	 *
+	 * @global string $comment_status
+	 * @global string $comment_type
+	 *
+	 * @param string $which
+	 */
+	protected function extra_tablenav( $which ) {}
+
+	/**
+	 *
+	 * @global string $comment_status
+	 */
+	public function no_items() {
+		global $comment_status;
+		if ( 'moderated' === $comment_status ) {
+			_e( 'No reports awaiting moderation.', 'buddymedia' );
+		} else {
+			_e( 'No reports found.', 'buddymedia' );
+		}
+	}
 }

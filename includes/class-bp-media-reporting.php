@@ -55,6 +55,10 @@ class BP_Media_Reporting {
 	 * @since 1.0.2
 	 */
 	public function setup_menu() {
+		// Bail if reporting is not enabled.
+		if ( ! bp_media_enabled() ) {
+			return;
+		}
 		add_submenu_page(
 			'edit.php?post_type=bp_media',
 			$this->title,
@@ -88,6 +92,11 @@ class BP_Media_Reporting {
 	 */
 	public function add_flag() {
 		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Bail if reporting is not enabled.
+		if ( ! bp_media_enabled() ) {
 			return;
 		}
 		global $post;
@@ -162,6 +171,7 @@ class BP_Media_Reporting {
 			$comment_query->query_vars['type__not_in'] = array( $this->comment_type );
 		}
 	}
+
 }
 
 new BP_Media_Reporting();
