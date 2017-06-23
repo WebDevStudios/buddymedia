@@ -205,8 +205,6 @@ class BP_Media_Settings {
         	'repeatable' => true,
         ) );
 
-		 
-
 	}
 
 }
@@ -279,7 +277,6 @@ function bp_plugin_setting_callback_section() {
  * The bp_media_setting_field_callback function.
  */
 function bp_media_setting_field_callback() {
-
 	$bp_media_shared_gallery = bp_get_option( 'bp-media-shared-gallery' );
 	?>
 	<input id="bp-media-shared-gallery" name="bp-media-shared-gallery" type="checkbox" value="1" <?php checked( $bp_media_shared_gallery ); ?> />

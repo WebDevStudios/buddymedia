@@ -40,22 +40,22 @@ class BP_Media_AJAX {
 	 * @since 1.0.2
 	 */
 	public function hooks() {
-		add_action('wp_ajax_photo_gallery_upload', array( $this, 'bp_media_upload_photo' ) );
-		add_action('wp_ajax_bp_media_photo_activity_attach', array( $this, 'bp_media_photo_activity_attach' ) );
+		add_action( 'wp_ajax_photo_gallery_upload', array( $this, 'bp_media_upload_photo' ) );
+		add_action( 'wp_ajax_bp_media_photo_activity_attach', array( $this, 'bp_media_photo_activity_attach' ) );
 
-		add_action('wp_ajax_bp_media_get_image', array( $this, 'bp_media_get_image' ) );
-		add_action('wp_ajax_nopriv_bp_media_get_image', array( $this, 'bp_media_get_image' ) );
+		add_action( 'wp_ajax_bp_media_get_image', array( $this, 'bp_media_get_image' ) );
+		add_action( 'wp_ajax_nopriv_bp_media_get_image', array( $this, 'bp_media_get_image' ) );
 
-		add_action('wp_ajax_bp_media_add_album', array( $this, 'bp_media_add_album' ) );
+		add_action( 'wp_ajax_bp_media_add_album', array( $this, 'bp_media_add_album' ) );
 
-		add_action('wp_ajax_bp_media_ajax_create_album', array( $this, 'bp_media_ajax_create_album' ) );
-		add_action('wp_ajax_bp_media_ajax_edit_album', array( $this, 'bp_media_ajax_edit_album' ) );
+		add_action( 'wp_ajax_bp_media_ajax_create_album', array( $this, 'bp_media_ajax_create_album' ) );
+		add_action( 'wp_ajax_bp_media_ajax_edit_album', array( $this, 'bp_media_ajax_edit_album' ) );
 
-		add_action('wp_ajax_bp_media_ajax_delete_album', array( $this, 'bp_media_ajax_delete_album' ) );
-		add_action('wp_ajax_bp_media_ajax_delete_image', array( $this, 'bp_media_ajax_delete_image' ) );
-		add_action('wp_ajax_bp_media_ajax_edit_image', array( $this, 'bp_media_ajax_edit_image' ) );
-		add_action('wp_ajax_bp_media_ajax_add_comment', array( $this, 'bp_media_ajax_add_comment' ) );
-		add_action('wp_ajax_bp_media_ajax_delete_comment', array( $this, 'bp_media_ajax_delete_comment' ) );
+		add_action( 'wp_ajax_bp_media_ajax_delete_album', array( $this, 'bp_media_ajax_delete_album' ) );
+		add_action( 'wp_ajax_bp_media_ajax_delete_image', array( $this, 'bp_media_ajax_delete_image' ) );
+		add_action( 'wp_ajax_bp_media_ajax_edit_image', array( $this, 'bp_media_ajax_edit_image' ) );
+		add_action( 'wp_ajax_bp_media_ajax_add_comment', array( $this, 'bp_media_ajax_add_comment' ) );
+		add_action( 'wp_ajax_bp_media_ajax_delete_comment', array( $this, 'bp_media_ajax_delete_comment' ) );
 	}
 
 	/**
@@ -65,11 +65,15 @@ class BP_Media_AJAX {
 	 */
 	public function bp_media_upload_photo() {
 
-		check_ajax_referer('photo-upload');
+		check_ajax_referer( 'photo-upload' );
 
 		// Upload file.
 		$file   = $_FILES['async-upload'];
-		$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'photo_gallery_upload' ) );
+		$status = wp_handle_upload( $file, array(
+			'test_form' => true,
+			'action' => 'photo_gallery_upload',
+			)
+		);
 
 		$wp_upload_dir = wp_upload_dir();
 
@@ -79,7 +83,7 @@ class BP_Media_AJAX {
 			'post_mime_type' => $status['type'],
 			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
 			'post_content'   => '',
-			'post_status'    => 'inherit'
+			'post_status'    => 'inherit',
 		);
 		$attach_id  = wp_insert_attachment( $attachment, $status['file'], (int) $_POST['gallery_id'] );
 
@@ -93,7 +97,7 @@ class BP_Media_AJAX {
 		update_post_meta( $attach_id, 'description', $_POST['description'] );
 		update_post_meta( $attach_id, 'bp_media', '1' );
 
-		$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
+		$image = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
 
 		$data = array(
 			'id'  => $attach_id,
@@ -120,13 +124,17 @@ class BP_Media_AJAX {
 	 */
 	public function bp_media_photo_activity_attach() {
 
-		check_ajax_referer('photo-upload');
+		check_ajax_referer( 'photo-upload' );
 
 		// Upload file.
 		$file = $_FILES['async-upload'];
-		$status = wp_handle_upload( $file, array( 'test_form' => true, 'action' => 'bp_media_photo_activity_attach' ) );
+		$status = wp_handle_upload( $file, array(
+			'test_form' => true,
+			'action' => 'bp_media_photo_activity_attach',
+			)
+		);
 
-		if ( ! $album_id = $this->bp_media_get_activity_album_id( $_POST['user_id'] ) ) {
+		if ( ! $album_id == $this->bp_media_get_activity_album_id( $_POST['user_id'] ) ) {
 			exit;
 		}
 
@@ -138,7 +146,7 @@ class BP_Media_AJAX {
 			'post_mime_type' => $status['type'],
 			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $status['file'] ) ),
 			'post_content'   => '',
-			'post_status'    => 'inherit'
+			'post_status'    => 'inherit',
 		);
 		$attach_id = wp_insert_attachment( $attachment, $status['file'], (int) $album_id );
 
@@ -152,7 +160,7 @@ class BP_Media_AJAX {
 		update_post_meta( $attach_id, 'bp_media', '1' );
 		update_post_meta( $attach_id, 'secondary_item_id', (int) $_POST['whats-new-post-in'] );
 
-		$image = wp_get_attachment_image_src( $attach_id, 'thumbnail');
+		$image = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
 
 		$data = array(
 			'id'       => $attach_id,
@@ -192,9 +200,9 @@ class BP_Media_AJAX {
 		}
 
 		$post = get_posts( array(
-		    'meta_key'  => '_activity_album',
-		    'author'    => (int) $user_id,
-		    'post_type' => 'bp_media',
+			'meta_key'  => '_activity_album',
+			'author'    => (int) $user_id,
+			'post_type' => 'bp_media',
 		) );
 
 		if ( $post ) {
@@ -210,7 +218,7 @@ class BP_Media_AJAX {
 		  'post_type'    => 'bp_media',
 		);
 
-		add_filter('bp_activity_type_before_save', '__return_false', 9999 );
+		add_filter( 'bp_activity_type_before_save', '__return_false', 9999 );
 
 		// Insert the post into the database.
 		$post = wp_insert_post( $my_post );
@@ -233,7 +241,7 @@ class BP_Media_AJAX {
 		$user_id  = ! empty( $_GET['user'] ) ? (int) $_GET['user'] : 0;
 		$user     = get_user_by( 'id', (int) $user_id );
 
-		include( bp_media_get_template_part( 'single/image') );
+		include( bp_media_get_template_part( 'single/image' ) );
 
 		die();
 	}
@@ -245,7 +253,7 @@ class BP_Media_AJAX {
 	 */
 	public function bp_media_add_album() {
 
-		include_once( bp_media_get_template_part( 'single/add-album') );
+		include_once( bp_media_get_template_part( 'single/add-album' ) );
 
 		die();
 	}
@@ -255,7 +263,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	function bp_media_ajax_create_album(){
+	function bp_media_ajax_create_album() {
 
 		check_ajax_referer( 'create-album', 'nonce' );
 
@@ -275,7 +283,7 @@ class BP_Media_AJAX {
 
 		// Dont post activity if album is not public.
 		if ( 'public' !== $permission ) {
-			add_filter('bp_activity_type_before_save', '__return_false', 9999 );
+			add_filter( 'bp_activity_type_before_save', '__return_false', 9999 );
 		}
 
 		// Insert the post into the database.
@@ -288,7 +296,7 @@ class BP_Media_AJAX {
 
 		// Return album link.
 		$data = array(
-			'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true'
+			'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '?new=true',
 		);
 
 		/**
@@ -306,7 +314,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	function bp_media_ajax_edit_album(){
+	function bp_media_ajax_edit_album() {
 
 		check_ajax_referer( 'edit-album', 'nonce' );
 
@@ -332,7 +340,7 @@ class BP_Media_AJAX {
 
 		// Return post id.
 		$data = array(
-			'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '/edit'
+			'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/album/' . $post . '/edit',
 		);
 
 		/**
@@ -350,7 +358,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	public function bp_media_ajax_delete_album(){
+	public function bp_media_ajax_delete_album() {
 
 		check_ajax_referer( 'edit-album', 'nonce' );
 
@@ -362,7 +370,7 @@ class BP_Media_AJAX {
 
 		// Return post id.
 		$data = array(
-			'url' =>  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG
+			'url' => bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG,
 		);
 
 		/**
@@ -381,7 +389,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	public function bp_media_ajax_delete_image(){
+	public function bp_media_ajax_delete_image() {
 
 		check_ajax_referer( 'edit-album', 'nonce' );
 
@@ -389,8 +397,11 @@ class BP_Media_AJAX {
 		$image_id = $_GET['image_id'];
 		$parent   = get_post_field( 'post_parent', $image_id );
 
-		if ( $activity_id = get_post_meta( $image_id, 'activity_id', true ) ) {
-			bp_activity_delete( array( 'id' => $activity_id ) );
+		if ( get_post_meta( $image_id, 'activity_id', true ) == $activity_id ) {
+			bp_activity_delete( array(
+				'id' => $activity_id,
+				)
+			);
 		}
 
 		// Delete the post.
@@ -419,7 +430,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	public function bp_media_ajax_edit_image(){
+	public function bp_media_ajax_edit_image() {
 
 		check_ajax_referer( 'edit-album', 'nonce' );
 
@@ -452,7 +463,7 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	public function bp_media_ajax_add_comment(){
+	public function bp_media_ajax_add_comment() {
 
 		check_ajax_referer( 'add-comment', 'nonce' );
 
@@ -464,21 +475,21 @@ class BP_Media_AJAX {
 			return;
 		}
 
-		$time = current_time('mysql');
+		$time = current_time( 'mysql' );
 
 		$data = array(
-		    'comment_post_ID'      => $post_id,
-		    'comment_author'       => '',
-		    'comment_author_email' => '',
-		    'comment_author_url'   => '',
-		    'comment_content'      => $comment,
-		    'comment_type'         => '',
-		    'comment_parent'       => 0,
-		    'user_id'              => $user_id,
-		    'comment_author_IP'    => '',
-		    'comment_agent'        => '',
-		    'comment_date'         => $time,
-		    'comment_approved'     => 1,
+			'comment_post_ID'      => $post_id,
+			'comment_author'       => '',
+			'comment_author_email' => '',
+			'comment_author_url'   => '',
+			'comment_content'      => $comment,
+			'comment_type'         => '',
+			'comment_parent'       => 0,
+			'user_id'              => $user_id,
+			'comment_author_IP'    => '',
+			'comment_agent'        => '',
+			'comment_date'         => $time,
+			'comment_approved'     => 1,
 		);
 
 		$data = apply_filters( 'bp_media_ajax_add_comment', $data );
@@ -510,12 +521,12 @@ class BP_Media_AJAX {
 	 *
 	 * @since 1.0.2
 	 */
-	function bp_media_ajax_delete_comment(){
+	function bp_media_ajax_delete_comment() {
 
 		check_ajax_referer( 'add-comment', 'nonce' );
 
-		$user_id    =  $_GET['user_id'];
-		$comment_id =  $_GET['comment_id'];
+		$user_id    = ! empty( $_GET['user_id'] ) ? absint( $_GET['user_id'] ) : 0;
+		$comment_id = ! empty( $_GET['comment_id'] ) ? absint( $_GET['comment_id'] ) : 0;
 
 		if ( empty( $comment_id ) || bp_loggedin_user_id() !== (int) $user_id ) {
 			return;

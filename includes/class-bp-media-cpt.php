@@ -1,5 +1,4 @@
 <?php
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -99,12 +98,12 @@ class BP_Media_CPT {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
 			'capability_type'     => 'post',
-	        'bp_activity' => array(
-	            'component_id' => buddypress()->activity->id,
-	            'action_id'    => 'new_album',
-	            'contexts'     => array( 'activity', 'member' ),
-	            'position'     => 40,
-	        ),
+			'bp_activity' => array(
+				'component_id' => buddypress()->activity->id,
+				'action_id'    => 'new_album',
+				'contexts'     => array( 'activity', 'member' ),
+				'position'     => 40,
+			),
 		);
 		register_post_type( 'bp_media', $args );
 
@@ -130,12 +129,12 @@ class BP_Media_CPT {
 	 */
 	public function add_new_gallery_columns( $gallery_columns ) {
 
-	    $new_columns['cb']     = '<input type="checkbox" />';
+		$new_columns['cb']     = '<input type="checkbox" />';
 		$new_columns['title']  = _x( 'Album Name', 'bp-media' );
 		$new_columns['author'] = __( 'Author' );
 		$new_columns['date']   = _x( 'Date', 'bp-media' );
 
-	    return $new_columns;
+		return $new_columns;
 	}
 
 
@@ -146,22 +145,22 @@ class BP_Media_CPT {
 	 * @return void
 	 */
 	public function customize_media_tracking_args() {
-	    // Check if the Activity component is active before using it.
-	    if ( ! bp_is_active( 'activity' ) ) {
-	        return;
-	    }
+		// Check if the Activity component is active before using it.
+		if ( ! bp_is_active( 'activity' ) ) {
+			return;
+		}
 
-	    bp_activity_set_post_type_tracking_args( 'bp_media', array(
-	        'component_id'             => buddypress()->media->id,
-	        'action_id'                => 'new_album',
-	        'bp_activity_admin_filter' => __( 'Created a new album', 'bp_media' ),
-	        'bp_activity_front_filter' => __( 'Media', 'bp_media' ),
-	        'contexts'                 => array( 'activity', 'member' ),
-	        'activity_comment'         => true,
-	        'bp_activity_new_post'     => __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ),
-	        'bp_activity_new_post_ms'  => __( '%1$s created a new <a href="%2$s">album</a>, on the site %3$s', 'bp_media' ),
-	        'position'                 => 100,
-	    ) );
+		bp_activity_set_post_type_tracking_args( 'bp_media', array(
+			'component_id'             => buddypress()->media->id,
+			'action_id'                => 'new_album',
+			'bp_activity_admin_filter' => __( 'Created a new album', 'bp_media' ),
+			'bp_activity_front_filter' => __( 'Media', 'bp_media' ),
+			'contexts'                 => array( 'activity', 'member' ),
+			'activity_comment'         => true,
+			'bp_activity_new_post'     => __( '%1$s created a new <a href="%2$s">album</a>', 'bp_media' ),
+			'bp_activity_new_post_ms'  => __( '%1$s created a new <a href="%2$s">album</a>, on the site %3$s', 'bp_media' ),
+			'position'                 => 100,
+		) );
 	}
 
 
@@ -341,7 +340,7 @@ class BP_Media_CPT {
 
 				<?php
 
-			}
+			} // End foreach().
 
 			echo '</ul>';
 

@@ -43,7 +43,6 @@ class BP_Media_Reporting {
 		//ajax command
 		add_action( 'wp_ajax_bp_media_make_report', array( $this, 'bp_media_make_report' ) );
 		//add_action('wp_ajax_nopriv_bp_media_make_report', array($this, 'bp_media_make_report') );
-		//
 		add_action( 'pre_get_comments', array( $this, 'hide_comments' ) );
 	}
 

@@ -96,12 +96,12 @@ if ( ! class_exists( 'BP_Media' ) ) :
 
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-admin-settings.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-function.php' );
-			require( dirname( __FILE__ ) . '/includes/bp-media-cpt.php' );
+			require( dirname( __FILE__ ) . '/includes/class-bp-media-cpt.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-loader.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-ajax.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-activity.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-library-filter.php' );
-			require( dirname( __FILE__ ) . '/includes/bp-media-groups.php' );
+			require( dirname( __FILE__ ) . '/includes/class-bp-media-groups.php' );
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-reports-list-table.php' );
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-reporting.php' );
 
