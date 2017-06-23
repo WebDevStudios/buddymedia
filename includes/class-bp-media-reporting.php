@@ -39,7 +39,6 @@ class BP_Media_Reporting {
 	 */
 	public function hooks() {
 		add_action( 'admin_menu', array( $this, 'setup_menu' ) );
-		add_action( 'admin_comment_types_dropdown', array( $this, 'add_custom_comment_type_dropdown' ) );
 		add_action( 'bp_media_photo_options', array( $this, 'add_flag' ) );
 		//ajax command
 		add_action( 'wp_ajax_bp_media_make_report', array( $this, 'bp_media_make_report' ) );
@@ -78,18 +77,6 @@ class BP_Media_Reporting {
 			?>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Add custom comment type to comment type dropdown
-	 *
-	 * @author Kailan W.
-	 *
-	 * @since 1.0.2
-	 */
-	public function add_custom_comment_type_dropdown( $comment_types = array() ) {
-		$comment_types[ $this->comment_type ] = __( 'Flagged Media', 'bp-media' );
-		return $comment_types;
 	}
 
 	/**
