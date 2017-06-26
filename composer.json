@@ -1,0 +1,5 @@
+{
+    "require": {
+        "webdevstudios/cmb2": "^2.2"
+    }
+}
