@@ -27,7 +27,7 @@ function bp_media_is_action_edit() {
 
 	$variables = bp_action_variables();
 
-	if ( isset( $variables[1] ) && 'edit' ===  $variables[1] ) {
+	if ( isset( $variables[1] ) && 'edit' === $variables[1] ) {
 		return true;
 	}
 
@@ -43,13 +43,13 @@ function bp_media_is_action_edit() {
 function bp_media_loop_filter() {
 	$bp = buddypress();
 
-	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+	$paged = ( isset( $_GET['mpage'] ) ) ? absint( $_GET['mpage'] ) : 1;
 
 	$query = array(
 		'post_type'      => 'bp_media',
 		'posts_per_page' => 12,
 		'orderby'        => 'modified',
-		'paged'          => $paged
+		'paged'          => $paged,
 	);
 
 	$query = apply_filters( 'bp_media_loop_filter', $query );
@@ -67,7 +67,7 @@ function bp_media_loop_filter() {
  */
 function bp_media_loop_profile_filter( $query ) {
 
-	$paged = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+	$paged = ( isset( $_GET['mpage'] ) ) ? absint( $_GET['mpage'] ) : 1;
 
 	if ( bp_is_user() ) {
 
@@ -87,11 +87,10 @@ function bp_media_loop_profile_filter( $query ) {
 				array(
 					'key'     => '_permission',
 					'value'   => $value,
-					'compare' => '='
-				)
-			)
+					'compare' => '=',
+				),
+			),
 		);
-
 
 		if ( 'album' === $action ) {
 
@@ -103,11 +102,8 @@ function bp_media_loop_profile_filter( $query ) {
 				'orderby' => 'modified',
 				'paged' => $paged,
 			);
-
 		}
-
 	}
-
 	return $query;
 }
 add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
@@ -122,11 +118,11 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_profile_filter' );
 function bp_media_loop_permissions_filter( $query ) {
 
 	$action = bp_current_action();
-	$paged  = ( isset( $_GET['mpage'] ) ) ? $_GET['mpage'] : 1;
+	$paged  = ( isset( $_GET['mpage'] ) ) ? absint( $_GET['mpage'] ) : 1;
 
 	if ( ! bp_is_user() ) {
 
-		$value = ( ! empty($_GET['permission']) ) ? $_GET['permission'] : 'public' ;
+		$value = ( ! empty( $_GET['permission'] ) ) ? sanitize_text_field( $_GET['permission'] ) : 'public' ;
 
 		$query = array(
 			'post_type'      => 'bp_media',
@@ -137,13 +133,11 @@ function bp_media_loop_permissions_filter( $query ) {
 				array(
 					'key'     => '_permission',
 					'value'   => $value,
-					'compare' => '='
-				)
-			)
+					'compare' => '=',
+				),
+			),
 		);
-
 	}
-
 
 	if ( bp_is_group() ) {
 
@@ -160,15 +154,12 @@ function bp_media_loop_permissions_filter( $query ) {
 					array(
 						'key'     => 'secondary_item_id',
 						'value'   => bp_get_group_id(),
-						'compare' => '='
-					)
-				)
+						'compare' => '=',
+					),
+				),
 			);
-
 		}
-
 	}
-
 	return $query;
 }
 add_filter( 'bp_media_loop_filter', 'bp_media_loop_permissions_filter' );
@@ -180,6 +171,7 @@ add_filter( 'bp_media_loop_filter', 'bp_media_loop_permissions_filter' );
 function bp_media_css_class() {
 	echo bp_get_media_css_class();
 }
+
 	/**
 	 * The bp_get_media_css_class function.
 	 *
@@ -196,6 +188,7 @@ function bp_media_css_class() {
 function bp_media_css_id() {
 	echo bp_get_media_css_id();
 }
+
 	/**
 	 * The bp_get_media_css_id function.
 	 *
@@ -207,13 +200,11 @@ function bp_media_css_id() {
 		return $post->ID;
 	}
 
-
 /**
  * The bp_media_userlink function.
  */
 function bp_media_userlink() {
 		echo bp_media_get_userlink();
-
 }
 
 	/**
@@ -229,15 +220,12 @@ function bp_media_userlink() {
 		return;
 	}
 
-
-
 /**
  * The bp_media_create_album_link function.
  */
 function bp_media_create_album_link() {
 	echo bp_media_get_create_album_link();
 }
-
 
 	/**
 	 * The bp_media_get_create_album_link function.
@@ -254,15 +242,12 @@ function bp_media_edit_album_link() {
 	echo bp_media_get_edit_album_link();
 }
 
-
 	/**
 	 * The bp_media_get_edit_album_link function.
 	 */
 	function bp_media_get_edit_album_link() {
 		return bp_media_userlink( bp_displayed_user_id() ) . 'edit';
 	}
-
-
 
 /**
  * The bp_media_edit_image_link function.
@@ -284,10 +269,10 @@ function bp_media_edit_image_link( $id = null ) {
 function bp_media_create_album_link_ajax() {
 
 	$ajax_url = add_query_arg(
-	    array(
-	        'action' => 'bp_media_add_album'
-	    ),
-	    '/wp-admin/admin-ajax.php'
+		array(
+			'action' => 'bp_media_add_album',
+		),
+		'/wp-admin/admin-ajax.php'
 	);
 
 	return $ajax_url;
@@ -298,7 +283,7 @@ function bp_media_create_album_link_ajax() {
  * The bp_media_album_link function.
  */
 function bp_media_album_link() {
-		echo bp_get_media_album_link();
+	echo bp_get_media_album_link();
 }
 
 	/**
@@ -315,7 +300,6 @@ function bp_media_album_link() {
 		}
 
 		return;
-
 	}
 
 
@@ -328,11 +312,11 @@ function bp_media_album_link() {
 function bp_media_time_since( $photo_id ) {
 
 	$attachment = get_post( $photo_id );
-	$post_date = sprintf( __( '%1$s ago', 'bp_media' ), human_time_diff( strtotime( $attachment->post_date ), current_time('timestamp') ) );
+	// translators:  Time ago.
+	$post_date = sprintf( __( '%1$s ago', 'bp_media' ), human_time_diff( strtotime( $attachment->post_date ), current_time( 'timestamp' ) ) );
 
 	return $post_date;
 }
-
 
 
 /**
@@ -351,11 +335,11 @@ function bp_album_cover_url() {
 		'numberposts'    => 1,
 	);
 
-	$attachments = get_posts($args);
+	$attachments = get_posts( $args );
 
-  	if ( $attachments ) {
-		foreach ($attachments as $attachment) {
-			$cover =  wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+	if ( $attachments ) {
+		foreach ( $attachments as $attachment ) {
+			$cover = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
 			echo $cover[0];
 		}
 	} else {
@@ -363,7 +347,6 @@ function bp_album_cover_url() {
 	}
 
 }
-
 
 /**
  * The bp_album_image_count function.
@@ -385,12 +368,11 @@ function bp_album_image_count() {
 
 	$count = 0;
 	foreach ( $attachments as $attachment ) {
-	    $count += count( $attachment );
+		$count += count( $attachment );
 	}
 
-	$text = ( $count === 1 ) ? __( ' image', 'bp_media' ) : __( ' images', 'bp_media' ) ;
-
-	echo $count . $text;
+	$text = sprintf( _n( '%s image', '%s images', $count, 'bp_media' ), $count );
+	echo $text;
 
 }
 
@@ -403,8 +385,8 @@ function bp_get_media_image_id() {
 	$action_var = bp_action_variables();
 	$photo_id = $action_var[0];
 
-	if ( FALSE === get_post_status( $photo_id ) ) {
-	  $photo_id = FALSE;
+	if ( false === get_post_status( $photo_id ) ) {
+		$photo_id = false;
 	}
 
 	return $photo_id;
@@ -421,8 +403,8 @@ function bp_get_media_album_id() {
 	$action_var = bp_action_variables();
 	$album_id = $action_var[0];
 
-	if ( FALSE === get_post_status( $album_id ) ) {
-	  $album_id = FALSE;
+	if ( false === get_post_status( $album_id ) ) {
+		$album_id = false;
 	}
 
 	return $album_id;
@@ -438,6 +420,7 @@ function bp_get_media_album_id() {
 function bp_media_album_field( $field = null ) {
 	echo bp_media_get_album_field( $field );
 }
+
 	/**
 	 * The bp_media_get_album_field function.
 	 *
@@ -446,13 +429,15 @@ function bp_media_album_field( $field = null ) {
 	 */
 	function bp_media_get_album_field( $field = null ) {
 
-		if( ! $field ) return;
+		if ( ! $field ) {
+			return;
+		}
 
 		$action_var = bp_action_variables();
 
 		$album = get_post( $action_var[0] );
 
-		if( ! $album ) {
+		if ( ! $album ) {
 			die();
 		}
 
@@ -487,7 +472,9 @@ function bp_media_image_description() {
 		$action_var = bp_action_variables();
 		$meta = get_post_meta( $action_var[0], 'description', true );
 
-		if( $meta ) return esc_html( $meta );
+		if ( $meta ) {
+			return esc_html( $meta );
+		}
 
 		return;
 	}
@@ -495,6 +482,7 @@ function bp_media_image_description() {
 function bp_media_album_meta( $field = null ) {
 	echo bp_media_get_album_meta( $field );
 }
+
 	/**
 	 * The bp_media_get_album_field function.
 	 *
@@ -503,13 +491,17 @@ function bp_media_album_meta( $field = null ) {
 	 */
 	function bp_media_get_album_meta( $field = null ) {
 
-		if( ! $field ) return;
+		if ( ! $field ) {
+			return;
+		}
 
 		$action_var = bp_action_variables();
 
 		$album = get_post_meta( $action_var[0], $field, true );
 
-		if( $album ) return $album;
+		if ( $album ) {
+			return $album;
+		}
 
 		return;
 	}
@@ -524,12 +516,17 @@ function bp_media_posted_in() {
 		$action_var = bp_action_variables();
 		$meta = get_post_meta( $action_var[0], 'secondary_item_id', true );
 
-		if( !$meta ) return;
+		if ( ! $meta ) {
+			return;
+		}
 
-		if( $meta !== '0' ) {
+		if ( 0 !== $meta ) {
 
-			$group = groups_get_group( array( 'group_id' => (int) $meta ) );
-			return __( 'Posted in the group <a href="' . home_url( $bp->groups->slug . '/' . $group->slug ) . '">'. $group->name .'</a>' , 'bp-media' );
+			$group = groups_get_group( array(
+				'group_id' => (int) $meta,
+				)
+			);
+			return __( 'Posted in the group <a href="' . home_url( $bp->groups->slug . '/' . $group->slug ) . '">' . esc_html( $group->name ) .'</a>', 'bp-media' );
 		}
 
 		return;
@@ -547,7 +544,7 @@ function bp_media_album_permission( $permission ) {
 
 	$meta = get_post_meta( $action_var[0], '_permission', true );
 
-	if( $meta === $permission) {
+	if ( $meta === $permission ) {
 		echo 'checked="checked"';
 	}
 
@@ -562,7 +559,7 @@ function bp_media_album_back_url( $album_id = null ) {
 
 	$action_var = bp_action_variables();
 
-	if( !$album_id ) {
+	if ( ! $album_id ) {
 		$album_id = $action_var[0];
 	}
 
@@ -603,10 +600,8 @@ function bp_media_group_image_link( $id, $user_id ) {
 }
 
 	function bp_media_get_group_image_link( $id, $user_id ) {
-		return  bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $id;
+		return bp_core_get_user_domain( $user_id ) . BP_MEDIA_SLUG . '/image/' . $id;
 	}
-
-
 
 /**
  * The bp_media_album_id function.
@@ -626,17 +621,13 @@ function bp_media_album_id() {
 		return $action_var[0];
 	}
 
-
-
 /**
  * The bp_media_enqueue_scripts function.
  */
 function bp_media_enqueue_scripts() {
-	 wp_enqueue_script('plupload-all');
+	wp_enqueue_script( 'plupload-all' );
 }
 add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
-
-
 
 /**
  * The bp_media_comments function.
@@ -644,7 +635,7 @@ add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts' );
  * @param mixed $comment Comments.
  */
 function bp_media_comments( $comment ) {
-	bp_media_get_template_part('comments' );
+	bp_media_get_template_part( 'comments' );
 }
 
 
@@ -659,7 +650,6 @@ function bp_media_can_edit() {
 }
 
 
-
 /**
  * The bp_media_add_activity_meta function.
  *
@@ -667,14 +657,14 @@ function bp_media_can_edit() {
  */
 function bp_media_add_activity_meta( $activity ) {
 
-	 if ( ! empty( $_POST['attachment_id'] ) ) {
-          bp_activity_update_meta( $activity->id, 'bp_media_attachment_id', $_POST['attachment_id'] );
-          update_post_meta( $_POST['attachment_id'], 'description', $_POST['content'] );
-          update_post_meta( $_POST['attachment_id'], 'activity_id', $activity->id );
-     }
+	if ( ! empty( $_POST['attachment_id'] ) ) {
+		$attachment_id = absint( $_POST['attachment_id'] );
+		bp_activity_update_meta( $activity->id, 'bp_media_attachment_id', $attachment_id );
+		update_post_meta( $attachment_id, 'description', $_POST['content'] );
+		update_post_meta( $attachment_id, 'activity_id', $activity->id );
+	}
 }
 add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
-
 
 
 /**
@@ -682,7 +672,7 @@ add_action( 'bp_activity_after_save', 'bp_media_add_activity_meta' );
  */
 function bp_media_display_attachment_image() {
 
-	if ( $attachment_id = bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) ) {
+	if ( bp_activity_get_meta( bp_get_activity_id(), 'bp_media_attachment_id', true ) == $attachment_id ) {
 
 		/**
 		 * Filter activity attachment media size.
@@ -722,28 +712,30 @@ add_action( 'bp_activity_entry_content', 'bp_media_display_attachment_image' );
  *
  * @param mixed $id Attachemnt ID.
  */
-function bp_media_delete_attachments_before_delete_post( $id ){
+function bp_media_delete_attachments_before_delete_post( $id ) {
 	global $post;
 
-	if( $post && 'bp_media' !== $post->post_type ) return;
+	if ( $post && 'bp_media' !== $post->post_type ) {
+		return;
+	}
 
 	$subposts = get_children(array(
-	    'post_parent' => $id,
-	    'post_type'   => 'any',
-	    'numberposts' => -1,
-	    'post_status' => 'any'
+		'post_parent' => $id,
+		'post_type'   => 'any',
+		'numberposts' => -1,
+		'post_status' => 'any',
 	));
 
-	if ( is_array( $subposts ) && count( $subposts ) > 0 ){
+	if ( is_array( $subposts ) && count( $subposts ) > 0 ) {
 		$uploadpath = wp_upload_dir();
 
-		foreach( $subposts as $subpost ){
+		foreach ( $subposts as $subpost ) {
 
 			$_wp_attached_file = get_post_meta( $subpost->ID, '_wp_attached_file', true );
 
 			$original = basename( $_wp_attached_file );
 			$pos = strpos( strrev( $original ), '.' );
-			if (strpos( $original, '.' ) !== false ){
+			if ( false !== strpos( $original, '.' ) ) {
 				$ext = explode( '.', strrev( $original ) );
 				$ext = strrev( $ext[0] );
 			} else {
@@ -751,13 +743,14 @@ function bp_media_delete_attachments_before_delete_post( $id ){
 				$ext = strrev( $ext[0] );
 			}
 
-			$pattern = $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'-[0-9]*x[0-9]*.'.$ext;
-			$original= $uploadpath['basedir'].'/'.dirname( $_wp_attached_file ).'/'.basename( $original, '.'.$ext ).'.'.$ext;
-			if ( getimagesize( $original ) ){
+			$pattern  = $uploadpath['basedir'] . '/' . dirname( $_wp_attached_file ) . '/' . basename( $original, '.' . $ext ) . '-[0-9]*x[0-9]*.' . $ext;
+			$original = $uploadpath['basedir'] . '/' . dirname( $_wp_attached_file ) . '/' . basename( $original, '.' . $ext ) . '.' . $ext;
+			if ( getimagesize( $original ) ) {
 				$thumbs = glob( $pattern );
-				if ( is_array( $thumbs ) && count( $thumbs ) > 0 ){
-					foreach( $thumbs as $thumb )
+				if ( is_array( $thumbs ) && count( $thumbs ) > 0 ) {
+					foreach ( $thumbs as $thumb ) {
 						unlink( $thumb );
+					}
 				}
 			}
 			wp_delete_attachment( $subpost->ID, true );
@@ -769,8 +762,6 @@ add_action( 'delete_post', 'bp_media_delete_attachments_before_delete_post' );
 // Trom wp 3.2.
 add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_post' );
 
-
-
 /**
  * The bp_media_filter_album_attachments function.
  *
@@ -781,7 +772,7 @@ add_action( 'before_delete_post', 'bp_media_delete_attachments_before_delete_pos
  */
 function bp_media_filter_album_attachments( $args, $type, $post ) {
 
-	if( 'bp_media' === $post->post_type ) {
+	if ( 'bp_media' === $post->post_type ) {
 
 		$args['orderby'] = 'date';
 		$args['order'] = 'desc';
@@ -800,11 +791,11 @@ add_filter( 'get_attached_media_args', 'bp_media_filter_album_attachments', 10, 
  */
 function bp_media_user_can_delete( $user_id = 0 ) {
 
-	if( 0 === $user_id  ) {
+	if ( ! empty( $user_id ) ) {
 		$user_id = bp_displayed_user_id();
 	}
 
-	if( bp_loggedin_user_id() === (int) $user_id ) {
+	if ( bp_loggedin_user_id() === (int) $user_id ) {
 		return true;
 	}
 	return;
@@ -819,15 +810,19 @@ function bp_media_user_can_delete( $user_id = 0 ) {
  */
 function bp_media_user_can_access( $user_id = 0 ) {
 
-	if( !is_user_logged_in() ) return;
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
 
-	if( 0 === $user_id  ) {
+	if ( ! empty( $user_id ) ) {
 		$user_id = bp_displayed_user_id();
 	}
 
-	if( ! apply_filters( 'bp_media_user_can_access', $user_id ) ) return;
+	if ( ! apply_filters( 'bp_media_user_can_access', $user_id ) ) {
+		return;
+	}
 
-	if( bp_loggedin_user_id() === (int) $user_id ) {
+	if ( bp_loggedin_user_id() === (int) $user_id ) {
 		return true;
 	}
 	return;
@@ -844,7 +839,7 @@ function bp_media_user_can_access( $user_id = 0 ) {
 function bp_is_friend_boolean() {
 	$is_friend = bp_is_friend();
 
-	if( 'is_friend' === $is_friend ) {
+	if ( 'is_friend' === $is_friend ) {
 		return true;
 	}
 	return false;
@@ -867,13 +862,13 @@ function bp_media_pagination_count( $query ) {
 	 */
 	function bp_media_get_pagination_count( $query ) {
 
-		$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __('album', 'bp-media') : __('image', 'bp-media') ;
+		$action = ( 'album' !== bp_current_action() && bp_is_user() ) ? __( 'album', 'bp-media' ) : __( 'image', 'bp-media' );
 
-		if( bp_is_directory() && !bp_current_action() ) {
-			$action = __('album', 'bp-media');
+		if ( bp_is_directory() && ! bp_current_action() ) {
+			$action = __( 'album', 'bp-media' );
 		}
 
-		$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+		$paged = ( isset( $_GET['mpage'] ) ) ? absint( $_GET['mpage'] ) : 1;
 		$posts_per_page = $query->query['posts_per_page'];
 
 		$start_num = intval( ( $paged - 1 ) * $posts_per_page ) + 1;
@@ -882,9 +877,9 @@ function bp_media_pagination_count( $query ) {
 		$total     = bp_core_number_format( $query->found_posts );
 
 		if ( 1 == $query->found_posts ) {
-			$message = __( 'Viewing 1 ' . $action, 'bp-media' );
+			$message = sprintf( __( 'Viewing 1 %s', 'bp-media' ), $action );
 		} else {
-			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s '.$action.'s', 'Viewing %1$s - %2$s of %3$s '.$action.'s', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
+			$message = sprintf( _n( 'Viewing %1$s - %2$s of %3$s ' . $action . 's', 'Viewing %1$s - %2$s of %3$s ' . $action . 's', $query->found_posts, 'bp-media' ), $from_num, $to_num, $total );
 		}
 
 		/**
@@ -908,26 +903,61 @@ function bp_media_pagination_links( $query ) {
 	echo bp_media_get_pagination_links( $query );
 }
 
-	function bp_media_get_pagination_links( $query ) {
+function bp_media_get_pagination_links( $query ) {
 
-			$paged = ( isset($_GET['mpage']) ) ? $_GET['mpage'] : 1;
+	$paged = ( isset( $_GET['mpage'] ) ) ? absint( $_GET['mpage'] ) : 1;
 
-			$pag_args = array(
-				'mpage' => '%#%'
-			);
+	$pag_args = array(
+		'mpage' => '%#%',
+	);
+	$base = '';
 
-			if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
-				$base = remove_query_arg( 's', wp_get_referer() );
-			} else {
-				$base = '';
-			}
-
-			echo paginate_links( array(
-				'base'      => add_query_arg( $pag_args, $base ),
-				'format'    => '',
-				'total'     => ceil( (int) $query->found_posts / (int)  $query->query['posts_per_page'] ),
-				'current'   => $paged,
-				'prev_text' => _x( '&larr;', 'Media pagination previous text', 'bp-media' ),
-				'next_text' => _x( '&rarr;', 'Media pagination next text', 'bp-media' ),
-			) );
+	if ( defined( 'DOING_AJAX' ) && true === (bool) DOING_AJAX ) {
+		$base = remove_query_arg( 's', wp_get_referer() );
 	}
+
+	echo paginate_links( array(
+		'base'      => add_query_arg( $pag_args, $base ),
+		'format'    => '',
+		'total'     => ceil( (int) $query->found_posts / (int) $query->query['posts_per_page'] ),
+		'current'   => $paged,
+		'prev_text' => _x( '&larr;', 'Media pagination previous text', 'bp-media' ),
+		'next_text' => _x( '&rarr;', 'Media pagination next text', 'bp-media' ),
+	) );
+}
+
+/**
+ * Wrapper function around cmb2_get_option.
+ * @since  0.1.0
+ * @param  string $key     Options array key
+ * @param  mixed  $default Optional default value
+ * @return mixed           Option value
+ */
+function bp_media_get_option( $key = '', $default = false ) {
+	if ( function_exists( 'cmb2_get_option' ) ) {
+		// Use cmb2_get_option as it passes through some key filters.
+		return cmb2_get_option( buddymedia()->admin->key, $key, $default );
+	}
+	// Fallback to get_option if CMB2 is not loaded yet.
+	$opts = get_option( buddymedia()->admin->key, $default );
+	$val = $default;
+	if ( 'all' == $key ) {
+		$val = $opts;
+	} elseif ( array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+		$val = $opts[ $key ];
+	}
+	return $val;
+}
+
+/**
+ * Helper function to check if Reporting is enabled.
+ *
+ * @since  1.0.2
+ *
+ * @author  Kailan W.
+ *
+ * @return boolean.
+ */
+function bp_media_enabled() {
+	return ( 'on' === bp_media_get_option( 'enable_reporting' ) );
+}
