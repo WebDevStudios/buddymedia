@@ -93,7 +93,10 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		 * @return void
 		 */
 		private function includes() {
-
+			//if ( is_admin() ) {
+				require( dirname( __FILE__ ) . '/importers/class-buddymedia-importer.php' );
+				require( dirname( __FILE__ ) . '/importers/class-buddymedia-rtmedia-importer.php' );
+			//}
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-admin-settings.php' );
 			require( dirname( __FILE__ ) . '/includes/bp-media-function.php' );
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-cpt.php' );
@@ -106,6 +109,7 @@ if ( ! class_exists( 'BP_Media' ) ) :
 			require( dirname( __FILE__ ) . '/includes/class-bp-media-reporting.php' );
 
 			$this->admin = new BP_Media_Settings();
+			$this->importer = new BuddyMedia_Importer();
 		}
 
 		/**
