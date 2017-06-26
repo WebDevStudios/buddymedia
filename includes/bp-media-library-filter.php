@@ -79,7 +79,7 @@ class BP_MEDIA_LIBRARY_FILTER {
 					'compare' => 'NOT EXISTS'
 				)
 			);
-	    return $query;
+		return $query;
 	}
 
 }
