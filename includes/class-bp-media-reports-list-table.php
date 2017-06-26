@@ -177,7 +177,7 @@ class BP_Media_Reports_List_Table extends WP_Comments_List_Table {
 	 */
 	public function column_media_item( $comment ) {
 		if ( wp_attachment_is_image( $comment->comment_post_ID ) ) {
-			echo '<a href="' . get_edit_post_link( $comment->comment_post_ID ) . '">' . wp_get_attachment_image( $comment->comment_post_ID, 'thumbnail' ) . '</a>';
+			echo '<a href="' . get_edit_post_link( $comment->comment_post_ID ) . '">' . wp_get_attachment_image( $comment->comment_post_ID, array( 150, 150 ) ) . '</a>';
 		}
 	}
 

@@ -124,8 +124,8 @@ class BP_Media_Reporting {
 			return;
 		}
 
-		$comment_content    = ! empty( $_POST['reason'] ) ? sanitize_text_field( $_POST['reason'] ) : '';
-		$comment_content    = $comment_content . '<br />' . ( ! empty( $_POST['message'] ) ? wp_kses_post( $_POST['message'] ) : '' );
+		$report_reason    = ! empty( $_POST['reason'] ) ? sanitize_text_field( $_POST['reason'] ) : '';
+		$comment_content  = $report_reason . '<br />' . ( ! empty( $_POST['message'] ) ? wp_kses_post( $_POST['message'] ) : '' );
 		$results = array();
 		$commentdata = array(
 			'comment_post_ID'  => $item_id, // To which post the comment will show up.
@@ -139,6 +139,9 @@ class BP_Media_Reporting {
 
 		// Insert new comment and get the comment ID.
 		$comment_id = wp_new_comment( $commentdata );
+
+		// Add comment reason.
+		add_comment_meta( $comment_id, '_bp_media_report_reason', $report_reason );
 
 		// Disable previous filter.
 		add_filter( 'duplicate_comment_id', '__return_true' );
