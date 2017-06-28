@@ -111,13 +111,17 @@ if ( ! class_exists( 'BP_Media' ) ) :
 		/**
 		 * The libs function.
 		 *
+		 * @author  Kailan W.
+		 *
+		 * @since 1.0.2
+		 *
 		 * @access private
 		 * @return void
 		 */
 		private function libs() {
 
-			if ( file_exists( __DIR__ . '/vendor/CMB2/init.php' ) ) {
-				require_once  __DIR__ . '/vendor/CMB2/init.php';
+			if ( file_exists( __DIR__ . '/vendor/webdevstudios/cmb2/init.php' ) ) {
+				require_once  __DIR__ . '/vendor/webdevstudios/cmb2/init.php';
 			}
 		}
 
