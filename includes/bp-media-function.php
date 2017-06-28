@@ -343,7 +343,7 @@ function bp_album_cover_url() {
 			echo $cover[0];
 		}
 	} else {
-		echo BP_MEDIA_PLUGIN_URL . 'includes/images/no-image.png';
+		echo BP_MEDIA_PLUGIN_URL . 'includes/assets/images/no-image.png';
 	}
 
 }
