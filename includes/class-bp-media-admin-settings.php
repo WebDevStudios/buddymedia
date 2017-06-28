@@ -104,7 +104,7 @@ class BP_Media_Settings {
 				<a href="<?php echo admin_url( 'admin.php?page=' . $this->key . '&tab=reporting' ); ?>" class="nav-tab <?php echo 'reporting' == $active_tab  ? 'nav-tab-active' : ''; ?>"><?php _e( 'Reporting', 'um-learndash' ); ?></a>
 			</h2>
 			<?php
-			switch( $active_tab ) {
+			switch ( $active_tab ) {
 				case 'reporting':
 					cmb2_metabox_form( $this->metabox_id . '-reporting', $this->key );
 				break;
@@ -123,7 +123,11 @@ class BP_Media_Settings {
 	 * @return void
 	 */
 	public function add_options_page_metabox() {
-
+		if ( ! function_exists( 'get_editable_roles' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/user.php' );
+		}
+		$roles = get_editable_roles();
+		$roles = wp_list_pluck( $roles, 'name' );
 		$cmb = new_cmb2_box( array(
 			'id'         => $this->metabox_id,
 			'hookup'     => false,
@@ -135,51 +139,59 @@ class BP_Media_Settings {
 			),
 		) );
 
-        $cmb->add_field( array(
-        	'name'    => __( 'Media Types', 'buddymedia' ),
-        	'desc'    => __( 'Allowed media types.', 'buddymedia' ),
-        	'default' => '',
-        	'id'      => 'media_types',
-        	'type'    => 'title',
-        ) );
+		$cmb->add_field( array(
+			'name'    => __( 'Allowed User Roles', 'buddymedia' ),
+			'desc'    => __( 'Users with these roles will have the ability to upload photos. Leave blank to allow all roles', 'buddymedia' ),
+			'id'      => 'allowed_roles',
+			'type'    => 'multicheck',
+			'options' => $roles,
+		) );
 
-        $cmb->add_field( array(
-        	'name'    => __( 'Allowed extensions for images.', 'buddymedia' ),
-        	'desc'    => '',
-        	'default' => '',
-        	'id'      => 'bp_media_image_types',
-        	'type'    => 'text',
-        ) );
+		$cmb->add_field( array(
+			'name'    => __( 'Media Types', 'buddymedia' ),
+			'desc'    => __( 'Allowed media types.', 'buddymedia' ),
+			'default' => '',
+			'id'      => 'media_types',
+			'type'    => 'title',
+		) );
 
-        $cmb->add_field( array(
-        	'name'    => __( 'Allowed extensions for docs.', 'buddymedia' ),
-        	'desc'    => '',
-        	'default' => '',
-        	'id'      => 'bp_media_doc_types',
-        	'type'    => 'text',
-        ) );
+		$cmb->add_field( array(
+			'name'    => __( 'Allowed extensions for images.', 'buddymedia' ),
+			'desc'    => '',
+			'default' => '',
+			'id'      => 'bp_media_image_types',
+			'type'    => 'text',
+		) );
 
-        $cmb->add_field( array(
-        	'name'    => __( 'Storage Types', 'buddymedia' ),
-        	'desc'    => __( 'Allowed storage quotas.', 'buddymedia' ),
-        	'default' => '',
-        	'id'      => 'storage_types',
-        	'type'    => 'title',
-        ) );
+		$cmb->add_field( array(
+			'name'    => __( 'Allowed extensions for docs.', 'buddymedia' ),
+			'desc'    => '',
+			'default' => '',
+			'id'      => 'bp_media_doc_types',
+			'type'    => 'text',
+		) );
 
-        $cmb->add_field( array(
-        	'name'    => __( 'Maximum Upload size per file(MB)?', 'buddymedia' ),
-        	'desc'    => '',
-        	'default' => '',
-        	'id'      => 'bp_media_file_size',
-        	'type'    => 'text',
-        ) );
+		$cmb->add_field( array(
+			'name'    => __( 'Storage Types', 'buddymedia' ),
+			'desc'    => __( 'Allowed storage quotas.', 'buddymedia' ),
+			'default' => '',
+			'id'      => 'storage_types',
+			'type'    => 'title',
+		) );
+
+		$cmb->add_field( array(
+			'name'    => __( 'Maximum Upload size per file(MB)?', 'buddymedia' ),
+			'desc'    => '',
+			'default' => '',
+			'id'      => 'bp_media_file_size',
+			'type'    => 'text',
+		) );
 
 		/*
 		Add your fields here
 		*/
 
-        $cmb = new_cmb2_box( array(
+		$cmb = new_cmb2_box( array(
 			'id'         => $this->metabox_id . '-reporting',
 			'hookup'     => false,
 			'cmb_styles' => false,
@@ -191,19 +203,19 @@ class BP_Media_Settings {
 		) );
 
 		$cmb->add_field( array(
-        	'name'    => __( 'Turn on reporting', 'buddymedia' ),
-        	'id'      => 'enable_reporting',
-        	'desc'    => __( 'Enable repoting on media items', 'buddymedia' ),
-        	'type'    => 'checkbox',
-        ) );
+			'name'    => __( 'Turn on reporting', 'buddymedia' ),
+			'id'      => 'enable_reporting',
+			'desc'    => __( 'Enable repoting on media items', 'buddymedia' ),
+			'type'    => 'checkbox',
+		) );
 
-        $cmb->add_field( array(
-        	'name'       => __( 'Reporting Reasons', 'buddymedia' ),
-        	'id'         => 'bp_media_reporting_reasons',
-        	'desc'       => __( 'Enable repoting on media items', 'buddymedia' ),
-        	'type'       => 'text',
-        	'repeatable' => true,
-        ) );
+		$cmb->add_field( array(
+			'name'       => __( 'Reporting Reasons', 'buddymedia' ),
+			'id'         => 'bp_media_reporting_reasons',
+			'desc'       => __( 'Enable repoting on media items', 'buddymedia' ),
+			'type'       => 'text',
+			'repeatable' => true,
+		) );
 
 	}
 
@@ -213,53 +225,44 @@ class BP_Media_Settings {
  */
 function bp_media_admin_settings() {
 
-    /* This is how you add a new section to BuddyPress settings */
-    add_settings_section(
-        /* the id of your new section */
-        'bp_media_section',
+	/* This is how you add a new section to BuddyPress settings */
+	add_settings_section(
+		/* the id of your new section */
+		'bp_media_section',
+		/* the title of your section */
+		__( 'Media Settings',  'bp-media' ),
+		/* the display function for your section's description */
+		'bp_plugin_setting_callback_section',
+		/* BuddyPress settings */
+		'buddypress'
+	);
 
-        /* the title of your section */
-        __( 'Media Settings',  'bp-media' ),
+	/* This is how you add a new field to your plugin's section */
+	add_settings_field(
+		/* the option name you want to use for your plugin */
+		'bp-media-shared-gallery',
+		/* The title for your setting */
+		__( 'Shared Galleries', 'bp-media' ),
+		/* Display function */
+		'bp_media_setting_field_callback',
+		/* BuddyPress settings */
+		'buddypress',
+		/* Your plugin's section id */
+		'bp_media_section'
+	);
 
-        /* the display function for your section's description */
-        'bp_plugin_setting_callback_section',
-
-        /* BuddyPress settings */
-        'buddypress'
-    );
-
-    /* This is how you add a new field to your plugin's section */
-    add_settings_field(
-        /* the option name you want to use for your plugin */
-        'bp-media-shared-gallery',
-
-        /* The title for your setting */
-        __( 'Shared Galleries', 'bp-media' ),
-
-        /* Display function */
-        'bp_media_setting_field_callback',
-
-        /* BuddyPress settings */
-        'buddypress',
-
-        /* Your plugin's section id */
-        'bp_media_section'
-    );
-
-    /*
-       This is where you add your setting to BuddyPress ones
-       Here you are directly using intval as your validation function
-    */
-    register_setting(
-        /* BuddyPress settings */
-        'buddypress',
-
-        /* the option name you want to use for your plugin */
-        'bp-media-shared-gallery',
-
-        /* the validatation function you use before saving your option to the database */
-        'intval'
-    );
+	/*
+	   This is where you add your setting to BuddyPress ones
+	   Here you are directly using intval as your validation function
+	*/
+	register_setting(
+		/* BuddyPress settings */
+		'buddypress',
+		/* the option name you want to use for your plugin */
+		'bp-media-shared-gallery',
+		/* the validatation function you use before saving your option to the database */
+		'intval'
+	);
 }
 add_action( 'bp_register_admin_settings', 'bp_media_admin_settings', 999 );
 

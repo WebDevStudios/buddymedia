@@ -961,3 +961,40 @@ function bp_media_get_option( $key = '', $default = false ) {
 function bp_media_enabled() {
 	return ( 'on' === bp_media_get_option( 'enable_reporting' ) );
 }
+
+/**
+ * Does user have an allowed user role access to media?
+ *
+ * @param  int $user_id User ID.
+ *
+ * @since  1.0.2
+ *
+ * @author  Kailan W.
+ *
+ * @return boolean.
+ */
+function bp_media_role_allowed( $user_id = 0 ) {
+	// Get allowed user roles.
+	$roles = bp_media_get_option( 'allowed_roles' );
+
+	// If roles are empty then allow.
+	if ( empty( $roles ) ) {
+		return true;
+	}
+
+	if ( ! $user_id ) {
+		$user_id = bp_loggedin_user_id();
+	}
+
+	// Get WP_User object.
+	$user_info = get_userdata( $user_id );
+	if ( ! empty( $user_info->roles ) ) {
+		foreach ( $user_info->roles as $role ) {
+			// Check if the current user role is in allowed set.
+			if ( in_array( $role, $roles ) ) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
