@@ -107,12 +107,18 @@ class BP_Media_Component extends BP_Component {
 			'position'            => 10,
 			'screen_function'     => 'bp_media_screen_user_media',
 			'default_subnav_slug' => 'media',
-			'item_css_id'         => $this->id
+			'item_css_id'         => $this->id,
 		);
 
 		// Stop if there is no user displayed or logged in.
-		if ( !is_user_logged_in() && !bp_displayed_user_id() )
+		if ( ! is_user_logged_in() && ! bp_displayed_user_id() ) {
 			return;
+		}
+
+		// Check if this user is allowed to have media tab on their profile.
+		if ( ! bp_media_role_allowed( bp_displayed_user_id() ) ) {
+			return;
+		}
 
 		// Determine user to use.
 		if ( bp_displayed_user_domain() ) {
@@ -126,8 +132,9 @@ class BP_Media_Component extends BP_Component {
 		// User link.
 		$media_link = trailingslashit( $user_domain . $this->slug );
 
-		if ( !defined( 'BP_MEDIA_USER_SLUG' ) )
+		if ( ! defined( 'BP_MEDIA_USER_SLUG' ) ) {
 			define( 'BP_MEDIA_USER_SLUG', $media_link );
+		}
 
 		// Add the subnav items to the media nav item if we are using a theme that supports this.
 		$sub_nav[] = array(
@@ -136,7 +143,7 @@ class BP_Media_Component extends BP_Component {
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
-			'position'        => 10
+			'position'        => 10,
 		);
 
 		$sub_nav[] = array(
@@ -145,7 +152,7 @@ class BP_Media_Component extends BP_Component {
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
-			'position'        => 40
+			'position'        => 40,
 		);
 
 		$sub_nav[] = array(
@@ -154,28 +161,28 @@ class BP_Media_Component extends BP_Component {
 			'parent_url'      => $media_link,
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
-			'position'        => 40
+			'position'        => 40,
 		);
 
-		if( is_user_logged_in() ) {
+		if ( is_user_logged_in() ) {
 			$sub_nav[] = array(
 				'name'            => ' ',
 				'slug'            => 'create',
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 50
+				'position'        => 50,
 			);
 		}
 
-		if( is_user_logged_in() ) {
+		if ( is_user_logged_in() ) {
 			$sub_nav[] = array(
 				'name'            => ' ',
 				'slug'            => 'edit',
 				'parent_url'      => $media_link,
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
-				'position'        => 50
+				'position'        => 50,
 			);
 		}
 
@@ -187,7 +194,7 @@ class BP_Media_Component extends BP_Component {
 				'parent_slug'     => $this->slug,
 				'screen_function' => 'bp_media_screen_user_media',
 				'position'        => 20,
-				'user_has_access' => bp_is_friend_boolean() || bp_is_my_profile()
+				'user_has_access' => bp_is_friend_boolean() || bp_is_my_profile(),
 			);
 		}
 
@@ -198,7 +205,7 @@ class BP_Media_Component extends BP_Component {
 			'parent_slug'     => $this->slug,
 			'screen_function' => 'bp_media_screen_user_media',
 			'position'        => 30,
-			'user_has_access' => bp_is_my_profile()
+			'user_has_access' => bp_is_my_profile(),
 		);
 
 		/*
@@ -258,7 +265,7 @@ class BP_Media_Component extends BP_Component {
 		$bp = buddypress();
 
 		// Menus for logged in user.
-		if ( is_user_logged_in() ) {
+		if ( is_user_logged_in() && bp_media_role_allowed() ) {
 
 			// Setup the logged in user variables.
 			$user_domain   = bp_loggedin_user_domain();
